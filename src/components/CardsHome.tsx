@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, {useState} from "react";
+=======
+import React, { useState } from "react";
+>>>>>>> cards-home
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -7,10 +11,24 @@ import AddShoppingCartRoundedIcon from "@mui/icons-material/AddShoppingCartRound
 import "@fontsource/nunito/700.css";
 import { Tooltip } from "@mui/material";
 
+<<<<<<< HEAD
 function CardsHome() {
 
    const [productName ] = useState("Graphic Card NVdia GTX 930")
    const [productPrice ] = useState(15000)
+=======
+function CardsHome({
+  image,
+  name,
+  price,
+}: {
+  image: string;
+  name: string;
+  price: string;
+}) {
+  const [productName] = useState("Graphic Card NVdia GTX 930");
+  const [productPrice] = useState(15000);
+>>>>>>> cards-home
   return (
     <Box
       sx={{
@@ -29,6 +47,7 @@ function CardsHome() {
         }}>
         <img
           style={{ width: "100%" }}
+          // fill the src with image props
           src='https://cf.shopee.co.id/file/6922c127c5285f3411d78090a6079d7c'
           alt='vga'
         />
@@ -37,7 +56,7 @@ function CardsHome() {
         sx={{
           padding: "10px",
           display: "flex",
-          gap: "5px"
+          gap: "5px",
         }}>
         <Box sx={{ display: "flex", flexDirection: "column", gap: "5px" }}>
           <Typography
@@ -47,7 +66,8 @@ function CardsHome() {
               color: "white",
               fontWeight: "700",
             }}>
-            {productName.substring(0,20)+"..."}
+              {/* replace productName state with name props */}
+            {productName.substring(0, 20) + "..."}
           </Typography>
           <Typography
             sx={{
@@ -56,6 +76,7 @@ function CardsHome() {
               color: "white",
               fontWeight: "700",
             }}>
+              {/* replace productPrice with price props*/}
             {productPrice}
           </Typography>
         </Box>
@@ -76,7 +97,7 @@ function CardsHome() {
               />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Add to Cart">
+          <Tooltip title='Add to Cart'>
             <IconButton
               size='medium'
               sx={{
@@ -88,7 +109,10 @@ function CardsHome() {
                 },
               }}>
               <AddShoppingCartRoundedIcon
-                sx={{ fontSize: {xs: "medium", sm:"25px", md: "20px"}, color: "#2296CB" }}
+                sx={{
+                  fontSize: { xs: "medium", sm: "25px", md: "20px" },
+                  color: "#2296CB",
+                }}
               />
             </IconButton>
           </Tooltip>
