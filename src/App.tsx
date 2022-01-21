@@ -20,7 +20,7 @@ function App() {
         productCount= "4"
         sumPrice= "40000"/>
       <br/>
-      <SummaryDetail/>
+      
       
 
     </div>

@@ -1,8 +1,15 @@
 import React from "react";
 import { Box } from "@mui/material";
 
+interface summaryDetail {
+  qty :number;
+  shipping :number;
+  sumPrice: number;
 
-function SummaryDetail() {
+
+}
+
+function SummaryDetail(props:summaryDetail) {
     return (
         <Box
       sx={{
@@ -43,9 +50,9 @@ function SummaryDetail() {
         
         justifyContent: "space-between",        
       }}>
-        <p style={{ marginBottom:"10px", color:"#FFFFFF" }}>6</p>
-        <p style={{ marginBottom:"10px", color:"#FFFFFF" }}>Rp.20.000</p>
-        <p style={{ marginBottom:"10px", color:"#FFFFFF" }}>Rp.80.000</p>
+        <p style={{ marginBottom:"10px", color:"#FFFFFF" }}>{props.qty}</p>
+        <p style={{ marginBottom:"10px", color:"#FFFFFF" }}>Rp.{props.shipping}</p>
+        <p style={{ marginBottom:"10px", color:"#FFFFFF" }}>Rp.{props.sumPrice}</p>
       </Box>
     </Box>       
       
