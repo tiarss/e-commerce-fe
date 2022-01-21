@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import React, {useState} from "react";
-=======
 import React, { useState } from "react";
->>>>>>> cards-home
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -11,12 +7,6 @@ import AddShoppingCartRoundedIcon from "@mui/icons-material/AddShoppingCartRound
 import "@fontsource/nunito/700.css";
 import { Tooltip } from "@mui/material";
 
-<<<<<<< HEAD
-function CardsHome() {
-
-   const [productName ] = useState("Graphic Card NVdia GTX 930")
-   const [productPrice ] = useState(15000)
-=======
 function CardsHome({
   image,
   name,
@@ -28,7 +18,6 @@ function CardsHome({
 }) {
   const [productName] = useState("Graphic Card NVdia GTX 930");
   const [productPrice] = useState(15000);
->>>>>>> cards-home
   return (
     <Box
       sx={{
