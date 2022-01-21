@@ -8,8 +8,8 @@ import CardsHome from './components/CardsHome';
 function App() {
   return (
     <div className="App">
-      <Header />
-      <CardsHome />
+      {/* <Header />
+      <CardsHome /> */}
     </div>
   );
 }
