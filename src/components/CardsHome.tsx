@@ -12,9 +12,9 @@ function CardsHome({
   name,
   price,
 }: {
-  image: string;
-  name: string;
-  price: string;
+  image?: string;
+  name?: string;
+  price?: string;
 }) {
   const [productName] = useState("Graphic Card NVdia GTX 930");
   const [productPrice] = useState(15000);
