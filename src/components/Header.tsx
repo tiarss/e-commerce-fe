@@ -19,7 +19,7 @@ function Header() {
       <Box>
         <Box>Search</Box>
       </Box>
-      <Box>Login and Cart</Box>
+      <Box>Login and Carts</Box>
     </Box>
   );
 }
