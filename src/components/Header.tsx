@@ -64,7 +64,7 @@ function Header() {
             gap: "10px",
           }}>
           <ShoppingCartOutlinedIcon sx={{ color: "white" }} />
-          <Typography sx={{ color: "white" }}>1</Typography>
+          <Typography sx={{ color: "white" }}>2</Typography>
         </Box>
         <Box>
           <CustomButtonSecondary caption='Log In' />
