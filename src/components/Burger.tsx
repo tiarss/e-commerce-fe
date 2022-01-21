@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
-import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -8,11 +7,12 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
-import Logout from "@mui/icons-material/Logout";
 import LoginRounded from "@mui/icons-material/LoginRounded";
 import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import "@fontsource/nunito/700.css";
+import Avatar from "@mui/material/Avatar";
+import Logout from "@mui/icons-material/Logout";
 
 function Burger() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);

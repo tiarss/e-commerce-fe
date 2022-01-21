@@ -3,7 +3,7 @@ import { Box, Typography } from "@mui/material";
 import logo from "../images/Logo-sirclo.png";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import { CustomButtonPrimary, CustomButtonSecondary } from "./CustomButton";
+import { CustomButtonSecondary } from "./CustomButton";
 import "@fontsource/nunito";
 import Burger from "./Burger";
 
