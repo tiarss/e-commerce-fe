@@ -1,3 +1,19 @@
+# Getting Started to E-COMMERCE-FE
+Run this command in your terminal
+
+### npm install @mui/icons-material  
+this command is due to install Icon Material(https://www.npmjs.com/package/material-icons)
+
+### npm install @mui/material @emotion/react @emotion/styled
+this command is due to instal lMaterial UI(https://www.npmjs.com/package/@mui/material)
+
+### npm install @fontsource/nunito
+this command is due to install Font
+
+
+#### npm start
+this command is due to view it in the browser
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
