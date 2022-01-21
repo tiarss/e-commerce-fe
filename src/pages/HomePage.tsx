@@ -1,12 +1,14 @@
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, Grid, IconButton, Typography } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import Pagination from "@mui/material/Pagination";
 import React, { useState } from "react";
 import FilterListRoundedIcon from "@mui/icons-material/FilterListRounded";
 import FilterAltRoundedIcon from "@mui/icons-material/FilterAltRounded";
 import Header from "../components/Header";
 import CardsHome from "../components/CardsHome";
 import "@fontsource/nunito/700.css";
+import Footer from "../components/Footer";
 
 function HomePage() {
   const [categoryOpenMenu, setCategoryOpenMenu] = useState<null | HTMLElement>(
@@ -33,7 +35,14 @@ function HomePage() {
   return (
     <Box>
       <Header />
-      <Box sx={{ padding: "50px 100px 0px 100px" }}>
+      <Box
+        sx={{
+          padding: {
+            xs: "50px 30px 0px 30px",
+            sm: "50px 35px 0px 35px",
+            md: "50px 100px 0px 100px",
+          },
+        }}>
         <Box sx={{ display: { xs: "block", md: "none" } }}>
           <Typography
             sx={{
@@ -137,11 +146,56 @@ function HomePage() {
           </Box>
         </Box>
         {/* Card Grid */}
-        <Box>
-          <CardsHome />
+        <Grid
+          container
+          spacing={1}
+          sx={{ maxWidth: "1300px", justifyContent: "space-between" }}>
+          <Grid item>
+            <CardsHome />
+          </Grid>
+          <Grid item>
+            <CardsHome />
+          </Grid>
+          <Grid item>
+            <CardsHome />
+          </Grid>
+          <Grid item>
+            <CardsHome />
+          </Grid>
+          <Grid item>
+            <CardsHome />
+          </Grid>
+          <Grid item>
+            <CardsHome />
+          </Grid>
+          <Grid item>
+            <CardsHome />
+          </Grid>
+          <Grid item>
+            <CardsHome />
+          </Grid>
+          <Grid item>
+            <CardsHome />
+          </Grid>
+          <Grid item>
+            <CardsHome />
+          </Grid>
+        </Grid>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+            margin: "30px 0px",
+          }}>
+          <Pagination
+            count={10}
+            variant='outlined'
+            shape='rounded'
+            sx={{ '.MuiPagination-outlined': { fontFamily: "Nunito!important", fontWeight: "700" } }}
+          />
         </Box>
       </Box>
-      <Box>{/* Pagination */}</Box>
+      <Footer />
     </Box>
   );
 }

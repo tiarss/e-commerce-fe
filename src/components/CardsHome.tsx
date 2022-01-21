@@ -21,7 +21,7 @@ function CardsHome({
   return (
     <Box
       sx={{
-        width: { xs: "175px", sm: "250px", md: "200px" },
+        width: { xs: "140px", sm: "250px", md: "200px" },
         minHeight: { xs: "210px", sm: "300px", md: "250px" },
         backgroundColor: "#2296CB",
         marginTop: "50px",
@@ -51,7 +51,7 @@ function CardsHome({
           <Typography
             sx={{
               fontFamily: "Nunito",
-              fontSize: { xs: "14px", sm: "20px" },
+              fontSize: { xs: "12px", sm: "20px" },
               color: "white",
               fontWeight: "700",
             }}>
@@ -61,7 +61,7 @@ function CardsHome({
           <Typography
             sx={{
               fontFamily: "Nunito",
-              fontSize: "14px",
+              fontSize: "12px",
               color: "white",
               fontWeight: "700",
             }}>
