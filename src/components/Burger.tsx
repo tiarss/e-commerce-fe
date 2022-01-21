@@ -10,9 +10,9 @@ import Tooltip from "@mui/material/Tooltip";
 import LoginRounded from "@mui/icons-material/LoginRounded";
 import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import "@fontsource/nunito/700.css";
 import Avatar from "@mui/material/Avatar";
 import Logout from "@mui/icons-material/Logout";
+import "@fontsource/nunito/700.css";
 
 function Burger() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
