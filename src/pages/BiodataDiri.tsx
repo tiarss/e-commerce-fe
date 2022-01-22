@@ -16,7 +16,7 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 const token: string =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJlbWFpbCI6ImJhaHRpYXJAZ21haWwuY29tIiwiZXhwIjoxNjQyODU4Mzg2LCJpZCI6NH0.rueej1rDiq_1Hj8DU-ej5NqihlAtLWVlqq867ghmXLc";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJlbWFpbCI6ImJhaHRpYXJAZ21haWwuY29tIiwiZXhwIjoxNjQyODY5OTMwLCJpZCI6NH0.v9XWXOn773NRc2zk0MJc7V5qcYRW1qly6_t1zB8ZNKQ";
 const config = {
   headers: {
     Authorization: `Bearer ${token}`,
@@ -69,7 +69,7 @@ function BiodataDiri() {
     setStreetUser(value)
   };
 
-  const handleChange = (event: SelectChangeEvent) => {
+  const handleChangeGender = (event: SelectChangeEvent) => {
     setGenderUser(event.target.value as string);
   };
 
@@ -98,6 +98,7 @@ function BiodataDiri() {
         setIsReady(true);
       });
   };
+
   const handleEditUser = () => {
     axios.put("users/4",{
       name: nameUser,
@@ -230,7 +231,7 @@ function BiodataDiri() {
                     id='demo-simple-select'
                     value={genderUser}
                     label='Gender'
-                    onChange={handleChange}>
+                    onChange={handleChangeGender}>
                     <MenuItem value='Laki-Laki'>Laki-Laki</MenuItem>
                     <MenuItem value='Perempuan'>Perempuan</MenuItem>
                   </Select>
