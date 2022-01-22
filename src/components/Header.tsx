@@ -1,22 +1,27 @@
 import React from "react";
-import { Box } from "@mui/material";
-import logo from "../images/Logo-sirclo.png"
+import { Box, Typography } from "@mui/material";
+import logo from "../images/Logo-sirclo.png";
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import { CustomButtonSecondary } from "./CustomButton";
+import "@fontsource/nunito";
+import Burger from "./Burger";
 
 function Header() {
   return (
     <Box
       sx={{
         display: "flex",
-        height: "70px",
-        padding: "10px 50px",
-        boxShadow: "0px 4px 4px #000",
+        height: "80px",
+        padding: { xs: "17px 20px", sm: "10px 50px" },
+        boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.250);",
         justifyContent: "space-between",
-        alignItems: "center"
+        alignItems: "center",
       }}>
+      <Box sx={{ display: { xs: "none", md: "block" } }}>
+        <img style={{ height: "40px" }} src={logo} alt='logo-sirclo' />
+      </Box>
       <Box>
-<<<<<<< Updated upstream
-        <img style={{height: "40px"}} src={logo} alt='logo-sirclo' />
-=======
         <Box
           sx={{
             display: "flex",
@@ -59,17 +64,15 @@ function Header() {
             gap: "10px",
           }}>
           <ShoppingCartOutlinedIcon sx={{ color: "white" }} />
-          <Typography sx={{ color: "white" }}>1</Typography>
+          <Typography sx={{ color: "white" }}>2</Typography>
         </Box>
         <Box>
           <CustomButtonSecondary caption='Log In' />
         </Box>
->>>>>>> Stashed changes
       </Box>
-      <Box>
-        <Box>Search</Box>
+      <Box sx={{ display: { xs: "block", md: "none" } }}>
+        <Burger />
       </Box>
-      <Box>Login and Cart</Box>
     </Box>
   );
 }
