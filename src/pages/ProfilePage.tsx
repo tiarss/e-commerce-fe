@@ -9,6 +9,7 @@ import "@fontsource/nunito/700.css";
 import BiodataDiri from "./BiodataDiri";
 import Barangku from "./Barangku";
 import History from "./History";
+import Footer from "../components/Footer";
 
 function ProfilePage() {
   const [value, setValue] = React.useState("biodata");
@@ -49,7 +50,7 @@ function ProfilePage() {
               fontSize: "36px",
               color: "#2296CB",
             }}>
-            User 1
+            Profile
           </Typography>
         </Box>
         <Box sx={{ marginTop: "20px", borderBottom: "solid 2px #1767A0" }}>
@@ -93,6 +94,7 @@ function ProfilePage() {
           <History />
         )}
       </Box>
+      <Footer />
     </Box>
   );
 }
