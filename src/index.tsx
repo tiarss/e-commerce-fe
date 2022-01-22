@@ -4,6 +4,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import "./index.css"
 import LoginPage from "./pages/LoginPage"
+import DetailProduct from './pages/DetailProduct';
 
 ReactDOM.render(
   <React.StrictMode>

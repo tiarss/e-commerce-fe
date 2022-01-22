@@ -5,6 +5,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { Box } from '@mui/material';
 import {InputText2, InputText3} from '../components/InputText'
 import SummaryDetail from '../components/SummaryDetail';
+import { CustomButtonPrimary } from '../components/CustomButton';
 
 const token: string =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJlbWFpbCI6ImJhaHRpYXJAZ21haWwuY29tIiwiZXhwIjoxNjQyODcyNTgxLCJpZCI6NH0.si7XYgSZl6x9y03hHyLwsTRl8fH30EBKeq4_1HsXJik";
@@ -68,7 +69,7 @@ function FinalOrder() {
               display:"flex"
            }}>
             <Box>
-            <button>Purchase</button>
+            {/* <CustomButtonPrimary caption='Purchase' OnClick={fetchData} /> */}
 
             </Box>
           </Box>

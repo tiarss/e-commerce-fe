@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Box } from '@mui/system';
 import { useState, useEffect } from 'react';
 import logo from "../images/Logo-sirclo-white.png";
+import { CustomButtonPrimary } from '../components/CustomButton';
 
 
 
@@ -96,7 +97,7 @@ const handlePassword = (e: React.ChangeEvent<HTMLInputElement>)=>{
               <InputText2 textLabel='Nama' type='text' onChange={(e)=>handleName(e)}/>
               <InputText2 textLabel='Email' type='email' onChange={(e)=>handleEmail(e)}/>
               <InputText2 textLabel='Password' type='password' onChange={(e)=>handleEmail(e)}/>
-              <button onClick={fetchData}>Sign Up </button>
+              <CustomButtonPrimary caption='Sign Up' OnClick={fetchData} />
           </Box>         
 
         </Box>

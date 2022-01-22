@@ -6,6 +6,7 @@ import Footer from '../components/Footer';
 import axios from 'axios';
 import {dataProductTypes} from "../Types/index";
 import Modal from "@mui/material/Modal";
+import { CustomButtonPrimary, CustomButtonSecondary } from '../components/CustomButton';
 
 const token: string =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJlbWFpbCI6IiIsImV4cCI6MTY0Mjg5NTcwOCwiaWQiOjV9.gfj-cyM-O1LQXiX5IXJ6yA06XCF8D9hlgS1OtM73tOA";
@@ -27,6 +28,15 @@ function DetailProduct() {
   const [imageProduct, setImageProduct] = useState<string>("")
 
   const [isReady, setIsReady] = useState<boolean>(false);
+
+  const bringData = async () =>{
+    await axios.post("http://52.77.229.210:3000/users", {
+      // update this function to add product in cart
+  
+    }).then((res)=>{
+       console.log(res)
+    })
+ }
 
   useEffect(() => {
     fetchDataProductID();
@@ -68,7 +78,8 @@ function DetailProduct() {
            <Box sx={{ width:{xs:"80%", sm:"50%"}, alignItems:"center", }}>
              <img style={{ width:"50%" }} src={dataProductID[0].image}/>
              <p></p>
-             <button>add to cart</button>
+             <CustomButtonPrimary caption='Tambah Ke Keranjang' OnClick={bringData} />
+             
            </Box>
            <Box sx={{ minWidth:{xs:"80%", sm:"50%", md:"60%"} }}>
              <h1 style={{ color:"#2296CB" }}>{dataProductID[0].name}</h1>

@@ -3,7 +3,7 @@ import axios from "axios";
 import { Box } from "@mui/system";
 import logo from "../images/Logo-sirclo-white.png";
 import { InputText2 } from "../components/InputText";
-import { CustomButtonPrimary } from "../components/CustomButton";
+import { CustomButtonPrimary, CustomButtonSecondary } from "../components/CustomButton";
 import { Link } from 'react-router-dom';
 
 const LoginPage: React.FC = () => {
@@ -91,7 +91,8 @@ const LoginPage: React.FC = () => {
            }}>
               <InputText2 textLabel='Email' type='email' onChange={(e)=>handleEmail(e)}/>
               <InputText2 textLabel='Password' type='password' onChange={(e)=>handleEmail(e)}/>
-              <button onClick={fetchData}>Login </button>
+              {/* <button onClick={fetchData}>Login </button> */}
+              <CustomButtonPrimary caption='Login' OnClick={fetchData} />
           </Box>         
 
         </Box>
