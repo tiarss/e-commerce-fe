@@ -29,7 +29,7 @@ function CardProduct(props:cardproduct) {
             padding: { xs: "17px 20px", sm: "10px 50px" },
             justifyContent: "space-between",
             alignItems: "center",
-            border: "1px solid black",
+            // border: "1px solid black",
             fontFamily: "Nunito",
           }}>
             <Box

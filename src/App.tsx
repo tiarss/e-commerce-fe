@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './components/Header';
 import "./App.css"
+<<<<<<< Updated upstream
 import {InputText,InputText2,InputText3} from './components/InputText';
 import CardProduct from './components/CardProduct';
 import SummaryDetail from './components/SummaryDetail';
@@ -22,8 +23,19 @@ function App() {
       <br/>
       
       
+=======
+import LoginPage from './pages/LoginPage';
+import CardsHome from './components/CardsHome';
+import SignUp from './pages/SignUp';
+import { BrowserRouter, Route } from 'react-router-dom';
 
-    </div>
+function App() {
+  return (
+    <BrowserRouter>
+>>>>>>> Stashed changes
+
+    </BrowserRouter>
+    
   );
 }
 

@@ -3,10 +3,20 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import "./index.css"
+<<<<<<< Updated upstream
+=======
+import "@fontsource/nunito"
+import SignUp from './pages/SignUp';
+import LoginPage from './pages/LoginPage';
+import ShoppingCard from './pages/ShoppingCard'
+import DetailProduct from './pages/DetailProduct';
+import FinalOrder from './pages/FinalOrder';
+
+>>>>>>> Stashed changes
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <LoginPage/>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -2,10 +2,9 @@ import React from "react";
 import { Box } from "@mui/material";
 
 interface summaryDetail {
-  qty :number;
-  shipping :number;
-  sumPrice: number;
-
+  qty :string;
+  shipping :string;
+  sumPrice: string;
 
 }
 
@@ -48,7 +47,7 @@ function SummaryDetail(props:summaryDetail) {
         padding: "10px 10px",
         textAlign: "right",
         
-        justifyContent: "space-between",        
+        justifyContent: "space-betweeend",        
       }}>
         <p style={{ marginBottom:"10px", color:"#FFFFFF" }}>{props.qty}</p>
         <p style={{ marginBottom:"10px", color:"#FFFFFF" }}>Rp.{props.shipping}</p>
