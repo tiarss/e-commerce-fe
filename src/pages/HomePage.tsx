@@ -2,25 +2,29 @@ import { Box, Grid, IconButton, Typography } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Pagination from "@mui/material/Pagination";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FilterListRoundedIcon from "@mui/icons-material/FilterListRounded";
 import FilterAltRoundedIcon from "@mui/icons-material/FilterAltRounded";
 import Header from "../components/Header";
 import CardsHome from "../components/CardsHome";
 import "@fontsource/nunito/700.css";
 import Footer from "../components/Footer";
+import axios from "axios";
 
 function HomePage() {
   const [categoryOpenMenu, setCategoryOpenMenu] = useState<null | HTMLElement>(
     null
   );
   const [sortOpenMenu, setSortOpenMenu] = useState<null | HTMLElement>(null);
+
+  // const [product, setProduct] = useState()
   const openCategory = Boolean(categoryOpenMenu);
   const openSort = Boolean(sortOpenMenu);
 
   const handleClickCategory = (event: React.MouseEvent<HTMLButtonElement>) => {
     setCategoryOpenMenu(event.currentTarget);
   };
+
   const handleClickSort = (event: React.MouseEvent<HTMLButtonElement>) => {
     setSortOpenMenu(event.currentTarget);
   };
@@ -28,9 +32,16 @@ function HomePage() {
   const handleCloseCategory = () => {
     setCategoryOpenMenu(null);
   };
+
   const handleCloseSort = () => {
     setSortOpenMenu(null);
   };
+
+  useEffect(() => {}, []);
+
+  // const fetchDataAllProduct = async () => {
+  //   await axios.get("")
+  // }
 
   return (
     <Box>
@@ -39,7 +50,7 @@ function HomePage() {
         sx={{
           padding: {
             xs: "50px 30px 0px 30px",
-            sm: "50px 35px 0px 35px",
+            sm: "50px 40px 0px 40px",
             md: "50px 100px 0px 100px",
           },
         }}>
@@ -149,7 +160,7 @@ function HomePage() {
         <Grid
           container
           spacing={1}
-          sx={{ maxWidth: "1300px", justifyContent: "space-between" }}>
+          sx={{ maxWidth: "1300px", justifyContent: {xs: "space-between", sm: "space-evenly", md: "space-between"} }}>
           <Grid item>
             <CardsHome />
           </Grid>
@@ -191,7 +202,22 @@ function HomePage() {
             count={10}
             variant='outlined'
             shape='rounded'
-            sx={{ '.MuiPagination-outlined': { fontFamily: "Nunito!important", fontWeight: "700" } }}
+            sx={{
+              ".MuiButtonBase-root": {
+                fontFamily: "Nunito",
+                fontWeight: "700",
+                color: "white",
+                backgroundColor: "#2296CB",
+                outline: "none",
+                border: "none",
+              },
+              ".MuiButtonBase .Mui-selected": {
+                backgroundColor: "#1767A0"
+              },
+              ".MuiButtonBase-root:hover": {
+                backgroundColor: "#1767A0"
+              }
+            }}
           />
         </Box>
       </Box>
