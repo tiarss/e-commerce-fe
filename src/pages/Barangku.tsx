@@ -268,17 +268,19 @@ function Barangku() {
                 </Box>
               </AccordionSummary>
               <AccordionDetails>
-                <Box sx={{ display: "flex", gap: 4, padding: "0px 20px" }}>
-                  <Box sx={{ width: "20%" }}>
+                <Box sx={{ display: "flex", gap: 4, padding: "0px 20px" , flexDirection: {xs: "column", sm: "row"}}}>
+                  <Box sx={{ width: {xs:"100%", sm: "20%"} }}>
                     <img style={{ width: "135px" }} src={value.image} alt='' />
                   </Box>
-                  <Box sx={{ width: "80%" }}>
+                  <Box sx={{ width: {xs:"100%", sm: "80%"} }}>
                     <Typography>Stok : {value.stock}</Typography>
                     <Typography>Harga : {value.price}</Typography>
                     <Typography>Deskripsi : </Typography>
                     <Typography>{value.description}</Typography>
                     <Box
                       sx={{
+                        marginTop: {xs:"20px", md: "0px"},
+                        width:"100%",
                         display: "flex",
                         justifyContent: "flex-end",
                         gap: 2,
