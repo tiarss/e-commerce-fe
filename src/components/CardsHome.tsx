@@ -14,10 +14,9 @@ function CardsHome({
 }: {
   image?: string;
   name?: string;
-  price?: string;
+  price?: number;
 }) {
-  const [productName] = useState("Graphic Card NVdia GTX 930");
-  const [productPrice] = useState(15000);
+
   return (
     <Box
       sx={{
@@ -35,9 +34,9 @@ function CardsHome({
           overflow: "hidden",
         }}>
         <img
-          style={{ width: "100%" }}
+          style={{ height: "100%", width: "100%",objectFit: 'contain' }}
           // fill the src with image props
-          src='https://cf.shopee.co.id/file/6922c127c5285f3411d78090a6079d7c'
+          src={image}
           alt='vga'
         />
       </Box>
@@ -56,7 +55,7 @@ function CardsHome({
               fontWeight: "700",
             }}>
               {/* replace productName state with name props */}
-            {productName.substring(0, 20) + "..."}
+            {name?.substring(0, 15) + "..."}
           </Typography>
           <Typography
             sx={{
@@ -66,7 +65,7 @@ function CardsHome({
               fontWeight: "700",
             }}>
               {/* replace productPrice with price props*/}
-            {productPrice}
+            {price}
           </Typography>
         </Box>
         <Box>
