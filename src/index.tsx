@@ -7,11 +7,19 @@ import LoginPage from "./pages/LoginPage"
 import DetailProduct from './pages/DetailProduct';
 import SignUp from './pages/SignUp';
 import { Login } from '@mui/icons-material';
+<<<<<<< Updated upstream
 import Route from "./routes/route";
 
 ReactDOM.render(
   <React.StrictMode>
     <Route/>
+=======
+import RouteCenter from "./routes/route";
+
+ReactDOM.render(
+  <React.StrictMode>
+    <RouteCenter/>
+>>>>>>> Stashed changes
   </React.StrictMode>,
   document.getElementById('root')
 );

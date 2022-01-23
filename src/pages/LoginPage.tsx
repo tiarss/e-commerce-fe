@@ -11,6 +11,8 @@ const LoginPage: React.FC = () => {
    let navigate = useNavigate();   
    const [email, setEmail] = useState<string>("")
    const [password, setPassword] = useState<string>("")
+   // const [auth2, getAuth] = useLocalStorage<authTypes[]>('auth')
+
    useEffect(()=>{      
    },[])
 
@@ -20,12 +22,24 @@ const LoginPage: React.FC = () => {
          email: email,
          password: password
       }).then((res)=>{
+<<<<<<< Updated upstream
          console.log(res.code)
          // if(res.code===200){
 
          // }
          navigate(`/`);
          
+=======
+         const {data} = res.data
+         setAuth([{
+            id: data.id,
+            token: data.token,
+            isAuth: true
+         }])
+         console.log(res)
+         console.log(auth)
+
+>>>>>>> Stashed changes
       })
    } 
 
