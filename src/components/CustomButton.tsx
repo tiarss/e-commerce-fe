@@ -1,7 +1,11 @@
 import { Button, Typography } from "@mui/material";
 import "@fontsource/nunito/700.css";
 
+<<<<<<< HEAD
 function CustomButtonSecondary({ caption, OnClick }: { caption: string, OnClick: ()=>void }) {
+=======
+function CustomButtonSecondary({ caption, OnClick }: { caption: string, OnClick?: ()=>void }) {
+>>>>>>> Develop
   return (
     <Button
     onClick={OnClick}
@@ -33,7 +37,11 @@ function CustomButtonSecondary({ caption, OnClick }: { caption: string, OnClick:
   );
 }
 
+<<<<<<< HEAD
 function CustomButtonPrimary({ caption, OnClick }: { caption: string, OnClick: ()=>void }) {
+=======
+function CustomButtonPrimary({ caption, OnClick }: { caption: string, OnClick?: ()=>void }) {
+>>>>>>> Develop
   return (
     <Button
       onClick={OnClick}

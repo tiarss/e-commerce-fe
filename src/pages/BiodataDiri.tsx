@@ -6,17 +6,13 @@ import {
   CustomButtonPrimary,
   CustomButtonSecondary,
 } from "../components/CustomButton";
-// import { InputText2, InputText3 } from "../components/InputText";
 import { dataUserIDTypes } from "../Types";
-
-import TextField from "@mui/material/TextField";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { SelectChangeEvent } from "@mui/material/Select";
+import { InputText2, InputText3 } from "../components/InputText";
+import "@fontsource/nunito/700.css";
 
 const token: string =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJlbWFpbCI6ImJhaHRpYXJAZ21haWwuY29tIiwiZXhwIjoxNjQyODcyNTgxLCJpZCI6NH0.si7XYgSZl6x9y03hHyLwsTRl8fH30EBKeq4_1HsXJik";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJlbWFpbCI6ImJhaHRpYXJAZ21haWwuY29tIiwiZXhwIjoxNjQyOTIzMjQxLCJpZCI6NH0.WkVbA9nm5CQSFSSnJZ8U6hmFGpg0liDLhP2cHu_QlV8";
 const config = {
   headers: {
     Authorization: `Bearer ${token}`,
@@ -29,10 +25,10 @@ function BiodataDiri() {
   const [nameUser, setNameUser] = useState<string>("");
   const [genderUser, setGenderUser] = useState<string>("");
   const [emailUser, setEmailUser] = useState<string>("");
-  const [cityUser, setCityUser] = useState<string>("")
-  const [provinceUser, setProvinceUser] = useState<string>("")
-  const [streetUser, setStreetUser] = useState<string>("")
-  const [zipcodeUser, setZipcodeUser] = useState<string>("")
+  const [cityUser, setCityUser] = useState<string>("");
+  const [provinceUser, setProvinceUser] = useState<string>("");
+  const [streetUser, setStreetUser] = useState<string>("");
+  const [zipcodeUser, setZipcodeUser] = useState<string>("");
 
   const [isReady, setIsReady] = useState<boolean>(false);
   const [open, setOpen] = React.useState(false);
@@ -41,32 +37,32 @@ function BiodataDiri() {
 
   const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    setNameUser(value)
+    setNameUser(value);
   };
 
   const handleChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    setEmailUser(value)
+    setEmailUser(value);
   };
 
   const handleChangeCity = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    setCityUser(value)
+    setCityUser(value);
   };
 
   const handleChangeProvince = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    setProvinceUser(value)
+    setProvinceUser(value);
   };
 
   const handleChangeZipcode = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    setZipcodeUser(value)
+    setZipcodeUser(value);
   };
 
   const handleChangeStreet = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    setStreetUser(value)
+    setStreetUser(value);
   };
 
   const handleChangeGender = (event: SelectChangeEvent) => {
@@ -83,13 +79,13 @@ function BiodataDiri() {
       .then((res) => {
         const { data } = res.data;
         setDataUserID([data]);
-        setNameUser(data.name)
-        setEmailUser(data.email)
-        setGenderUser(data.gender)
-        setCityUser(data.address.city)
-        setProvinceUser(data.address.province)
-        setZipcodeUser(data.address.zipcode)
-        setStreetUser(data.address.street)
+        setNameUser(data.name);
+        setEmailUser(data.email);
+        setGenderUser(data.gender);
+        setCityUser(data.address.city);
+        setProvinceUser(data.address.province);
+        setZipcodeUser(data.address.zipcode);
+        setStreetUser(data.address.street);
       })
       .catch((err) => {
         console.log(err);
@@ -100,24 +96,32 @@ function BiodataDiri() {
   };
 
   const handleEditUser = () => {
-    axios.put("users/4",{
-      name: nameUser,
-      email: emailUser,
-      gender: genderUser,
-      address: {
-        city: cityUser,
-        province: provinceUser,
-        zipcode: zipcodeUser,
-        street: streetUser
-      }
-    },config).then((res)=>{
-      console.log(res)
-    }).catch((err)=>{
-      console.log(err)
-    }).finally(()=>{
-      fetchDataUserId()
-      setOpen(false)
-    })
+    axios
+      .put(
+        "users/4",
+        {
+          name: nameUser,
+          email: emailUser,
+          gender: genderUser,
+          address: {
+            city: cityUser,
+            province: provinceUser,
+            zipcode: zipcodeUser,
+            street: streetUser,
+          },
+        },
+        config
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        fetchDataUserId();
+        setOpen(false);
+      });
   };
 
   if (isReady) {
@@ -164,27 +168,25 @@ function BiodataDiri() {
             justifyContent: { xs: "center", md: "flex-start" },
           }}>
           <Box sx={{ display: "flex" }}>
-            <Typography sx={{ width: "100px" }}>Nama</Typography>
-            <Typography>{dataUserID[0].name}</Typography>
+            <Typography sx={{ width: "100px", fontFamily: "Nunito", fontWeight: "700" }}>Nama</Typography>
+            <Typography sx={{fontFamily: "Nunito", fontWeight: "700"}}>{dataUserID[0].name}</Typography>
           </Box>
           <Box sx={{ display: "flex" }}>
-            <Typography sx={{ width: "100px" }}>Email</Typography>
-            <Typography>{dataUserID[0].email}</Typography>
+            <Typography sx={{ width: "100px" , fontFamily: "Nunito", fontWeight: "700" }}>Email</Typography>
+            <Typography sx={{fontFamily: "Nunito", fontWeight: "700"}}>{dataUserID[0].email}</Typography>
           </Box>
           <Box sx={{ display: "flex" }}>
-            <Typography sx={{ width: "100px" }}>Alamat</Typography>
-            <Typography>
-              {
-                (dataUserID[0].address.street +
-                dataUserID[0].address.city +
-                dataUserID[0].address.province +
-                dataUserID[0].address.zipcode)
-              }
+            <Typography sx={{ width: "100px" , fontFamily: "Nunito", fontWeight: "700" }}>Alamat</Typography>
+            <Typography sx={{fontFamily: "Nunito", fontWeight: "700"}}>
+              {dataUserID[0].address.street + " " +
+                dataUserID[0].address.city + " "+
+                dataUserID[0].address.province + " " +
+                dataUserID[0].address.zipcode}
             </Typography>
           </Box>
           <Box sx={{ display: "flex" }}>
-            <Typography sx={{ width: "100px" }}>Gender</Typography>
-            <Typography>{dataUserID[0].gender}</Typography>
+            <Typography sx={{ width: "100px" , fontFamily: "Nunito", fontWeight: "700" }}>Gender</Typography>
+            <Typography sx={{fontFamily: "Nunito", fontWeight: "700"}}>{dataUserID[0].gender}</Typography>
           </Box>
         </Box>
         <Box sx={{ position: "absolute", bottom: "20px" }}>
@@ -213,81 +215,74 @@ function BiodataDiri() {
               gap: 3,
               p: 4,
             }}>
-            <Box sx={{ display: "flex", gap: 3 }}>
-              <TextField
-                sx={{ width: "50%" }}
-                id='filled-basic'
-                label='Nama'
-                variant='filled'
-                type='text'
-                value={nameUser}
-                onChange={handleChangeName}
-              />
-              <Box sx={{ minWidth: "50%" }}>
-                <FormControl fullWidth>
-                  <InputLabel id='demo-simple-select-label'>Gender</InputLabel>
-                  <Select
-                    labelId='demo-simple-select-label'
-                    id='demo-simple-select'
-                    value={genderUser}
-                    label='Gender'
-                    onChange={handleChangeGender}>
-                    <MenuItem value='Laki-Laki'>Laki-Laki</MenuItem>
-                    <MenuItem value='Perempuan'>Perempuan</MenuItem>
-                  </Select>
-                </FormControl>
+            <Typography sx={{fontFamily: "Nunito", fontWeight: "700", fontSize: "28px"}}>Edit Biodata</Typography>
+            <Box sx={{ display: "flex", gap: 3, width: "100%" }}>
+              <Box sx={{ width: "100%" }}>
+                <InputText2
+                  textLabel='Nama'
+                  placeholder='Masukkan Nama'
+                  type='text'
+                  onChange={handleChangeName}
+                  value={nameUser}
+                />
+              </Box>
+              <Box sx={{ width: "100%" }}>
+                <InputText3
+                  label='Gender'
+                  data={["Laki-Laki", "Perempuan"]}
+                  value={genderUser}
+                  onChange={handleChangeGender}
+                />
               </Box>
             </Box>
-            <Box sx={{ display: "flex", gap: 3 }}>
-              <TextField
-                sx={{ width: "100%" }}
-                id='filled-basic'
-                label='Email'
-                variant='filled'
-                value={emailUser}
+            <Box>
+              <InputText2
+                textLabel='Email'
+                placeholder='Masukkan Email'
                 type='text'
                 onChange={handleChangeEmail}
+                value={emailUser}
               />
             </Box>
-            <Box sx={{ display: "flex", gap: 3 }}>
-              <TextField
-                sx={{ width: "50%" }}
-                id='filled-basic'
-                label='Provinsi'
-                value={provinceUser}
-                onChange={handleChangeProvince}
-                variant='filled'
-                type='text'
-              />
-              <TextField
-                sx={{ width: "50%" }}
-                id='filled-basic'
-                label='Kota'
-                value={cityUser}
-                variant='filled'
-                onChange={handleChangeCity}
-                type='text'
-              />
+            <Box sx={{ display: "flex", gap: 3, width: "100%" }}>
+              <Box sx={{ width: "100%" }}>
+                <InputText2
+                  textLabel='Provinsi'
+                  placeholder='Masukkan Provinsi'
+                  type='text'
+                  onChange={handleChangeProvince}
+                  value={provinceUser}
+                />
+              </Box>
+              <Box sx={{ width: "100%" }}>
+                <InputText2
+                  textLabel='Kota'
+                  placeholder='Masukkan Kota'
+                  type='text'
+                  onChange={handleChangeCity}
+                  value={cityUser}
+                />
+              </Box>
             </Box>
-            <Box sx={{ display: "flex", gap: 3 }}>
-              <TextField
-                sx={{ width: "50%" }}
-                id='filled-basic'
-                label='Kode Pos'
-                value={zipcodeUser}
-                onChange={handleChangeZipcode}
-                variant='filled'
-                type='text'
-              />
-              <TextField
-                sx={{ width: "50%" }}
-                id='filled-basic'
-                label='Alamat'
-                value={streetUser}
-                onChange={handleChangeStreet}
-                variant='filled'
-                type='text'
-              />
+            <Box sx={{ display: "flex", gap: 3, width: "100%" }}>
+              <Box sx={{ width: "100%" }}>
+                <InputText2
+                  textLabel='Kode Pos'
+                  placeholder='Masukkan Kode Pos'
+                  type='text'
+                  onChange={handleChangeZipcode}
+                  value={zipcodeUser}
+                />
+              </Box>
+              <Box sx={{ width: "100%" }}>
+                <InputText2
+                  textLabel='Alamat'
+                  placeholder='Masukkan Alamat'
+                  type='text'
+                  onChange={handleChangeStreet}
+                  value={streetUser}
+                />
+              </Box>
             </Box>
             <Box>
               <CustomButtonPrimary caption='Simpan' OnClick={handleEditUser} />
@@ -297,7 +292,22 @@ function BiodataDiri() {
       </Box>
     );
   } else {
-    return <Box>Loading</Box>;
+    return (
+      <Box
+        sx={{
+          minHeight: "400px",
+          boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.250);",
+          borderRadius: "10px",
+          marginTop: "10px",
+          marginBottom: "50px",
+          padding: "20px",
+          display: "flex",
+          position: "relative",
+          flexDirection: { xs: "column", md: "row" },
+        }}>
+        Loading
+      </Box>
+    );
   }
 }
 

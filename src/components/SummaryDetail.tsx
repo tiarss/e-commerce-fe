@@ -3,9 +3,8 @@ import { Box } from "@mui/material";
 
 interface summaryDetail {
   qty :number;
-  shipping :number;
+  shipping :string;
   sumPrice: number;
-
 
 }
 
@@ -13,12 +12,14 @@ function SummaryDetail(props:summaryDetail) {
     return (
         <Box
       sx={{
+        marginTop: "20px",
         display: "flex",
         width: { xs:"357px", sm:"463px"},
         height: "130px",
         padding: "10px 30px",
         backgroundColor: "#1767A0",
-        justifyContent: "space-between",        
+        justifyContent: "space-between",    
+        borderRadius: "10px",    
       }}>
       <Box
       sx={{        
@@ -48,7 +49,7 @@ function SummaryDetail(props:summaryDetail) {
         padding: "10px 10px",
         textAlign: "right",
         
-        justifyContent: "space-between",        
+        justifyContent: "space-betweeend",        
       }}>
         <p style={{ marginBottom:"10px", color:"#FFFFFF" }}>{props.qty}</p>
         <p style={{ marginBottom:"10px", color:"#FFFFFF" }}>Rp.{props.shipping}</p>

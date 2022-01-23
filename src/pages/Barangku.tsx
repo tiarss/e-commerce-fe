@@ -9,17 +9,14 @@ import {
   CustomButtonSecondary,
 } from "../components/CustomButton";
 import Modal from "@mui/material/Modal";
-import TextField from "@mui/material/TextField";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import "@fontsource/nunito/700.css";
 import axios from "axios";
 import { dataProductUserTypes } from "../Types";
+import { InputText2, InputText3 } from "../components/InputText";
 
 const token: string =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJlbWFpbCI6ImJhaHRpYXJAZ21haWwuY29tIiwiZXhwIjoxNjQyODcyNTgxLCJpZCI6NH0.si7XYgSZl6x9y03hHyLwsTRl8fH30EBKeq4_1HsXJik";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJlbWFpbCI6ImJhaHRpYXJAZ21haWwuY29tIiwiZXhwIjoxNjQyOTIzMjQxLCJpZCI6NH0.WkVbA9nm5CQSFSSnJZ8U6hmFGpg0liDLhP2cHu_QlV8";
 const config = {
   headers: {
     Authorization: `Bearer ${token}`,
@@ -59,7 +56,7 @@ function Barangku() {
       })
       .then((res) => {
         const { data } = res.data;
-        setDataProductUser(data);;
+        setDataProductUser(data);
       })
       .catch((err) => {
         console.log(err);
@@ -133,7 +130,8 @@ function Barangku() {
         })
         .catch((err) => {
           console.log(err);
-        }).finally(()=>{
+        })
+        .finally(() => {
           setOpen(false);
           setCurrentId(0);
           fetchDataProductUser();
@@ -199,7 +197,7 @@ function Barangku() {
   };
 
   const handleDeleteProduct = (id: number) => {
-    console.log(id)
+    console.log(id);
     axios
       .delete(`/products/${id}`, config)
       .then((res) => {
@@ -207,8 +205,9 @@ function Barangku() {
       })
       .catch((err) => {
         console.log(err);
-      }).finally(()=>{
-        fetchDataProductUser()
+      })
+      .finally(() => {
+        fetchDataProductUser();
       });
   };
 
@@ -228,7 +227,7 @@ function Barangku() {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            marginBottom: '20px'
+            marginBottom: "20px",
           }}>
           <Typography
             sx={{ fontFamily: "Nunito", fontSize: "18px", fontWeight: "700" }}>
@@ -241,18 +240,27 @@ function Barangku() {
         </Box>
         <Box>
           {dataProductUser.map((value) => (
-            <Accordion key={value.id}>
+            <Accordion key={value.id} sx={{borderRadius: "10px", margin: "10px 0px"}}>
               <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
+                sx={{backgroundColor: "#2296CB", borderRadius: "10px 10px 0px 0px"}}
+                expandIcon={<ExpandMoreIcon sx={{color: "white"}} />}
                 aria-controls='panel1a-content'
                 id='panel1a-header'>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <Typography>{value.name}</Typography>
+                  <Typography
+                    sx={{
+                      fontFamily: "Nunito",
+                      fontSize: "18px",
+                      fontWeight: "700",
+                      color: "white"
+                    }}>
+                    {value.name}
+                  </Typography>
                   <Box
                     sx={{
                       marginLeft: "10px",
                       padding: "5px 10px",
-                      backgroundColor: "#2296CB",
+                      backgroundColor: "#1767A0",
                       borderRadius: "20px",
                     }}>
                     <Typography
@@ -267,20 +275,53 @@ function Barangku() {
                   </Box>
                 </Box>
               </AccordionSummary>
-              <AccordionDetails>
-                <Box sx={{ display: "flex", gap: 4, padding: "0px 20px" , flexDirection: {xs: "column", sm: "row"}}}>
-                  <Box sx={{ width: {xs:"100%", sm: "20%"} }}>
+              <AccordionDetails sx={{padding: "20px"}}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: 4,
+                    flexDirection: { xs: "column", sm: "row" },
+                  }}>
+                  <Box sx={{ width: { xs: "100%", sm: "20%" } }}>
                     <img style={{ width: "135px" }} src={value.image} alt='' />
                   </Box>
-                  <Box sx={{ width: {xs:"100%", sm: "80%"} }}>
-                    <Typography>Stok : {value.stock}</Typography>
-                    <Typography>Harga : {value.price}</Typography>
-                    <Typography>Deskripsi : </Typography>
-                    <Typography>{value.description}</Typography>
+                  <Box sx={{ width: { xs: "100%", sm: "80%" } }}>
+                    <Typography
+                      sx={{
+                        fontFamily: "Nunito",
+                        fontSize: "14px",
+                        fontWeight: "700",
+                      }}>
+                      Stok : {value.stock}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontFamily: "Nunito",
+                        fontSize: "14px",
+                        fontWeight: "700",
+                      }}>
+                      Harga : {value.price}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontFamily: "Nunito",
+                        fontSize: "14px",
+                        fontWeight: "700",
+                      }}>
+                      Deskripsi :{" "}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontFamily: "Nunito",
+                        fontSize: "14px",
+                        fontWeight: "700",
+                      }}>
+                      {value.description}
+                    </Typography>
                     <Box
                       sx={{
-                        marginTop: {xs:"20px", md: "0px"},
-                        width:"100%",
+                        marginTop: { xs: "20px", md: "0px" },
+                        width: "100%",
                         display: "flex",
                         justifyContent: "flex-end",
                         gap: 2,
@@ -291,7 +332,7 @@ function Barangku() {
                       />
                       <CustomButtonSecondary
                         caption='Hapus Produk'
-                        OnClick={()=>handleDeleteProduct(value.id)}
+                        OnClick={() => handleDeleteProduct(value.id)}
                       />
                     </Box>
                   </Box>
@@ -321,73 +362,65 @@ function Barangku() {
               p: 4,
             }}>
             <Box sx={{ display: "flex", gap: 3 }}>
-              <TextField
-                sx={{ width: "50%" }}
-                id='filled-basic'
-                label='Nama'
-                variant='filled'
-                type='text'
-                value={nameProduct}
-                onChange={handleChangeName}
-              />
-              <Box sx={{ minWidth: "50%" }}>
-                <FormControl fullWidth>
-                  <InputLabel id='demo-simple-select-label'>
-                    Kategori
-                  </InputLabel>
-                  <Select
-                    labelId='demo-simple-select-label'
-                    id='demo-simple-select'
-                    value={categoryProduct}
-                    label='Kategori'
-                    onChange={handleChangeCategory}>
-                    <MenuItem value='Processor'>Processor</MenuItem>
-                    <MenuItem value='Graphic Card'>Graphic Card</MenuItem>
-                  </Select>
-                </FormControl>
+              <Box sx={{ width: "100%" }}>
+                <InputText2
+                  textLabel='Nama'
+                  placeholder='Masukkan Nama Produk'
+                  type='text'
+                  onChange={handleChangeName}
+                  value={nameProduct}
+                />
+              </Box>
+              <Box sx={{ width: "100%" }}>
+                <InputText3
+                  label='Kategori'
+                  data={["Processor", "Graphic Card"]}
+                  value={categoryProduct}
+                  onChange={handleChangeCategory}
+                />
               </Box>
             </Box>
             <Box sx={{ display: "flex", gap: 3 }}>
-              <TextField
-                sx={{ width: "50%" }}
-                id='filled-basic'
-                label='Harga'
-                variant='filled'
-                type='number'
-                value={priceProduct}
-                onChange={handleChangePrice}
-              />
-              <TextField
-                sx={{ width: "50%" }}
-                id='filled-basic'
-                label='Stok'
-                value={stockProduct}
-                onChange={handleChangeStock}
-                variant='filled'
-                type='number'
-              />
+              <Box sx={{ width: "100%" }}>
+                <InputText2
+                  textLabel='Harga'
+                  placeholder='Masukkan Harga Produk'
+                  type='number'
+                  onChange={handleChangePrice}
+                  value={priceProduct}
+                />
+              </Box>
+              <Box sx={{ width: "100%" }}>
+                <InputText2
+                  textLabel='Stock'
+                  placeholder='Masukkan Stock Produk'
+                  type='number'
+                  onChange={handleChangeStock}
+                  value={stockProduct}
+                />
+              </Box>
             </Box>
             <Box sx={{ display: "flex", gap: 3 }}>
-              <TextField
-                sx={{ width: "100%" }}
-                id='filled-basic'
-                label='Deskripsi'
-                variant='filled'
-                value={descriptionProduct}
-                onChange={handleChangeDescription}
-                type='text'
-              />
+              <Box sx={{ width: "100%" }}>
+                <InputText2
+                  textLabel='Deskripsi'
+                  placeholder='Masukkan Deskripsi Produk'
+                  type='text'
+                  onChange={handleChangeDescription}
+                  value={descriptionProduct}
+                />
+              </Box>
             </Box>
             <Box sx={{ display: "flex", gap: 3 }}>
-              <TextField
-                sx={{ width: "100%" }}
-                id='filled-basic'
-                label='Link Gambar'
-                value={imageProduct}
-                onChange={handleChangeImage}
-                variant='filled'
-                type='text'
-              />
+              <Box sx={{ width: "100%" }}>
+                <InputText2
+                  textLabel='Link Gambar'
+                  placeholder='Masukkan Link Gambar Produk'
+                  type='text'
+                  onChange={handleChangeImage}
+                  value={imageProduct}
+                />
+              </Box>
             </Box>
             <Box>
               <CustomButtonPrimary
@@ -400,7 +433,19 @@ function Barangku() {
       </Box>
     );
   } else {
-    return <Box>Loading</Box>;
+    return (
+      <Box
+        sx={{
+          minHeight: "400px",
+          boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.250);",
+          borderRadius: "10px",
+          marginTop: "10px",
+          marginBottom: "50px",
+          padding: "20px",
+        }}>
+        Loading
+      </Box>
+    );
   }
 }
 
