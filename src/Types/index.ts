@@ -37,6 +37,12 @@ export type dataProductUserTypes = {
   image: string
 };
 
+export type authTypes = {
+  id: number,
+  token: string,
+  isAuth: boolean
+}
+
 
 
 //              "id": 9,

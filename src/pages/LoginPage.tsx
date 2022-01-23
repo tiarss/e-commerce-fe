@@ -5,14 +5,13 @@ import logo from "../images/Logo-sirclo-white.png";
 import { InputText2 } from "../components/InputText";
 import { CustomButtonPrimary, CustomButtonSecondary } from "../components/CustomButton";
 import { Link } from 'react-router-dom';
-import { useNavigate } from "react-router-dom";
+import { useLocalStorage } from "../utils/useLocalStorage";
+import { authTypes } from "../Types";
 
 const LoginPage: React.FC = () => {
-   let navigate = useNavigate();   
+   const [auth, setAuth] = useLocalStorage<authTypes[]>('auth',[])
    const [email, setEmail] = useState<string>("")
    const [password, setPassword] = useState<string>("")
-   // const [auth2, getAuth] = useLocalStorage<authTypes[]>('auth')
-
    useEffect(()=>{      
    },[])
 
@@ -22,14 +21,6 @@ const LoginPage: React.FC = () => {
          email: email,
          password: password
       }).then((res)=>{
-<<<<<<< Updated upstream
-         console.log(res.code)
-         // if(res.code===200){
-
-         // }
-         navigate(`/`);
-         
-=======
          const {data} = res.data
          setAuth([{
             id: data.id,
@@ -37,9 +28,7 @@ const LoginPage: React.FC = () => {
             isAuth: true
          }])
          console.log(res)
-         console.log(auth)
-
->>>>>>> Stashed changes
+         
       })
    } 
 
@@ -109,7 +98,7 @@ const LoginPage: React.FC = () => {
             gap:"20px",
            }}>
               <InputText2 textLabel='Email' type='email' onChange={(e)=>handleEmail(e)}/>
-              <InputText2 textLabel='Password' type='password' onChange={(e)=>handleEmail(e)}/>
+              <InputText2 textLabel='Password' type='password' onChange={(e)=>handlePassword(e)}/>
               {/* <button onClick={fetchData}>Login </button> */}
               <CustomButtonPrimary caption='Login' OnClick={fetchData} />
           </Box>         
