@@ -7,8 +7,10 @@ import { CustomButtonPrimary, CustomButtonSecondary } from "../components/Custom
 import { Link } from 'react-router-dom';
 import { useLocalStorage } from "../utils/useLocalStorage";
 import { authTypes } from "../Types";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage: React.FC = () => {
+   let navigate = useNavigate(); 
    const [auth, setAuth] = useLocalStorage<authTypes[]>('auth',[])
    const [email, setEmail] = useState<string>("")
    const [password, setPassword] = useState<string>("")
@@ -17,19 +19,27 @@ const LoginPage: React.FC = () => {
 
 
    const fetchData = async () =>{
-      await axios.post("http://52.77.229.210:3000/login", {
+      await axios.post("/login", {
          email: email,
          password: password
       }).then((res)=>{
+         
          const {data} = res.data
          setAuth([{
             id: data.id,
             token: data.token,
             isAuth: true
          }])
-         console.log(res)
+         console.log(res.status)
+         console.log(res) 
+         navigate(`/`); 
          
       })
+      .catch((err) => {
+         console.log(err);
+         navigate(`/signup`);
+     })
+     
    } 
 
    const handleEmail = (e: React.ChangeEvent<HTMLInputElement>)=>{

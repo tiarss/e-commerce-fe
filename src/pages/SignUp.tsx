@@ -25,7 +25,7 @@ const SignUp: React.FC = () => {
         password: password
     }).then((res)=>{
        console.log(res)
-       navigate(`/Login`);
+       navigate(`login`);
     })
  }
 
