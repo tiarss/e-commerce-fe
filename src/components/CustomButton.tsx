@@ -4,11 +4,7 @@ import "@fontsource/nunito/700.css";
 function CustomButtonSecondary({ caption, OnClick }: { caption: string, OnClick: ()=>void }) {
   return (
     <Button
-<<<<<<< HEAD
-      onClick={OnClick}
-=======
     onClick={OnClick}
->>>>>>> branch-tiar
       sx={{
         borderRadius: "10px",
         border: "2px solid #2296CB",
@@ -37,11 +33,7 @@ function CustomButtonSecondary({ caption, OnClick }: { caption: string, OnClick:
   );
 }
 
-<<<<<<< HEAD
-function CustomButtonPrimary({ caption, OnClick }: { caption: string,OnClick: ()=>void }) {
-=======
 function CustomButtonPrimary({ caption, OnClick }: { caption: string, OnClick: ()=>void }) {
->>>>>>> branch-tiar
   return (
     <Button
       onClick={OnClick}
