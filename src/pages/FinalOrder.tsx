@@ -17,6 +17,7 @@ const config = {
 
 
 function FinalOrder() {
+
   return (
       <Box>
         <Header/>
@@ -29,7 +30,7 @@ function FinalOrder() {
             <InputText2 placeholder='Zip Code' type='text'/>
             </Box>            
             <Box sx={{ width:"30%", display:"flex", flexDirection:"column", gap:"2vh" }}>
-            <InputText3 textLabel='Credit Card' defValue='Visa' type='text'/>
+            <InputText3 textLabel='Credit Card' defValue='Visa' type='text' />
             </Box>
             <Box sx={{  width:"100%", display:"flex", flexDirection:"column", gap:"2vh" }}>
             <InputText2 placeholder='Number on Card' type='text'/>
