@@ -1,14 +1,14 @@
 // import React from "react";
 import * as React from 'react';
-import { alpha, styled } from '@mui/material/styles';
+import { alpha, styled, Theme, useTheme } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import TextField, { TextFieldProps } from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
-import { OutlinedInputProps } from '@mui/material/OutlinedInput';
+import OutlinedInput, { OutlinedInputProps } from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import NativeSelect from '@mui/material/NativeSelect';
 
 
@@ -77,22 +77,26 @@ const CssTextField = styled(TextField)({
     type?: string;
     label?: string;
     textLabel?: string;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+    defValue?: string;
+    value?: string;
+    
 
 }
 
 function InputText(props:inputDetail){
-    // props.firstName
-    // props.lastName
+    // props.firstinputVal
+    // props.lastinputVal
     return(
         <div>
              <FormControl variant="standard">
-            <BootstrapInput 
+            <BootstrapInput sx={{ width:"100%" }}
             placeholder={props.placeholder}
+            value={props.value}
             id="bootstrap-input" 
             type={props.type}
             />
-            </FormControl>      
- 
+            </FormControl>
         </div>
     )
 }
@@ -100,11 +104,13 @@ function InputText2(props:inputDetail){
     return(
         <div>
             <p>{props.textLabel}</p>
-            <FormControl variant="standard">
+            <FormControl variant="standard" sx={{ width:"100%" }}>
             <BootstrapInput 
             id="bootstrap-input" 
             placeholder = {props.placeholder}            
             type= {props.type}
+            onChange={props.onChange}
+            value={props.value}
             />
             </FormControl>             
         </div>
@@ -117,15 +123,18 @@ function InputText3(props:inputDetail){
   };
   return (
     <div>     
-      <FormControl sx={{ m: 1, width:"100%", height: "45px" }} variant="standard" >        
+        <p>{props.textLabel}</p>
+      <FormControl sx={{width:"100%", height: "45px" }} variant="standard" >        
         <Select
           labelId="demo-customized-select-label"
           id="demo-customized-select"
           value={age}
+          defaultValue={props.defValue}
+         
           onChange={handleChange}
-          input={<BootstrapInput placeholder= {props.placeholder}/>}
+          input={<BootstrapInput placeholder= {props.placeholder} defaultValue={props.defValue}/>}
         >
-          <MenuItem value="">
+          <MenuItem value={props.value}>
             <em>None</em>
           </MenuItem>
           <MenuItem value={10}>Ten</MenuItem>
@@ -136,6 +145,41 @@ function InputText3(props:inputDetail){
       
     </div>
   );
+}
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+  
+
+};
+
+const inputVals = [
+  'Oliver Hansen',
+  'Van Henry',
+  'April Tucker',
+  'Ralph Hubbard',
+  'Omar Alexander',
+  'Carlos Abbott',
+  'Miriam Wagner',
+  'Bradley Wilkerson',
+  'Virginia Andrews',
+  'Kelly Snyder',
+];
+
+function getStyles(inputVal: string, inputValue: readonly string[], theme: Theme) {
+  return {
+    fontWeight:
+      inputValue.indexOf(inputVal) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
 }
 
 export {InputText,InputText2, InputText3}

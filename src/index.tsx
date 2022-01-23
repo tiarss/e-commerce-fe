@@ -3,10 +3,12 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import "./index.css"
-import "@fontsource/nunito"
+import LoginPage from "./pages/LoginPage"
+import DetailProduct from './pages/DetailProduct';
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <LoginPage/>
   </React.StrictMode>,
   document.getElementById('root')
 );
