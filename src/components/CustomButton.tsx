@@ -1,9 +1,10 @@
 import { Button, Typography } from "@mui/material";
 import "@fontsource/nunito/700.css";
 
-function CustomButtonSecondary({ caption }: { caption: string }) {
+function CustomButtonSecondary({ caption, OnClick }: { caption: string, OnClick: ()=>void }) {
   return (
     <Button
+    onClick={OnClick}
       sx={{
         borderRadius: "10px",
         border: "2px solid #2296CB",
@@ -32,9 +33,10 @@ function CustomButtonSecondary({ caption }: { caption: string }) {
   );
 }
 
-function CustomButtonPrimary({ caption }: { caption: string }) {
+function CustomButtonPrimary({ caption, OnClick }: { caption: string, OnClick: ()=>void }) {
   return (
     <Button
+      onClick={OnClick}
       sx={{
         borderRadius: "10px",
         border: "2px solid #2296CB",
