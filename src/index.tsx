@@ -7,11 +7,11 @@ import LoginPage from "./pages/LoginPage"
 import DetailProduct from './pages/DetailProduct';
 import SignUp from './pages/SignUp';
 import { Login } from '@mui/icons-material';
-import Route from "./routes/route";
+import RouteCenter from "./routes/route";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Route/>
+    <RouteCenter/>
   </React.StrictMode>,
   document.getElementById('root')
 );

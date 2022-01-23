@@ -38,14 +38,17 @@ export type dataProductUserTypes = {
 };
 
 export type authTypes = {
-  id: number,
-  token: string,
-  isAuth: boolean
+  id: number | undefined,
+  token: string | undefined,
+  isAuth: boolean | undefined
+}
+
+export type burgerProps = {
+  isAuth?: boolean,
 }
 
 
-
-//              "id": 9,
+//             "id": 9,
 //             "name": "Nvidia RTx 2080",
 //             "seller": "Bahtiar Subrata",
 //             "category": "Graphic Card",

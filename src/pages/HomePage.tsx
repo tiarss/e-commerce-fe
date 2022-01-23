@@ -112,7 +112,6 @@ function HomePage() {
   if (isReady) {
     return (
       <Box>
-        <Header />
         <Box
           sx={{
             minHeight: "900px",

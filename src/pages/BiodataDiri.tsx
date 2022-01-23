@@ -9,18 +9,16 @@ import {
 import { dataUserIDTypes } from "../Types";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { InputText2, InputText3 } from "../components/InputText";
+import { useLocalStorage } from "../utils/useLocalStorage";
+import { authTypes } from "../Types";
+import { useNavigate } from "react-router-dom"
 import "@fontsource/nunito/700.css";
 
-const token: string =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJlbWFpbCI6ImJhaHRpYXJAZ21haWwuY29tIiwiZXhwIjoxNjQyOTM3MjAxLCJpZCI6NH0.1v6wWoab0UtQqRRJ1PqfNDHJU92HDzzfQ3UcfXJ3AXY";
-const config = {
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
-};
-
 function BiodataDiri() {
+  const navigate = useNavigate()
   const dataUserDefault: dataUserIDTypes[] = [];
+  const [auth, setAuth] = useLocalStorage<authTypes[] | undefined>("auth", []);
+
   const [dataUserID, setDataUserID] = useState(dataUserDefault);
   const [nameUser, setNameUser] = useState<string>("");
   const [genderUser, setGenderUser] = useState<string>("");
@@ -29,9 +27,7 @@ function BiodataDiri() {
   const [provinceUser, setProvinceUser] = useState<string>("");
   const [streetUser, setStreetUser] = useState<string>("");
   const [zipcodeUser, setZipcodeUser] = useState<string>("");
-  const [imageUser, setImageUser] = useState<string>(
-    ""
-  );
+  const [imageUser, setImageUser] = useState<string>("");
 
   const [isReady, setIsReady] = useState<boolean>(false);
   const [open, setOpen] = React.useState(false);
@@ -82,8 +78,22 @@ function BiodataDiri() {
   }, []);
 
   const fetchDataUserId = async () => {
+    let token: string | undefined;
+    let id: number | undefined;
+    if (auth === undefined) {
+      token = "";
+      id = 0;
+    } else {
+      token = auth[0].token;
+      id = auth[0].id;
+    }
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
     await axios
-      .get("/users/4", config)
+      .get(`/users/${id}`, config)
       .then((res) => {
         const { data } = res.data;
         setDataUserID([data]);
@@ -95,9 +105,10 @@ function BiodataDiri() {
         setZipcodeUser(data.address.zipcode);
         setStreetUser(data.address.street);
         setImageUser(data.image);
+        console.log(res)
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response);
       })
       .finally(() => {
         setIsReady(true);
@@ -105,9 +116,23 @@ function BiodataDiri() {
   };
 
   const handleEditUser = () => {
+    let token: string | undefined;
+    let id: number | undefined;
+    if (auth === undefined) {
+      token = "";
+      id = 0;
+    } else {
+      token = auth[0].token;
+      id = auth[0].id;
+    }
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
     axios
       .put(
-        "users/4",
+        `users/${id}`,
         {
           name: nameUser,
           email: emailUser,
@@ -118,7 +143,7 @@ function BiodataDiri() {
             zipcode: zipcodeUser,
             street: streetUser,
           },
-          image: imageUser
+          image: imageUser,
         },
         config
       )
@@ -133,7 +158,7 @@ function BiodataDiri() {
         setOpen(false);
       });
   };
-  console.log(dataUserID[0])
+  console.log(dataUserID[0]);
   if (isReady) {
     return (
       <Box

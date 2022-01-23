@@ -13,8 +13,9 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Avatar from "@mui/material/Avatar";
 import Logout from "@mui/icons-material/Logout";
 import "@fontsource/nunito/700.css";
+import { burgerProps } from "../Types";
 
-function Burger() {
+function Burger({isAuth}: burgerProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 

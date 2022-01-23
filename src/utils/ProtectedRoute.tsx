@@ -1,15 +1,21 @@
 import React from 'react';
 import {RouteProps, Route, Navigate } from "react-router-dom"
+import { useLocalStorage } from "../utils/useLocalStorage";
+import { authTypes } from "../Types";
 
-interface Props extends RouteProps{
-   isAuth: boolean;
-}
-
-const ProtectedRoute = ({isAuth, ...routeProps}: Props) => {
-   if(isAuth){
-      return <Route {...routeProps} />
+const ProtectedRoute = ({children}: any) => {
+   const [auth] = useLocalStorage<authTypes[] | undefined>("auth", []);
+   let isAuth: boolean | undefined;
+   if (auth === undefined) {
+     isAuth = false;
+   } else {
+     isAuth = auth[0]?.isAuth;
    }
-   return <Navigate to="/login" />
+       
+    if (isAuth ) {
+      return children    }
+      
+    return <Navigate to="/login" />
 }
 
 export default ProtectedRoute;
