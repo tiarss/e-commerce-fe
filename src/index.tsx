@@ -15,9 +15,10 @@ axios.defaults.baseURL="http://52.77.229.210:3000"
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <ProfilePage /> */}
-    <FinalOrder /> 
-    <ShoppingCard /> 
+    <ProfilePage />
+    {/* <HomePage /> */}
+    {/* <FinalOrder /> 
+    <ShoppingCard />  */}
   </React.StrictMode>,
   document.getElementById('root')
 );

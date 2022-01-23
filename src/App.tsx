@@ -14,9 +14,9 @@ function App() {
   return (
     <div className="App">
       {/* <LoginPage /> */}
-      <SignUp />
+      {/* <SignUp /> */}
       {/* <ProfilePage /> */}
-      {/* <HomePage /> */}
+      <HomePage />
     </div>
   );
 }

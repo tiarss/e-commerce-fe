@@ -1,11 +1,7 @@
 import { Button, Typography } from "@mui/material";
 import "@fontsource/nunito/700.css";
 
-<<<<<<< HEAD
-function CustomButtonSecondary({ caption, OnClick }: { caption: string, OnClick: ()=>void }) {
-=======
 function CustomButtonSecondary({ caption, OnClick }: { caption: string, OnClick?: ()=>void }) {
->>>>>>> Develop
   return (
     <Button
     onClick={OnClick}
@@ -26,6 +22,7 @@ function CustomButtonSecondary({ caption, OnClick }: { caption: string, OnClick?
           color: "#2296CB",
           padding: "6px 15px",
           fontWeight: "700",
+          fontSize: {xs: "11px",sm:"15px"},
           transition: "all 0.4s ease",
           "&:hover": {
             color: "white",
@@ -37,11 +34,7 @@ function CustomButtonSecondary({ caption, OnClick }: { caption: string, OnClick?
   );
 }
 
-<<<<<<< HEAD
-function CustomButtonPrimary({ caption, OnClick }: { caption: string, OnClick: ()=>void }) {
-=======
 function CustomButtonPrimary({ caption, OnClick }: { caption: string, OnClick?: ()=>void }) {
->>>>>>> Develop
   return (
     <Button
       onClick={OnClick}
@@ -63,6 +56,7 @@ function CustomButtonPrimary({ caption, OnClick }: { caption: string, OnClick?: 
           color: "white",
           padding: "6px 15px",
           fontWeight: "700",
+          fontSize: {xs: "11px",sm:"15px"}
         }}>
         {caption}
       </Typography>

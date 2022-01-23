@@ -17,27 +17,75 @@ function HomePage() {
   const [categoryOpenMenu, setCategoryOpenMenu] = useState<null | HTMLElement>(
     null
   );
-  const [sortOpenMenu, setSortOpenMenu] = useState<null | HTMLElement>(null);
   const [isReady, setIsReady] = useState<boolean>(false);
 
   const [product, setProduct] = useState(dataProductDefault);
   const openCategory = Boolean(categoryOpenMenu);
-  const openSort = Boolean(sortOpenMenu);
+
+  const [page, setPage] = React.useState(1);
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value)
+    fetchDataByPage(value);
+  };
+
+  const fetchDataByPage = async (page: number) => {
+    await axios
+      .get("/products", {
+        params: {
+          p: page,
+        },
+      })
+      .then((res) => {
+        const { data } = res.data;
+        setProduct(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const fetchDataByCategory = async (category: string) => {
+    await axios
+      .get("/products", {
+        params: {
+          category: category,
+        },
+      })
+      .then((res) => {
+        const { data } = res.data;
+        setProduct(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const handleClickCategory = (event: React.MouseEvent<HTMLButtonElement>) => {
     setCategoryOpenMenu(event.currentTarget);
   };
+  const handleCategoryProcessor= ()=>{
+    const category: string = "Processor"
+    fetchDataByCategory(category)
+  }
 
-  const handleClickSort = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setSortOpenMenu(event.currentTarget);
-  };
+  const handleCategoryGraphic = () =>{
+    const category: string = "Graphic Card"
+    fetchDataByCategory(category)
+  }
+
+  const handleCategoryRAM = () =>{
+    const category: string = "RAM"
+    fetchDataByCategory(category)
+  }
+
+  const handleCategoryInternalStorage = () =>{
+    const category: string = "Internal Storage"
+    fetchDataByCategory(category)
+  }
+
 
   const handleCloseCategory = () => {
     setCategoryOpenMenu(null);
-  };
-
-  const handleCloseSort = () => {
-    setSortOpenMenu(null);
   };
 
   useEffect(() => {
@@ -58,6 +106,7 @@ function HomePage() {
         setIsReady(true);
       });
   };
+
   console.log(product);
 
   if (isReady) {
@@ -66,6 +115,7 @@ function HomePage() {
         <Header />
         <Box
           sx={{
+            minHeight: "900px",
             padding: {
               xs: "50px 30px 0px 30px",
               sm: "50px 40px 0px 40px",
@@ -90,42 +140,6 @@ function HomePage() {
               justifyContent: "space-between",
             }}>
             {/* Sub Header */}
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <IconButton
-                id='sort-button'
-                aria-controls={openSort ? "basic-menu" : undefined}
-                aria-haspopup='true'
-                aria-expanded={openSort ? "true" : undefined}
-                onClick={handleClickSort}
-                size='small'
-                sx={{
-                  backgroundColor: "#2296CB",
-                  borderRadius: "5px",
-                  "&:hover": { backgroundColor: "#2296CB" },
-                }}>
-                <FilterListRoundedIcon sx={{ color: "white" }} />
-              </IconButton>
-              <Menu
-                id='basic-menu'
-                anchorEl={sortOpenMenu}
-                open={openSort}
-                onClose={handleCloseSort}
-                MenuListProps={{
-                  "aria-labelledby": "sort-button",
-                }}>
-                <MenuItem onClick={handleCloseSort}>Profile</MenuItem>
-                <MenuItem onClick={handleCloseSort}>My account</MenuItem>
-                <MenuItem onClick={handleCloseSort}>Logout</MenuItem>
-              </Menu>
-              <Typography
-                sx={{
-                  marginLeft: "10px",
-                  fontFamily: "Nunito",
-                  fontWeight: "700",
-                }}>
-                Urutkan
-              </Typography>
-            </Box>
             <Box sx={{ display: { xs: "none", md: "block" } }}>
               <Typography
                 sx={{
@@ -168,22 +182,25 @@ function HomePage() {
                 MenuListProps={{
                   "aria-labelledby": "category-button",
                 }}>
-                <MenuItem onClick={handleCloseCategory}>Profile</MenuItem>
-                <MenuItem onClick={handleCloseCategory}>My account</MenuItem>
-                <MenuItem onClick={handleCloseCategory}>Logout</MenuItem>
+                <MenuItem onClick={fetchDataAllProduct}>All Category</MenuItem>
+                <MenuItem onClick={handleCategoryProcessor}>Processor</MenuItem>
+                <MenuItem onClick={handleCategoryGraphic}>Graphic Card</MenuItem>
+                <MenuItem onClick={handleCategoryRAM}>RAM</MenuItem>
+                <MenuItem onClick={handleCategoryInternalStorage}>Internal Storage</MenuItem>
               </Menu>
             </Box>
           </Box>
           {/* Card Grid */}
           <Grid
             container
-            spacing={1}
+            spacing={4}
             sx={{
               maxWidth: "1300px",
+              minHeight: "800px",
               justifyContent: {
                 xs: "space-between",
                 sm: "space-evenly",
-                md: "space-between",
+                md: "flex-start",
               },
             }}>
             {product.map((value) => (
@@ -206,6 +223,8 @@ function HomePage() {
               count={10}
               variant='outlined'
               shape='rounded'
+              page={page}
+              onChange={handleChange}
               sx={{
                 ".MuiButtonBase-root": {
                   fontFamily: "Nunito",
@@ -215,7 +234,7 @@ function HomePage() {
                   outline: "none",
                   border: "none",
                 },
-                ".MuiButtonBase .Mui-selected": {
+                ".Mui-selected": {
                   backgroundColor: "#1767A0",
                 },
                 ".MuiButtonBase-root:hover": {
