@@ -8,6 +8,11 @@ import "@fontsource/nunito";
 import Burger from "./Burger";
 
 function Header() {
+
+  const handleToLogin = () =>{
+    
+  }
+
   return (
     <Box
       sx={{
@@ -67,7 +72,7 @@ function Header() {
           <Typography sx={{ color: "white" }}>2</Typography>
         </Box>
         <Box>
-          <CustomButtonSecondary caption='Log In' />
+          <CustomButtonSecondary caption='Log In' OnClick={handleToLogin} />
         </Box>
       </Box>
       <Box sx={{ display: { xs: "block", md: "none" } }}>
