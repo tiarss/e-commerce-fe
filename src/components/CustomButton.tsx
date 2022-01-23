@@ -33,7 +33,11 @@ function CustomButtonSecondary({ caption, OnClick }: { caption: string, OnClick:
   );
 }
 
+<<<<<<< Updated upstream
 function CustomButtonPrimary({ caption, OnClick }: { caption: string,OnClick: ()=>void }) {
+=======
+function CustomButtonPrimary({ caption, OnClick }: { caption: string, OnClick: ()=>void }) {
+>>>>>>> Stashed changes
   return (
     <Button
       onClick={OnClick}

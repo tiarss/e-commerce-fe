@@ -5,10 +5,13 @@ import reportWebVitals from './reportWebVitals';
 import "./index.css"
 import LoginPage from "./pages/LoginPage"
 import DetailProduct from './pages/DetailProduct';
+import SignUp from './pages/SignUp';
+import { Login } from '@mui/icons-material';
+import Route from "./routes/route";
 
 ReactDOM.render(
   <React.StrictMode>
-    <LoginPage/>
+    <Route/>
   </React.StrictMode>,
   document.getElementById('root')
 );
