@@ -6,10 +6,12 @@ import { Box } from '@mui/system';
 import { useState, useEffect } from 'react';
 import logo from "../images/Logo-sirclo-white.png";
 import { CustomButtonPrimary } from '../components/CustomButton';
+import { useNavigate } from "react-router-dom";
 
 
 
 const SignUp: React.FC = () => {
+  let navigate = useNavigate();   
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -23,6 +25,7 @@ const SignUp: React.FC = () => {
         password: password
     }).then((res)=>{
        console.log(res)
+       navigate(`/Login`);
     })
  }
 

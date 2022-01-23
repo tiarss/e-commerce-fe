@@ -10,8 +10,7 @@ function App() {
   return (
     <div >
       <Header/>
-      <Outlet/>
-     
+      <Outlet/>     
     </div>
    
   );

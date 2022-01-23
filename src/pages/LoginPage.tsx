@@ -5,9 +5,10 @@ import logo from "../images/Logo-sirclo-white.png";
 import { InputText2 } from "../components/InputText";
 import { CustomButtonPrimary, CustomButtonSecondary } from "../components/CustomButton";
 import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const LoginPage: React.FC = () => {
-   
+   let navigate = useNavigate();   
    const [email, setEmail] = useState<string>("")
    const [password, setPassword] = useState<string>("")
    useEffect(()=>{      
@@ -19,7 +20,11 @@ const LoginPage: React.FC = () => {
          email: email,
          password: password
       }).then((res)=>{
-         console.log(res)
+         console.log(res.code)
+         // if(res.code===200){
+
+         // }
+         navigate(`/`);
          
       })
    } 
