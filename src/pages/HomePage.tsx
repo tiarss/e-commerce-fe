@@ -24,7 +24,7 @@ function HomePage() {
 
   const [page, setPage] = React.useState(1);
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value)
+    setPage(value);
     fetchDataByPage(value);
   };
 
@@ -63,26 +63,25 @@ function HomePage() {
   const handleClickCategory = (event: React.MouseEvent<HTMLButtonElement>) => {
     setCategoryOpenMenu(event.currentTarget);
   };
-  const handleCategoryProcessor= ()=>{
-    const category: string = "Processor"
-    fetchDataByCategory(category)
-  }
+  const handleCategoryProcessor = () => {
+    const category: string = "Processor";
+    fetchDataByCategory(category);
+  };
 
-  const handleCategoryGraphic = () =>{
-    const category: string = "Graphic Card"
-    fetchDataByCategory(category)
-  }
+  const handleCategoryGraphic = () => {
+    const category: string = "Graphic Card";
+    fetchDataByCategory(category);
+  };
 
-  const handleCategoryRAM = () =>{
-    const category: string = "RAM"
-    fetchDataByCategory(category)
-  }
+  const handleCategoryRAM = () => {
+    const category: string = "RAM";
+    fetchDataByCategory(category);
+  };
 
-  const handleCategoryInternalStorage = () =>{
-    const category: string = "Internal Storage"
-    fetchDataByCategory(category)
-  }
-
+  const handleCategoryInternalStorage = () => {
+    const category: string = "Internal Storage";
+    fetchDataByCategory(category);
+  };
 
   const handleCloseCategory = () => {
     setCategoryOpenMenu(null);
@@ -107,6 +106,10 @@ function HomePage() {
       });
   };
 
+  const handleToDetails = (id: number) => {
+
+    
+  };
   console.log(product);
 
   if (isReady) {
@@ -183,9 +186,13 @@ function HomePage() {
                 }}>
                 <MenuItem onClick={fetchDataAllProduct}>All Category</MenuItem>
                 <MenuItem onClick={handleCategoryProcessor}>Processor</MenuItem>
-                <MenuItem onClick={handleCategoryGraphic}>Graphic Card</MenuItem>
+                <MenuItem onClick={handleCategoryGraphic}>
+                  Graphic Card
+                </MenuItem>
                 <MenuItem onClick={handleCategoryRAM}>RAM</MenuItem>
-                <MenuItem onClick={handleCategoryInternalStorage}>Internal Storage</MenuItem>
+                <MenuItem onClick={handleCategoryInternalStorage}>
+                  Internal Storage
+                </MenuItem>
               </Menu>
             </Box>
           </Box>
@@ -208,6 +215,7 @@ function HomePage() {
                   name={value.name}
                   image={value.image}
                   price={value.price}
+                  OnClick={() => handleToDetails(value.id)}
                 />
               </Grid>
             ))}

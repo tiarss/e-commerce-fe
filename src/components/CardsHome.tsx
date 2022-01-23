@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import AddShoppingCartRoundedIcon from "@mui/icons-material/AddShoppingCartRounded";
 import "@fontsource/nunito/700.css";
@@ -11,12 +10,13 @@ function CardsHome({
   image,
   name,
   price,
+  OnClick,
 }: {
   image?: string;
   name?: string;
   price?: number;
+  OnClick?: () => void;
 }) {
-
   return (
     <Box
       sx={{
@@ -34,7 +34,13 @@ function CardsHome({
           overflow: "hidden",
         }}>
         <img
-          style={{height: "200px", width: "200px", maxWidth: "140px" , minWidth: "250px"}}
+          onClick={OnClick}
+          style={{
+            height: "200px",
+            width: "200px",
+            maxWidth: "140px",
+            minWidth: "250px",
+          }}
           // fill the src with image props
           src={image}
           alt='vga'
@@ -54,7 +60,7 @@ function CardsHome({
               color: "white",
               fontWeight: "700",
             }}>
-              {/* replace productName state with name props */}
+            {/* replace productName state with name props */}
             {name?.substring(0, 15) + "..."}
           </Typography>
           <Typography
@@ -64,7 +70,7 @@ function CardsHome({
               color: "white",
               fontWeight: "700",
             }}>
-              {/* replace productPrice with price props*/}
+            {/* replace productPrice with price props*/}
             {price}
           </Typography>
         </Box>
