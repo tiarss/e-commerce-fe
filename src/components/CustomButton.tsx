@@ -22,6 +22,7 @@ function CustomButtonSecondary({ caption, OnClick }: { caption: string, OnClick?
           color: "#2296CB",
           padding: "6px 15px",
           fontWeight: "700",
+          fontSize: {xs: "11px",sm:"15px"},
           transition: "all 0.4s ease",
           "&:hover": {
             color: "white",
@@ -55,6 +56,7 @@ function CustomButtonPrimary({ caption, OnClick }: { caption: string, OnClick?: 
           color: "white",
           padding: "6px 15px",
           fontWeight: "700",
+          fontSize: {xs: "11px",sm:"15px"}
         }}>
         {caption}
       </Typography>

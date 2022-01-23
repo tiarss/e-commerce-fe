@@ -89,7 +89,7 @@ function FinalOrder() {
           }}>
           <Box></Box>
           <Box>
-            <SummaryDetail qty='4' shipping='0' sumPrice='40000' />
+            <SummaryDetail qty={4} shipping='0' sumPrice={4000} />
           </Box>
         </Box>
         <Box

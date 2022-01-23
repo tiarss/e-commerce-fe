@@ -2,9 +2,9 @@ import React from "react";
 import { Box } from "@mui/material";
 
 interface summaryDetail {
-  qty :string;
+  qty :number;
   shipping :string;
-  sumPrice: string;
+  sumPrice: number;
 
 }
 

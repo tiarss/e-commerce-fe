@@ -12,7 +12,7 @@ import { InputText2, InputText3 } from "../components/InputText";
 import "@fontsource/nunito/700.css";
 
 const token: string =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJlbWFpbCI6ImJhaHRpYXJAZ21haWwuY29tIiwiZXhwIjoxNjQyOTIzMjQxLCJpZCI6NH0.WkVbA9nm5CQSFSSnJZ8U6hmFGpg0liDLhP2cHu_QlV8";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJlbWFpbCI6ImJhaHRpYXJAZ21haWwuY29tIiwiZXhwIjoxNjQyOTM3MjAxLCJpZCI6NH0.1v6wWoab0UtQqRRJ1PqfNDHJU92HDzzfQ3UcfXJ3AXY";
 const config = {
   headers: {
     Authorization: `Bearer ${token}`,
@@ -29,6 +29,9 @@ function BiodataDiri() {
   const [provinceUser, setProvinceUser] = useState<string>("");
   const [streetUser, setStreetUser] = useState<string>("");
   const [zipcodeUser, setZipcodeUser] = useState<string>("");
+  const [imageUser, setImageUser] = useState<string>(
+    ""
+  );
 
   const [isReady, setIsReady] = useState<boolean>(false);
   const [open, setOpen] = React.useState(false);
@@ -69,6 +72,11 @@ function BiodataDiri() {
     setGenderUser(event.target.value as string);
   };
 
+  const handleChangeImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setImageUser(value);
+  };
+
   useEffect(() => {
     fetchDataUserId();
   }, []);
@@ -86,6 +94,7 @@ function BiodataDiri() {
         setProvinceUser(data.address.province);
         setZipcodeUser(data.address.zipcode);
         setStreetUser(data.address.street);
+        setImageUser(data.image);
       })
       .catch((err) => {
         console.log(err);
@@ -109,6 +118,7 @@ function BiodataDiri() {
             zipcode: zipcodeUser,
             street: streetUser,
           },
+          image: imageUser
         },
         config
       )
@@ -123,7 +133,7 @@ function BiodataDiri() {
         setOpen(false);
       });
   };
-
+  console.log(dataUserID[0])
   if (isReady) {
     return (
       <Box
@@ -152,11 +162,19 @@ function BiodataDiri() {
               overflow: "hidden",
               borderRadius: "60px",
             }}>
-            <img
-              style={{ width: "100%" }}
-              src='https://cdn3.vectorstock.com/i/1000x1000/01/77/businesswoman-character-avatar-icon-vector-12800177.jpg'
-              alt='avatar-user'
-            />
+            {dataUserID[0].image === "" ? (
+              <img
+                style={{ width: "100%" }}
+                src='https://cdn3.vectorstock.com/i/1000x1000/01/77/businesswoman-character-avatar-icon-vector-12800177.jpg'
+                alt='avatar-user'
+              />
+            ) : (
+              <img
+                style={{ width: "100%" }}
+                src={dataUserID[0].image}
+                alt='avatar-user1'
+              />
+            )}
           </Box>
         </Box>
         <Box
@@ -168,25 +186,46 @@ function BiodataDiri() {
             justifyContent: { xs: "center", md: "flex-start" },
           }}>
           <Box sx={{ display: "flex" }}>
-            <Typography sx={{ width: "100px", fontFamily: "Nunito", fontWeight: "700" }}>Nama</Typography>
-            <Typography sx={{fontFamily: "Nunito", fontWeight: "700"}}>{dataUserID[0].name}</Typography>
+            <Typography
+              sx={{ width: "100px", fontFamily: "Nunito", fontWeight: "700" }}>
+              Nama
+            </Typography>
+            <Typography sx={{ fontFamily: "Nunito", fontWeight: "700" }}>
+              {dataUserID[0].name}
+            </Typography>
           </Box>
           <Box sx={{ display: "flex" }}>
-            <Typography sx={{ width: "100px" , fontFamily: "Nunito", fontWeight: "700" }}>Email</Typography>
-            <Typography sx={{fontFamily: "Nunito", fontWeight: "700"}}>{dataUserID[0].email}</Typography>
+            <Typography
+              sx={{ width: "100px", fontFamily: "Nunito", fontWeight: "700" }}>
+              Email
+            </Typography>
+            <Typography sx={{ fontFamily: "Nunito", fontWeight: "700" }}>
+              {dataUserID[0].email}
+            </Typography>
           </Box>
           <Box sx={{ display: "flex" }}>
-            <Typography sx={{ width: "100px" , fontFamily: "Nunito", fontWeight: "700" }}>Alamat</Typography>
-            <Typography sx={{fontFamily: "Nunito", fontWeight: "700"}}>
-              {dataUserID[0].address.street + " " +
-                dataUserID[0].address.city + " "+
-                dataUserID[0].address.province + " " +
+            <Typography
+              sx={{ width: "100px", fontFamily: "Nunito", fontWeight: "700" }}>
+              Alamat
+            </Typography>
+            <Typography sx={{ fontFamily: "Nunito", fontWeight: "700" }}>
+              {dataUserID[0].address.street +
+                " " +
+                dataUserID[0].address.city +
+                " " +
+                dataUserID[0].address.province +
+                " " +
                 dataUserID[0].address.zipcode}
             </Typography>
           </Box>
           <Box sx={{ display: "flex" }}>
-            <Typography sx={{ width: "100px" , fontFamily: "Nunito", fontWeight: "700" }}>Gender</Typography>
-            <Typography sx={{fontFamily: "Nunito", fontWeight: "700"}}>{dataUserID[0].gender}</Typography>
+            <Typography
+              sx={{ width: "100px", fontFamily: "Nunito", fontWeight: "700" }}>
+              Gender
+            </Typography>
+            <Typography sx={{ fontFamily: "Nunito", fontWeight: "700" }}>
+              {dataUserID[0].gender}
+            </Typography>
           </Box>
         </Box>
         <Box sx={{ position: "absolute", bottom: "20px" }}>
@@ -215,7 +254,14 @@ function BiodataDiri() {
               gap: 3,
               p: 4,
             }}>
-            <Typography sx={{fontFamily: "Nunito", fontWeight: "700", fontSize: "28px"}}>Edit Biodata</Typography>
+            <Typography
+              sx={{
+                fontFamily: "Nunito",
+                fontWeight: "700",
+                fontSize: "28px",
+              }}>
+              Edit Biodata
+            </Typography>
             <Box sx={{ display: "flex", gap: 3, width: "100%" }}>
               <Box sx={{ width: "100%" }}>
                 <InputText2
@@ -283,6 +329,15 @@ function BiodataDiri() {
                   value={streetUser}
                 />
               </Box>
+            </Box>
+            <Box sx={{ display: "flex", gap: 3, width: "100%" }}>
+              <InputText2
+                textLabel='Link Gambar'
+                placeholder='Masukkan Link Gambar'
+                type='text'
+                onChange={handleChangeImage}
+                value={imageUser}
+              />
             </Box>
             <Box>
               <CustomButtonPrimary caption='Simpan' OnClick={handleEditUser} />

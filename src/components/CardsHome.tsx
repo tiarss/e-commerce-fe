@@ -30,11 +30,11 @@ function CardsHome({
       <Box
         sx={{
           width: "fit-content",
-          height: { xs: "130px", sm: "190px" },
+          height: { xs: "130px", sm: "200px" },
           overflow: "hidden",
         }}>
         <img
-          style={{ height: "100%", width: "100%",objectFit: 'contain' }}
+          style={{height: "200px", width: "200px", maxWidth: "140px" , minWidth: "250px"}}
           // fill the src with image props
           src={image}
           alt='vga'

@@ -16,7 +16,7 @@ import { dataProductUserTypes } from "../Types";
 import { InputText2, InputText3 } from "../components/InputText";
 
 const token: string =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJlbWFpbCI6ImJhaHRpYXJAZ21haWwuY29tIiwiZXhwIjoxNjQyOTIzMjQxLCJpZCI6NH0.WkVbA9nm5CQSFSSnJZ8U6hmFGpg0liDLhP2cHu_QlV8";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJlbWFpbCI6ImJhaHRpYXJAZ21haWwuY29tIiwiZXhwIjoxNjQyOTM2MzQyLCJpZCI6NH0.2X67E_RtqR2-7ArahbrKquS3U4ApVCKcwd4Yqf0vwV4";
 const config = {
   headers: {
     Authorization: `Bearer ${token}`,
@@ -101,6 +101,7 @@ function Barangku() {
   };
 
   const handleOpenModal = () => {
+    setCurrentId(0)
     setOpen(true);
     setCategoryProduct("");
     setNameProduct("");
@@ -215,7 +216,7 @@ function Barangku() {
     return (
       <Box
         sx={{
-          minHeight: "400px",
+          Height: "400px",
           boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.250);",
           borderRadius: "10px",
           marginTop: "10px",
@@ -238,12 +239,22 @@ function Barangku() {
             OnClick={handleOpenModal}
           />
         </Box>
-        <Box>
+        <Box sx={{overflowY: "scroll", height: "400px"}}>
           {dataProductUser.map((value) => (
-            <Accordion key={value.id} sx={{borderRadius: "10px", margin: "10px 0px"}}>
+            <Accordion
+              key={value.id}
+              sx={{
+                ".MuiAccordion-root": { borderRadius: "20px" },
+                margin: "10px 0px",
+                overflow: "hidden",
+              }}>
               <AccordionSummary
-                sx={{backgroundColor: "#2296CB", borderRadius: "10px 10px 0px 0px"}}
-                expandIcon={<ExpandMoreIcon sx={{color: "white"}} />}
+                sx={{
+                  backgroundColor: "#2296CB",
+                  borderRadius: "10px 10px 0px 0px",
+                  overflow: "hidden",
+                }}
+                expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
                 aria-controls='panel1a-content'
                 id='panel1a-header'>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -252,7 +263,7 @@ function Barangku() {
                       fontFamily: "Nunito",
                       fontSize: "18px",
                       fontWeight: "700",
-                      color: "white"
+                      color: "white",
                     }}>
                     {value.name}
                   </Typography>
@@ -275,7 +286,7 @@ function Barangku() {
                   </Box>
                 </Box>
               </AccordionSummary>
-              <AccordionDetails sx={{padding: "20px"}}>
+              <AccordionDetails sx={{ padding: "20px" }}>
                 <Box
                   sx={{
                     display: "flex",
@@ -353,15 +364,15 @@ function Barangku() {
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",
-              width: { xs: "350px", sm: "400px", md: "700px" },
+              width: { xs: "320px", sm: "400px", md: "700px" },
               bgcolor: "background.paper",
               boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.250);",
               display: "flex",
               flexDirection: "column",
-              gap: 3,
+              gap: {xs: 1, md: 3},
               p: 4,
             }}>
-            <Box sx={{ display: "flex", gap: 3 }}>
+            <Box sx={{ display: "flex", flexDirection: {xs: "column", md: "row"}, gap: {xs: 1, md:3} }}>
               <Box sx={{ width: "100%" }}>
                 <InputText2
                   textLabel='Nama'
@@ -380,7 +391,7 @@ function Barangku() {
                 />
               </Box>
             </Box>
-            <Box sx={{ display: "flex", gap: 3 }}>
+            <Box sx={{ display: "flex", flexDirection: {xs: "column", md: "row"},gap: {xs: 1, md:3} }}>
               <Box sx={{ width: "100%" }}>
                 <InputText2
                   textLabel='Harga'
@@ -411,7 +422,7 @@ function Barangku() {
                 />
               </Box>
             </Box>
-            <Box sx={{ display: "flex", gap: 3 }}>
+            <Box sx={{ display: "flex" }}>
               <Box sx={{ width: "100%" }}>
                 <InputText2
                   textLabel='Link Gambar'
