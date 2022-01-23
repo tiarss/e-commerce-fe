@@ -96,7 +96,7 @@ const handlePassword = (e: React.ChangeEvent<HTMLInputElement>)=>{
            }}>
               <InputText2 textLabel='Nama' type='text' onChange={(e)=>handleName(e)}/>
               <InputText2 textLabel='Email' type='email' onChange={(e)=>handleEmail(e)}/>
-              <InputText2 textLabel='Password' type='password' onChange={(e)=>handleEmail(e)}/>
+              <InputText2 textLabel='Password' type='password' onChange={(e)=>handlePassword(e)}/>
               <CustomButtonPrimary caption='Sign Up' OnClick={fetchData} />
           </Box>         
 

@@ -6,13 +6,16 @@ import CardsHome from './components/CardsHome';
 import HomePage from './pages/HomePage';
 import axios from 'axios';
 import ProfilePage from './pages/ProfilePage';
+import SignUp from './pages/SignUp';
 
 axios.defaults.baseURL="http://52.77.229.210:3000"
 
 function App() {
   return (
     <div className="App">
-      <ProfilePage />
+      {/* <LoginPage /> */}
+      <SignUp />
+      {/* <ProfilePage /> */}
       {/* <HomePage /> */}
     </div>
   );

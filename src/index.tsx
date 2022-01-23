@@ -5,10 +5,19 @@ import reportWebVitals from './reportWebVitals';
 import "./index.css"
 import LoginPage from "./pages/LoginPage"
 import DetailProduct from './pages/DetailProduct';
+import SignUp from './pages/SignUp'
+import HomePage from './pages/HomePage';
+import axios from "axios"
+import ProfilePage from './pages/ProfilePage';
+import ShoppingCard from './pages/ShoppingCard';
+import FinalOrder from './pages/FinalOrder';
+axios.defaults.baseURL="http://52.77.229.210:3000"
 
 ReactDOM.render(
   <React.StrictMode>
-    <LoginPage/>
+    <ProfilePage />
+    {/* <FinalOrder /> */}
+    {/* <ShoppingCard /> */}
   </React.StrictMode>,
   document.getElementById('root')
 );

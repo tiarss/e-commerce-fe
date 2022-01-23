@@ -38,7 +38,7 @@ const CssTextField = styled(TextField)({
       marginTop: theme.spacing(3),
     },
     '& .MuiInputBase-input': {
-      borderRadius: 0,
+      borderRadius: "10px",
       position: 'relative',
       backgroundColor: theme.palette.mode === 'light' ? '#ECE8E8' : '#fcfcfb',
       border: '1px solid #ced4da',
@@ -79,9 +79,7 @@ const CssTextField = styled(TextField)({
     textLabel?: string;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
     defValue?: string;
-    value?: string;
-    
-
+    value?: string | number;
 }
 
 function InputText(props:inputDetail){
@@ -116,30 +114,31 @@ function InputText2(props:inputDetail){
         </div>
     )
 }
-function InputText3(props:inputDetail){
-    const [age, setAge] = React.useState('');
-  const handleChange = (event: { target: { value: string } }) => {
-    setAge(event.target.value);
-  };
+type inputSelect = {
+  label?: string,
+  onChange?: (e: SelectChangeEvent) => void ,
+  data?: string[],
+  value?: string,
+  placeholder?: string
+
+}
+
+function InputText3({label, onChange, data,value,placeholder,}: inputSelect){
+
   return (
     <div>     
-        <p>{props.textLabel}</p>
+        <p>{label}</p>
       <FormControl sx={{width:"100%", height: "45px" }} variant="standard" >        
         <Select
           labelId="demo-customized-select-label"
           id="demo-customized-select"
-          value={age}
-          defaultValue={props.defValue}
-         
-          onChange={handleChange}
-          input={<BootstrapInput placeholder= {props.placeholder} defaultValue={props.defValue}/>}
+          value={value}
+          onChange={onChange}
+          input={<BootstrapInput placeholder= {placeholder} />}
         >
-          <MenuItem value={props.value}>
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          {data !== undefined ? data.map((datas)=>(
+            <MenuItem value={datas}>{datas}</MenuItem>
+          )) : <MenuItem value="kosong">Kosong</MenuItem>}
         </Select>
       </FormControl>
       

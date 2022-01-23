@@ -5,9 +5,11 @@ import logo from "../images/Logo-sirclo-white.png";
 import { InputText2 } from "../components/InputText";
 import { CustomButtonPrimary, CustomButtonSecondary } from "../components/CustomButton";
 import { Link } from 'react-router-dom';
+import { useLocalStorage } from "../utils/useLocalStorage";
+import { authTypes } from "../Types";
 
 const LoginPage: React.FC = () => {
-   
+   const [auth, setAuth] = useLocalStorage<authTypes[]>('auth',[])
    const [email, setEmail] = useState<string>("")
    const [password, setPassword] = useState<string>("")
    useEffect(()=>{      
@@ -19,6 +21,12 @@ const LoginPage: React.FC = () => {
          email: email,
          password: password
       }).then((res)=>{
+         const {data} = res.data
+         setAuth([{
+            id: data.id,
+            token: data.token,
+            isAuth: true
+         }])
          console.log(res)
          
       })
@@ -90,7 +98,7 @@ const LoginPage: React.FC = () => {
             gap:"20px",
            }}>
               <InputText2 textLabel='Email' type='email' onChange={(e)=>handleEmail(e)}/>
-              <InputText2 textLabel='Password' type='password' onChange={(e)=>handleEmail(e)}/>
+              <InputText2 textLabel='Password' type='password' onChange={(e)=>handlePassword(e)}/>
               {/* <button onClick={fetchData}>Login </button> */}
               <CustomButtonPrimary caption='Login' OnClick={fetchData} />
           </Box>         

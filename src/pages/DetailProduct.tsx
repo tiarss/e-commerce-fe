@@ -8,13 +8,7 @@ import {dataProductTypes} from "../Types/index";
 import Modal from "@mui/material/Modal";
 import { CustomButtonPrimary, CustomButtonSecondary } from '../components/CustomButton';
 
-const token: string =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJlbWFpbCI6IiIsImV4cCI6MTY0Mjg5NTcwOCwiaWQiOjV9.gfj-cyM-O1LQXiX5IXJ6yA06XCF8D9hlgS1OtM73tOA";
-const config = {
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
-};
+
 
 function DetailProduct() {
   const dataProductDefault: dataProductTypes[] = [];
@@ -30,7 +24,7 @@ function DetailProduct() {
   const [isReady, setIsReady] = useState<boolean>(false);
 
   const bringData = async () =>{
-    await axios.post("http://52.77.229.210:3000/users", {
+    await axios.post("/users", {
       // update this function to add product in cart
   
     }).then((res)=>{
@@ -44,7 +38,7 @@ function DetailProduct() {
 
   const fetchDataProductID = async () => {
     await axios
-      .get("http://52.77.229.210:3000/products/1", config)
+      .get("/products/1")
       .then((res) => {
         const { data } = res.data;
         setDataProductID([data]);
