@@ -14,6 +14,7 @@ const LoginPage: React.FC = () => {
    const [auth, setAuth] = useLocalStorage<authTypes[]>('auth',[])
    const [email, setEmail] = useState<string>("")
    const [password, setPassword] = useState<string>("")
+   const isAuthenticated = localStorage.getItem("isAuth");
    useEffect(()=>{      
    },[])
 
@@ -33,13 +34,13 @@ const LoginPage: React.FC = () => {
          console.log(res.status)
          console.log(res) 
          navigate(`/`); 
-         
+      
       })
       .catch((err) => {
          console.log(err);
-         navigate(`/signup`);
      })
-     
+     .finally(() => {setPassword("");
+     setEmail("");});
    } 
 
    const handleEmail = (e: React.ChangeEvent<HTMLInputElement>)=>{
@@ -107,8 +108,8 @@ const LoginPage: React.FC = () => {
             flexDirection:"column",
             gap:"20px",
            }}>
-              <InputText2 textLabel='Email' type='email' onChange={(e)=>handleEmail(e)}/>
-              <InputText2 textLabel='Password' type='password' onChange={(e)=>handlePassword(e)}/>
+              <InputText2 value={email} textLabel='Email' type='email' onChange={(e)=>handleEmail(e)}/>
+              <InputText2 value={password} textLabel='Password' type='password' onChange={(e)=>handlePassword(e)}/>
               {/* <button onClick={fetchData}>Login </button> */}
               <CustomButtonPrimary caption='Login' OnClick={fetchData} />
           </Box>         

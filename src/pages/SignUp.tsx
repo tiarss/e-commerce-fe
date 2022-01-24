@@ -8,8 +8,6 @@ import logo from "../images/Logo-sirclo-white.png";
 import { CustomButtonPrimary } from '../components/CustomButton';
 import { useNavigate } from "react-router-dom";
 
-
-
 const SignUp: React.FC = () => {
   let navigate = useNavigate();   
   const [name, setName] = useState<string>("");
@@ -27,8 +25,12 @@ const SignUp: React.FC = () => {
        console.log(res)
        navigate(`login`);
     })
+    .catch((err) => {
+      console.log(err);
+  })
+  .finally(() => {setPassword(""); setName("");
+  setEmail("");});
  }
-
 
   const handleName = (e: React.ChangeEvent<HTMLInputElement>)=>{
     const value = e.target.value
@@ -42,8 +44,6 @@ const handlePassword = (e: React.ChangeEvent<HTMLInputElement>)=>{
   const value = e.target.value
   setPassword(value)
 }
-
-
   return (
     <Box sx={{
       display: "flex",
@@ -97,18 +97,14 @@ const handlePassword = (e: React.ChangeEvent<HTMLInputElement>)=>{
             flexDirection:"column",
             gap:"20px",
            }}>
-              <InputText2 textLabel='Nama' type='text' onChange={(e)=>handleName(e)}/>
-              <InputText2 textLabel='Email' type='email' onChange={(e)=>handleEmail(e)}/>
-              <InputText2 textLabel='Password' type='password' onChange={(e)=>handlePassword(e)}/>
+              <InputText2 value={name} textLabel='Nama' type='text' onChange={(e)=>handleName(e)}/>
+              <InputText2 value={ email } textLabel='Email' type='email' onChange={(e)=>handleEmail(e)}/>
+              <InputText2 value={password} textLabel='Password' type='password' onChange={(e)=>handlePassword(e)}/>
               <CustomButtonPrimary caption='Sign Up' OnClick={fetchData} />
           </Box>         
-
         </Box>
-
-      </Box>
-      
-    </Box>
-   
+      </Box>      
+    </Box>   
   );
 }
 
