@@ -6,16 +6,26 @@ import {
   CustomButtonPrimary,
   CustomButtonSecondary,
 } from "../components/CustomButton";
-import { dataUserIDTypes } from "../Types";
+import { alertType, dataUserIDTypes } from "../Types";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { InputText2, InputText3 } from "../components/InputText";
 import { useLocalStorage } from "../utils/useLocalStorage";
 import { authTypes } from "../Types";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import "@fontsource/nunito/700.css";
 
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />;
+});
+
 function BiodataDiri() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dataUserDefault: dataUserIDTypes[] = [];
   const [auth, setAuth] = useLocalStorage<authTypes[] | undefined>("auth", []);
 
@@ -33,6 +43,23 @@ function BiodataDiri() {
   const [open, setOpen] = React.useState(false);
   const handleOpenModal = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const [openAlert, setOpenAlert] = React.useState(false);
+  const [alert, setAlert] = useState<alertType>({
+    message: "",
+    status: "info",
+  });
+  // setOpenAlert(true);
+
+  const handleCloseAlert = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenAlert(false);
+  };
 
   const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -105,12 +132,16 @@ function BiodataDiri() {
         setZipcodeUser(data.address.zipcode);
         setStreetUser(data.address.street);
         setImageUser(data.image);
-        console.log(res)
       })
       .catch((err) => {
-        const {data} = err.response;
-        if(data.message === "invalid or expired jwt"){
-          navigate('/login')
+        const { data } = err.response;
+        if (data.message === "invalid or expired jwt") {
+          setAlert({
+            message: "Login Expired",
+            status: "error",
+          });
+          setOpenAlert(true);
+          navigate("/login");
         }
       })
       .finally(() => {
@@ -151,17 +182,32 @@ function BiodataDiri() {
         config
       )
       .then((res) => {
-        console.log(res);
+        const { data } = res;
+        if (data.message === "successful") {
+          setAlert({
+            message: "Data Telah di Update",
+            status: "success",
+          });
+          setOpenAlert(true);
+        }
       })
       .catch((err) => {
-        console.log(err);
+        const { data } = err.response;
+        if (data.message === "invalid or expired jwt") {
+          setAlert({
+            message: "Login Expired",
+            status: "error",
+          });
+          setOpenAlert(true);
+          navigate("/login");
+        }
       })
       .finally(() => {
         fetchDataUserId();
         setOpen(false);
       });
   };
-  
+
   if (isReady) {
     return (
       <Box
@@ -372,6 +418,17 @@ function BiodataDiri() {
             </Box>
           </Box>
         </Modal>
+        <Snackbar
+          open={openAlert}
+          autoHideDuration={6000}
+          onClose={handleCloseAlert}>
+          <Alert
+            onClose={handleCloseAlert}
+            color={alert.status}
+            sx={{ width: "100%" }}>
+            {alert.message}
+          </Alert>
+        </Snackbar>
       </Box>
     );
   } else {

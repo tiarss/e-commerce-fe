@@ -12,19 +12,24 @@ import Modal from "@mui/material/Modal";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import "@fontsource/nunito/700.css";
 import axios from "axios";
-import { dataProductUserTypes } from "../Types";
+import { alertType, authTypes, dataProductUserTypes } from "../Types";
 import { InputText2, InputText3 } from "../components/InputText";
+import { useLocalStorage } from "../utils/useLocalStorage";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
+import { useNavigate } from "react-router-dom";
 
-const token: string =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJlbWFpbCI6ImJhaHRpYXJAZ21haWwuY29tIiwiZXhwIjoxNjQyOTM2MzQyLCJpZCI6NH0.2X67E_RtqR2-7ArahbrKquS3U4ApVCKcwd4Yqf0vwV4";
-const config = {
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
-};
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />;
+});
 
 function Barangku() {
+  const navigate = useNavigate()
   const dataProductDefault: dataProductUserTypes[] = [];
+  const [auth, setAuth] = useLocalStorage<authTypes[]>("auth", []);
 
   const [categoryProduct, setCategoryProduct] = useState<string>("");
   const [nameProduct, setNameProduct] = useState<string>("");
@@ -40,15 +45,41 @@ function Barangku() {
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
 
+  const [openAlert, setOpenAlert] = React.useState(false);
+  const [alert, setAlert] = useState<alertType>({
+    message: "",
+    status: "info",
+  });
+  // setOpenAlert(true);
+
+  const handleCloseAlert = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenAlert(false);
+  };
   useEffect(() => {
     fetchDataProductUser();
   }, []);
 
   const fetchDataProductUser = async () => {
+    let token: string | undefined;
+    let idUser: number | undefined;
+    if (auth === undefined) {
+      token = "";
+      idUser = 0;
+    } else {
+      token = auth[0].token;
+      idUser = auth[0].id;
+    }
+
     await axios
       .get("products", {
         params: {
-          uid: 4,
+          uid: idUser,
         },
         headers: {
           Authorization: `Bearer ${token}`,
@@ -59,7 +90,15 @@ function Barangku() {
         setDataProductUser(data);
       })
       .catch((err) => {
-        console.log(err);
+        const { data } = err.response;
+        if (data.message === "invalid or expired jwt") {
+          setAlert({
+            message: "Login Expired",
+            status: "error",
+          });
+          setOpenAlert(true);
+          navigate("/login");
+        }
       })
       .finally(() => {
         setIsReady(true);
@@ -101,7 +140,7 @@ function Barangku() {
   };
 
   const handleOpenModal = () => {
-    setCurrentId(0)
+    setCurrentId(0);
     setOpen(true);
     setCategoryProduct("");
     setNameProduct("");
@@ -112,6 +151,13 @@ function Barangku() {
   };
 
   const handleAddProduct = () => {
+    let token: string | undefined;
+    if (auth === undefined) {
+      token = "";
+    } else {
+      token = auth[0].token;
+    }
+
     if (currentId === 0) {
       axios
         .post(
@@ -124,7 +170,11 @@ function Barangku() {
             stock: stockProduct,
             image: imageProduct,
           },
-          config
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         )
         .then((res) => {
           console.log(res);
@@ -138,6 +188,12 @@ function Barangku() {
           fetchDataProductUser();
         });
     } else {
+      let token: string | undefined;
+      if (auth === undefined) {
+        token = "";
+      } else {
+        token = auth[0].token;
+      }
       axios
         .put(
           `products/${currentId}`,
@@ -170,11 +226,21 @@ function Barangku() {
   };
 
   const handleEditProduct = (id: number) => {
+    let token: string | undefined;
+    let idUser: number | undefined;
+    if (auth === undefined) {
+      token = "";
+      idUser = 0;
+    } else {
+      token = auth[0].token;
+      idUser = auth[0].id;
+    }
+
     setCurrentId(id);
     axios
       .get(`products/${id}`, {
         params: {
-          uid: 4,
+          uid: idUser,
         },
         headers: {
           Authorization: `Bearer ${token}`,
@@ -198,9 +264,19 @@ function Barangku() {
   };
 
   const handleDeleteProduct = (id: number) => {
-    console.log(id);
+    let token: string | undefined;
+    if (auth === undefined) {
+      token = "";
+    } else {
+      token = auth[0].token;
+    }
+
     axios
-      .delete(`/products/${id}`, config)
+      .delete(`/products/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
         console.log(res);
       })
@@ -239,7 +315,7 @@ function Barangku() {
             OnClick={handleOpenModal}
           />
         </Box>
-        <Box sx={{overflowY: "scroll", height: "400px"}}>
+        <Box sx={{ overflowY: "scroll", height: "400px" }}>
           {dataProductUser.map((value) => (
             <Accordion
               key={value.id}
@@ -369,10 +445,15 @@ function Barangku() {
               boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.250);",
               display: "flex",
               flexDirection: "column",
-              gap: {xs: 1, md: 3},
+              gap: { xs: 1, md: 3 },
               p: 4,
             }}>
-            <Box sx={{ display: "flex", flexDirection: {xs: "column", md: "row"}, gap: {xs: 1, md:3} }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", md: "row" },
+                gap: { xs: 1, md: 3 },
+              }}>
               <Box sx={{ width: "100%" }}>
                 <InputText2
                   textLabel='Nama'
@@ -391,7 +472,12 @@ function Barangku() {
                 />
               </Box>
             </Box>
-            <Box sx={{ display: "flex", flexDirection: {xs: "column", md: "row"},gap: {xs: 1, md:3} }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", md: "row" },
+                gap: { xs: 1, md: 3 },
+              }}>
               <Box sx={{ width: "100%" }}>
                 <InputText2
                   textLabel='Harga'
@@ -441,6 +527,17 @@ function Barangku() {
             </Box>
           </Box>
         </Modal>
+        <Snackbar
+          open={openAlert}
+          autoHideDuration={6000}
+          onClose={handleCloseAlert}>
+          <Alert
+            onClose={handleCloseAlert}
+            color={alert.status}
+            sx={{ width: "100%" }}>
+            {alert.message}
+          </Alert>
+        </Snackbar>
       </Box>
     );
   } else {

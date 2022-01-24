@@ -52,6 +52,11 @@ export type toSendCart = {
   qty?: number
   price?: number
 }
+
+export type alertType = {
+  message: string;
+  status: "error" | "info" | "success" | "warning" | undefined;
+};
 //             "id": 9,
 //             "name": "Nvidia RTx 2080",
 //             "seller": "Bahtiar Subrata",
