@@ -45,6 +45,10 @@ const SignUp: React.FC = () => {
   setEmail("");});
  }
 }
+const login=()=> {
+  navigate(`/login`); 
+
+}
 
   const handleName = (e: React.ChangeEvent<HTMLInputElement>)=>{
     const value = e.target.value
@@ -135,9 +139,20 @@ const handlePassword = (e: React.ChangeEvent<HTMLInputElement>)=>{
               <InputText2 value={ email } textLabel='Email' type='email' onChange={(e)=>handleEmail(e)}/>
               <span style={{ color: "red" }}>{emailError}</span>
               <InputText2 value={password} textLabel='Password' type='password' onChange={(e)=>handlePassword(e)}/>
-              <span style={{ color: "red" }}>{passwordError}</span>
-              <CustomButtonPrimary isDisabled={disabledVal} caption='Sign Up' OnClick={fetchData} />
+              <span style={{ color: "red" }}>{passwordError}</span>              
           </Box>         
+          <Box sx={{ width:{xs:"164px", sm:"220px"},
+            display: "flex",
+            flexDirection:"column",
+            gap:"20px", }}>
+              <CustomButtonPrimary isDisabled={disabledVal} caption='Sign Up' OnClick={fetchData} />
+         </Box>     
+         <Box sx={{ 
+            width:{xs:"327px", sm:"440px"},
+            display: "flex",
+            flexDirection:"row",}}>
+               <p>Have any account? Please <span onClick={login} style={{ color: "#2296CB" }}> Login </span> Here</p>
+         </Box>   
         </Box>
       </Box>      
     </Box>   
