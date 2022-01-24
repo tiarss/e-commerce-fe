@@ -10,24 +10,22 @@ import CardsHome from "../components/CardsHome";
 import "@fontsource/nunito/700.css";
 import Footer from "../components/Footer";
 import axios from "axios";
-import { dataProductTypes, toSendCart } from "../Types";
+import { authTypes, dataProductTypes, toSendCart } from "../Types";
 import { useLocalStorage } from "../utils/useLocalStorage";
 import { useNavigate } from "react-router-dom";
-
 
 function HomePage() {
   const dataProductDefault: dataProductTypes[] = [];
   const [categoryOpenMenu, setCategoryOpenMenu] = useState<null | HTMLElement>(
     null
   );
-  let navigate = useNavigate(); 
-
-  const [addCarts, setAddCarts] = useLocalStorage<dataProductTypes[]>('cart',[])
-  const [toSendCarts, setToSendCarts] = useLocalStorage<toSendCart[]>('storeSend',[])
+  let navigate = useNavigate();
+  const [auth, setAuth] = useLocalStorage<authTypes[] | undefined>("auth", []);
   const [countProducts, setCountProducts] = useState<number>(0);
   const [isReady, setIsReady] = useState<boolean>(false);
 
   const [product, setProduct] = useState(dataProductDefault);
+  const [categoryPage, setCategoryPage] = useState<string>("All Category");
   const openCategory = Boolean(categoryOpenMenu);
 
   const [page, setPage] = React.useState(1);
@@ -36,21 +34,56 @@ function HomePage() {
     fetchDataByPage(value);
   };
 
-  const addtoCart = (id:number)=>{
-    let carts = addCarts
-    if(carts !== undefined){
-      axios.get(`/products/${id}`).then((res)=>{
-        const {data} = res.data
-        carts!.push(data)
-        setAddCarts(carts)
-      })
-    }else{
-      console.log("test")
-    }
-    const idCart = id
-    // setAddCarts()
+  const addtoCart = (id: number) => {
+    let token: string | undefined;
+    let idUser: number | undefined;
 
-  }
+    if (auth === undefined) {
+      token = "";
+      idUser = 0;
+    } else {
+      token = auth[0].token;
+      idUser = auth[0].id;
+    }
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    axios
+      .post(
+        `/carts/${idUser}`,
+        {
+          productid: id,
+        },
+        config
+      )
+      .then((res) => {
+        console.log(res);
+      });
+
+    // const idCart = id
+    // setAddCarts()
+  };
+
+  // const fetchDataByPageCategory = async (page: number) => {
+  //   await axios
+  //     .get("/products", {
+  //       params: {
+  //         p: page,
+  //         category: categoryPage
+  //       },
+  //     })
+  //     .then((res) => {
+  //       const { data } = res.data;
+  //       setProduct(data.products);
+  //       setCountProducts(data.counts)
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   const fetchDataByPage = async (page: number) => {
     await axios
@@ -62,7 +95,7 @@ function HomePage() {
       .then((res) => {
         const { data } = res.data;
         setProduct(data.products);
-        setCountProducts(data.counts)
+        setCountProducts(data.counts);
       })
       .catch((err) => {
         console.log(err);
@@ -79,7 +112,7 @@ function HomePage() {
       .then((res) => {
         const { data } = res.data;
         setProduct(data.products);
-        setCountProducts(data.counts)
+        setCountProducts(data.counts);
       })
       .catch((err) => {
         console.log(err);
@@ -123,7 +156,7 @@ function HomePage() {
       .then((res) => {
         const { data } = res.data;
         setProduct(data.products);
-        setCountProducts(data.counts)
+        setCountProducts(data.counts);
       })
       .catch((err) => {
         console.log(err);
@@ -134,11 +167,9 @@ function HomePage() {
   };
 
   const handleToDetails = (id: number) => {
-    const idProduct:number =id
+    const idProduct: number = id;
     navigate(`/detailproduct/` + id);
-    
   };
-  console.log(product);
 
   if (isReady) {
     return (
@@ -256,7 +287,7 @@ function HomePage() {
               margin: "30px 0px",
             }}>
             <Pagination
-              count={Math.ceil(countProducts/10)}
+              count={Math.ceil(countProducts / 10)}
               variant='outlined'
               shape='rounded'
               page={page}
