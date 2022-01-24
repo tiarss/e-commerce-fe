@@ -24,7 +24,7 @@ function HomePage() {
 
   const [addCarts, setAddCarts] = useLocalStorage<dataProductTypes[]>('cart',[])
   const [toSendCarts, setToSendCarts] = useLocalStorage<toSendCart[]>('storeSend',[])
-  const [countProducts, seCountProducts] = useState<number>(0);
+  const [countProducts, setCountProducts] = useState<number>(0);
   const [isReady, setIsReady] = useState<boolean>(false);
 
   const [product, setProduct] = useState(dataProductDefault);
@@ -62,7 +62,7 @@ function HomePage() {
       .then((res) => {
         const { data } = res.data;
         setProduct(data.products);
-        seCountProducts(data.counts)
+        setCountProducts(data.counts)
       })
       .catch((err) => {
         console.log(err);
@@ -79,7 +79,7 @@ function HomePage() {
       .then((res) => {
         const { data } = res.data;
         setProduct(data.products);
-        seCountProducts(data.counts)
+        setCountProducts(data.counts)
       })
       .catch((err) => {
         console.log(err);
@@ -122,8 +122,8 @@ function HomePage() {
       .get("/products")
       .then((res) => {
         const { data } = res.data;
-        setProduct(data);
-        // seCountProducts(data.counts)
+        setProduct(data.products);
+        setCountProducts(data.counts)
       })
       .catch((err) => {
         console.log(err);
@@ -256,7 +256,7 @@ function HomePage() {
               margin: "30px 0px",
             }}>
             <Pagination
-              count={10}
+              count={Math.ceil(countProducts/10)}
               variant='outlined'
               shape='rounded'
               page={page}
