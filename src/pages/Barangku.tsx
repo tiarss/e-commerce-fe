@@ -42,6 +42,14 @@ function Barangku() {
   const [currentId, setCurrentId] = useState<number>(0);
   const [isReady, setIsReady] = useState<boolean>(false);
 
+  const [nameError, setNameError] = useState<string>("");
+  const [categoryError, setCategoryError] = useState<string>("");
+  const [priceError, setPriceError] = useState<string>("");
+  const [stockError, setStockError] = useState<string>("");
+  const [descriptionError, setDescriptionError] = useState<string>("");
+  const [linkError, setLinkError] = useState<string>("");
+  const [disabled, setDisabled] = useState<boolean>(false);
+
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
 
@@ -117,23 +125,43 @@ function Barangku() {
   const handleChangeCategory = (event: SelectChangeEvent) => {
     const value = event.target.value;
     setCategoryProduct(value);
+    if(event.target.value!==""){
+      setCategoryError("")
+    }
   };
 
   const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setNameProduct(value);
+    var len =event.target.value.length
+    if(len>20){
+     setNameError(" is too long")
+    } 
+    else{
+    setNameError("")
+    }
   };
 
   const handleChangePrice = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     const toNumber = parseInt(value);
     setPriceProduct(toNumber);
+    if(toNumber<1){
+      setPriceError(" has min value 1")
+    }else{
+      setPriceError("")
+    }
   };
 
   const handleChangeStock = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     const toNumber = parseInt(value);
     setStockProduct(toNumber);
+    if(toNumber<1){
+      setPriceError(" has min value 1")
+    }else{
+      setPriceError("")
+    }
   };
 
   const handleChangeDescription = (
@@ -141,11 +169,25 @@ function Barangku() {
   ) => {
     const value = event.target.value;
     setDescriptionProduct(value);
+    var len =event.target.value.length
+    if(len>100){
+     setDescriptionError(" is too long")
+    } 
+    else{
+    setDescriptionError("")
+    }
   };
 
   const handleChangeImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setImageProduct(value);
+    var len =event.target.value.length
+    if(len>100){
+     setLinkError(" is too long")
+    } 
+    else{
+    setLinkError("")
+    }
   };
 
   const handleOpenModal = () => {
@@ -166,6 +208,27 @@ function Barangku() {
     } else {
       token = auth[0].token;
     }
+    if(nameProduct===""){
+      setNameError(" is required")
+   } else if(categoryProduct===""){
+      setCategoryError(" is required")
+   }
+      else if(priceProduct===null){
+      setPriceError(" cannot be null")
+    }
+      else if(stockProduct<1){
+      setCategoryError(" min 1")
+    }
+      else if(descriptionProduct===""){
+      setDescriptionError(" is required")
+    }
+      else if(imageProduct===""){
+      setLinkError(" is required")
+    }
+      else if(nameError==="" && categoryError==="" && 
+      priceError==="" && stockError==="" && descriptionError==="" &&
+      linkError===""){
+       setDisabled(true)
 
     if (currentId === 0) {
       axios
@@ -280,6 +343,7 @@ function Barangku() {
           fetchDataProductUser();
         });
     }
+  }
   };
 
   const handleEditProduct = (id: number) => {
@@ -559,6 +623,7 @@ function Barangku() {
                   type='text'
                   onChange={handleChangeName}
                   value={nameProduct}
+                  errorVal={nameError}
                 />
               </Box>
               <Box sx={{ width: "100%" }}>
@@ -567,6 +632,7 @@ function Barangku() {
                   data={["Processor", "Graphic Card"]}
                   value={categoryProduct}
                   onChange={handleChangeCategory}
+                  errorVal={categoryError}
                 />
               </Box>
             </Box>
@@ -583,6 +649,7 @@ function Barangku() {
                   type='number'
                   onChange={handleChangePrice}
                   value={priceProduct}
+                  errorVal={priceError}
                 />
               </Box>
               <Box sx={{ width: "100%" }}>
@@ -592,6 +659,7 @@ function Barangku() {
                   type='number'
                   onChange={handleChangeStock}
                   value={stockProduct}
+                  errorVal={stockError}
                 />
               </Box>
             </Box>
@@ -603,6 +671,7 @@ function Barangku() {
                   type='text'
                   onChange={handleChangeDescription}
                   value={descriptionProduct}
+                  errorVal={descriptionError}
                 />
               </Box>
             </Box>
@@ -614,6 +683,7 @@ function Barangku() {
                   type='text'
                   onChange={handleChangeImage}
                   value={imageProduct}
+                  errorVal={linkError}
                 />
               </Box>
             </Box>
@@ -621,6 +691,7 @@ function Barangku() {
               <CustomButtonPrimary
                 caption='Tambahkan'
                 OnClick={handleAddProduct}
+                isDisabled={disabled}
               />
             </Box>
           </Box>

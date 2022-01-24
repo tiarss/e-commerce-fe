@@ -12,12 +12,15 @@ import Footer from "../components/Footer";
 import axios from "axios";
 import { dataProductTypes, toSendCart } from "../Types";
 import { useLocalStorage } from "../utils/useLocalStorage";
+import { useNavigate } from "react-router-dom";
+
 
 function HomePage() {
   const dataProductDefault: dataProductTypes[] = [];
   const [categoryOpenMenu, setCategoryOpenMenu] = useState<null | HTMLElement>(
     null
   );
+  let navigate = useNavigate(); 
 
   const [addCarts, setAddCarts] = useLocalStorage<dataProductTypes[]>('cart',[])
   const [toSendCarts, setToSendCarts] = useLocalStorage<toSendCart[]>('storeSend',[])
@@ -131,7 +134,8 @@ function HomePage() {
   };
 
   const handleToDetails = (id: number) => {
-
+    const idProduct:number =id
+    navigate(`/detailproduct/` + id);
     
   };
   console.log(product);
