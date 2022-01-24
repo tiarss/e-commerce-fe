@@ -29,25 +29,38 @@ function DetailProduct(props:any) {
   let navigate = useNavigate(); 
   
   const addToCart = async () =>{
-    let idUser: number|undefined;
-    let productId = parseInt(`${props.params.id}`)
+let token: string | undefined;
+    let idUser: number | undefined;
+    let id = parseInt(`${props.params.id}`)
+
     if (auth === undefined) {
-      navigate(`/login`);      
+      token = "";
+      idUser = 0;
     } else {
-      idUser = auth[0]?.id;  
-      if(idUser===undefined){
-        navigate(`/login`);
-      }
-      console.log(idUser)    
-    
-    await axios.post(`/carts/{idUser}`, {
-      "productid" :productId    
-  
-    }).then((res)=>{
-       console.log(res)
-    })
-  }
- }
+      token = auth[0].token;
+      idUser = auth[0].id;
+    }
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    axios
+      .post(
+        `/carts/${idUser}`,
+        {
+          productid: id,
+        },
+        config
+      )
+      .then((res) => {
+        console.log(res);
+      });
+
+    // const idCart = id
+    // setAddCarts()
+  };
 
   useEffect(() => {
     fetchDataProductID();

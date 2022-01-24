@@ -22,7 +22,6 @@ const LoginPage: React.FC = () => {
    useEffect(()=>{      
    },[])
 
-
    const fetchData = async () =>{
       if(email===""){
          setEmailError("Email is required")
@@ -53,6 +52,10 @@ const LoginPage: React.FC = () => {
      setEmail("");});
    }
    } 
+   const signUp=()=> {
+      navigate(`/signup`); 
+
+   }
 
    const handleEmail = (e: React.ChangeEvent<HTMLInputElement>)=>{
       const value = (e.target.value)
@@ -75,7 +78,6 @@ const LoginPage: React.FC = () => {
          setEmailError("")
       }
    }
-
 
   return( 
    <div>
@@ -133,9 +135,21 @@ const LoginPage: React.FC = () => {
                <span style={{ color: "red" }}>{emailError}</span>
               <InputText2  textLabel='Password' type='password' onChange={(e)=>handlePassword(e)}/>
               <span style={{ color: "red" }}>{passwordError}</span>
-              {/* <button onClick={fetchData}>Login </button> */}
+              {/* <button onClick={fetchData}>Login </button> */}             
+              
+          </Box> 
+          <Box sx={{ width:{xs:"164px", sm:"220px"},
+            display: "flex",
+            flexDirection:"column",
+            gap:"20px", }}>
               <CustomButtonPrimary isDisabled={disabledVal} caption='Login' OnClick={fetchData} />
-          </Box>         
+         </Box>     
+         <Box sx={{ 
+            width:{xs:"327px", sm:"440px"},
+            display: "flex",
+            flexDirection:"row",}}>
+               <p>Don’t have any account? Please <span onClick={signUp} style={{ color: "#2296CB" }}> Sign Up </span> Here</p>
+         </Box>   
 
         </Box>
 
