@@ -9,21 +9,32 @@ import { useLocalStorage } from "../utils/useLocalStorage";
 import { authTypes } from "../Types";
 import { useNavigate } from "react-router-dom";
 
+
 const LoginPage: React.FC = () => {
    let navigate = useNavigate(); 
    const [auth, setAuth] = useLocalStorage<authTypes[]>('auth',[])
    const [email, setEmail] = useState<string>("")
    const [password, setPassword] = useState<string>("")
+   const [emailError, setEmailError] = useState<string>("")
+   const [passwordError, setPasswordError] = useState<string>("")
+   const [disabledVal, setDisabled] = useState<boolean>(false)
    const isAuthenticated = localStorage.getItem("isAuth");
    useEffect(()=>{      
    },[])
 
 
    const fetchData = async () =>{
+      if(email===""){
+         setEmailError("Email is required")
+      } else if(password===""){
+         setPasswordError("Password is required")
+      }
+       else if(emailError==="" ){
+          setDisabled(true)          
       await axios.post("/login", {
          email: email,
          password: password
-      }).then((res)=>{
+      }) .then((res)=>{
          
          const {data} = res.data
          setAuth([{
@@ -31,26 +42,38 @@ const LoginPage: React.FC = () => {
             token: data.token,
             isAuth: true
          }])
-         console.log(res.status)
          console.log(res) 
-         navigate(`/`); 
-      
+         navigate(`/`);      
       })
       .catch((err) => {
          console.log(err);
+         console.log(email,password)
      })
-     .finally(() => {setPassword("");
+     .finally(() => {setPassword("");setEmailError(""); setPasswordError("");
      setEmail("");});
+   }
    } 
 
    const handleEmail = (e: React.ChangeEvent<HTMLInputElement>)=>{
-      const value = e.target.value
-      setEmail(value)
+      const value = (e.target.value)
+      setEmail(value)      
+      let regexpEmail = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$');
+      if(!regexpEmail.test(e.target.value)){
+         setEmailError("it's not an email bro")
+      }else{
+         setEmailError("")
+      }      
    }
    
    const handlePassword = (e: React.ChangeEvent<HTMLInputElement>)=>{
       const value = e.target.value
       setPassword(value)
+      var len = e.target.value.length
+      if(len>20){
+         setEmailError("your's is too long")
+      }else{
+         setEmailError("")
+      }
    }
 
 
@@ -82,7 +105,7 @@ const LoginPage: React.FC = () => {
           justifyContent:"center",
           alignItems:"center"   
          }}>
-        <img style={{ width:"100%" }} src={logo} alt='logo-sirclo' />      
+        <img style={{ width:"100%" }} src={logo} alt='logo-sirclo' />    
 
         </Box>
       </Box>
@@ -92,14 +115,12 @@ const LoginPage: React.FC = () => {
          alignItems: "center",
          fontFamily: "Nunito",
          height:"600px",
-         justifyContent:"center",
-         
+         justifyContent:"center",         
     }}>
         <Box sx={{ 
           display: "flex",
           flexDirection:"column",
-          gap:"20px",
-         
+          gap:"20px",         
          }}>
           <h1 style={{ color:"#309DCE", fontSize:"48px", }}>Login</h1>
           <Box sx={{ 
@@ -108,10 +129,12 @@ const LoginPage: React.FC = () => {
             flexDirection:"column",
             gap:"20px",
            }}>
-              <InputText2 value={email} textLabel='Email' type='email' onChange={(e)=>handleEmail(e)}/>
-              <InputText2 value={password} textLabel='Password' type='password' onChange={(e)=>handlePassword(e)}/>
+               <InputText2  textLabel='Email' type='email' onChange={(e)=>handleEmail(e)}/>
+               <span style={{ color: "red" }}>{emailError}</span>
+              <InputText2  textLabel='Password' type='password' onChange={(e)=>handlePassword(e)}/>
+              <span style={{ color: "red" }}>{passwordError}</span>
               {/* <button onClick={fetchData}>Login </button> */}
-              <CustomButtonPrimary caption='Login' OnClick={fetchData} />
+              <CustomButtonPrimary isDisabled={disabledVal} caption='Login' OnClick={fetchData} />
           </Box>         
 
         </Box>
