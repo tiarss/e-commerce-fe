@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import Header from "../components/Header";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
+import { Avatar } from "@mui/material";
 
 import "@fontsource/nunito/700.css";
 import BiodataDiri from "./BiodataDiri";
@@ -35,11 +36,7 @@ function ProfilePage() {
               overflow: "hidden",
               borderRadius: "60px",
             }}>
-            <img
-              style={{ width: "100%" }}
-              src='https://cdn3.vectorstock.com/i/1000x1000/01/77/businesswoman-character-avatar-icon-vector-12800177.jpg'
-              alt='avatar-user'
-            />
+            <Avatar sx={{ width: "60px", height: "60px" }} />
           </Box>
           <Typography
             sx={{

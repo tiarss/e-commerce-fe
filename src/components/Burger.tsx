@@ -10,12 +10,16 @@ import Tooltip from "@mui/material/Tooltip";
 import LoginRounded from "@mui/icons-material/LoginRounded";
 import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import Avatar from "@mui/material/Avatar";
 import Logout from "@mui/icons-material/Logout";
 import "@fontsource/nunito/700.css";
-import { burgerProps } from "../Types";
+import { authTypes, burgerProps } from "../Types";
+import { useNavigate } from "react-router-dom";
+import { useLocalStorage } from "../utils/useLocalStorage";
 
-function Burger({isAuth}: burgerProps) {
+function Burger({ isAuth, name, onLogOut }: burgerProps) {
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -24,6 +28,22 @@ function Burger({isAuth}: burgerProps) {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const toLogin = () => {
+    navigate("/login");
+  };
+
+  const toShopping = () => {
+    navigate("/shop");
+  };
+
+  const toProfile = () => {
+    navigate("/profilepage");
+  };
+
+  const toHome = () => {
+    navigate("/");
   };
 
   return (
@@ -38,11 +58,9 @@ function Burger({isAuth}: burgerProps) {
             aria-haspopup='true'
             aria-expanded={open ? "true" : undefined}>
             <MenuIcon sx={{ width: 32, height: 32 }} />
-            {/* <Avatar sx={{ width: 32, height: 32 }}>M</Avatar> */}
           </IconButton>
         </Tooltip>
       </Box>
-
       <Menu
         anchorEl={anchorEl}
         id='account-menu'
@@ -77,28 +95,39 @@ function Burger({isAuth}: burgerProps) {
         }}
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}>
-        {/* <MenuItem>
-          <Avatar /> Profile
-        </MenuItem> */}
-        <MenuItem>
+        <MenuItem
+          sx={{ display: `${isAuth ? "flex" : "none"}` }}
+          onClick={toProfile}>
+          <Avatar />
+          <Typography>{name?.substring(0, 7) + "..."}</Typography>
+        </MenuItem>
+        <MenuItem onClick={toShopping}>
           <ListItemIcon>
             <ShoppingCartOutlinedIcon fontSize='small' />
           </ListItemIcon>
           <Typography sx={{ fontFamily: "Nunito" }}>My Cart</Typography>
         </MenuItem>
+        <MenuItem onClick={toHome}>
+          <ListItemIcon>
+            <HomeRoundedIcon fontSize='small' />
+          </ListItemIcon>
+          <Typography sx={{ fontFamily: "Nunito" }}>Home</Typography>
+        </MenuItem>
         <Divider />
-        <MenuItem>
+        <MenuItem
+          onClick={toLogin}
+          sx={{ display: `${isAuth ? "none" : "flex"}` }}>
           <ListItemIcon>
             <LoginRounded fontSize='small' />
           </ListItemIcon>
           <Typography sx={{ fontFamily: "Nunito" }}>Login</Typography>
         </MenuItem>
-        {/* <MenuItem>
+        <MenuItem onClick={onLogOut} sx={{ display: `${isAuth ? "flex" : "none"}` }}>
           <ListItemIcon>
             <Logout fontSize='small' />
           </ListItemIcon>
           Logout
-        </MenuItem> */}
+        </MenuItem>
       </Menu>
     </Box>
   );

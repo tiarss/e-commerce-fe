@@ -27,7 +27,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 function Barangku() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dataProductDefault: dataProductUserTypes[] = [];
   const [auth, setAuth] = useLocalStorage<authTypes[]>("auth", []);
 
@@ -96,8 +96,17 @@ function Barangku() {
             message: "Login Expired",
             status: "error",
           });
+          setAuth([
+            {
+              id: 0,
+              token: "",
+              isAuth: false,
+            },
+          ]);
           setOpenAlert(true);
-          navigate("/login");
+          setTimeout(() => {
+            navigate("/login");
+          }, 2000);
         }
       })
       .finally(() => {
@@ -177,10 +186,34 @@ function Barangku() {
           }
         )
         .then((res) => {
-          console.log(res);
+          const { data } = res;
+          if (data.message === "successful") {
+            setAlert({
+              message: "Barang Telah di Tambahkan",
+              status: "success",
+            });
+            setOpenAlert(true);
+          }
         })
         .catch((err) => {
-          console.log(err);
+          const { data } = err.response;
+          if (data.message === "invalid or expired jwt") {
+            setAlert({
+              message: "Login Expired",
+              status: "error",
+            });
+            setAuth([
+              {
+                id: 0,
+                token: "",
+                isAuth: false,
+              },
+            ]);
+            setOpenAlert(true);
+            setTimeout(() => {
+              navigate("/login");
+            }, 2000);
+          }
         })
         .finally(() => {
           setOpen(false);
@@ -212,10 +245,34 @@ function Barangku() {
           }
         )
         .then((res) => {
-          console.log(res);
+          const { data } = res;
+          if (data.message === "successful") {
+            setAlert({
+              message: "Barang Telah di Edit",
+              status: "warning",
+            });
+            setOpenAlert(true);
+          }
         })
         .catch((err) => {
-          console.log(err);
+          const { data } = err.response;
+          if (data.message === "invalid or expired jwt") {
+            setAlert({
+              message: "Login Expired",
+              status: "error",
+            });
+            setAuth([
+              {
+                id: 0,
+                token: "",
+                isAuth: false,
+              },
+            ]);
+            setOpenAlert(true);
+            setTimeout(() => {
+              navigate("/login");
+            }, 2000);
+          }
         })
         .finally(() => {
           setOpen(false);
@@ -256,7 +313,24 @@ function Barangku() {
         setImageProduct(data.image);
       })
       .catch((err) => {
-        console.log(err);
+        const { data } = err.response;
+        if (data.message === "invalid or expired jwt") {
+          setAlert({
+            message: "Login Expired",
+            status: "error",
+          });
+          setAuth([
+            {
+              id: 0,
+              token: "",
+              isAuth: false,
+            },
+          ]);
+          setOpenAlert(true);
+          setTimeout(() => {
+            navigate("/login");
+          }, 2000);
+        }
       })
       .finally(() => {
         setOpen(true);
@@ -278,10 +352,34 @@ function Barangku() {
         },
       })
       .then((res) => {
-        console.log(res);
+        const { data } = res;
+        if (data.message === "successful") {
+          setAlert({
+            message: "Barang Telah di Hapus",
+            status: "error",
+          });
+          setOpenAlert(true);
+        }
       })
       .catch((err) => {
-        console.log(err);
+        const { data } = err.response;
+        if (data.message === "invalid or expired jwt") {
+          setAlert({
+            message: "Login Expired",
+            status: "error",
+          });
+          setAuth([
+            {
+              id: 0,
+              token: "",
+              isAuth: false,
+            },
+          ]);
+          setOpenAlert(true);
+          setTimeout(() => {
+            navigate("/login");
+          }, 2000);
+        }
       })
       .finally(() => {
         fetchDataProductUser();

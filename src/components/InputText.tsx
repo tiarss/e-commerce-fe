@@ -138,8 +138,8 @@ function InputText3({label, onChange, data,value,placeholder,errorVal}: inputSel
           onChange={onChange}
           input={<BootstrapInput placeholder= {placeholder} />}
         >
-          {data !== undefined ? data.map((datas)=>(
-            <MenuItem value={datas}>{datas}</MenuItem>
+          {data !== undefined ? data.map((datas, index)=>(
+            <MenuItem key={index} value={datas}>{datas}</MenuItem>
           )) : <MenuItem value="kosong">Kosong</MenuItem>}
         </Select>
       </FormControl>

@@ -45,6 +45,8 @@ export type authTypes = {
 
 export type burgerProps = {
   isAuth?: boolean,
+  name?: string
+  onLogOut?: ()=>void
 }
 
 export type toSendCart = {

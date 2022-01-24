@@ -13,6 +13,7 @@ import { useLocalStorage } from "../utils/useLocalStorage";
 import { authTypes } from "../Types";
 import { useNavigate } from "react-router-dom";
 import "@fontsource/nunito/700.css";
+import Avatar from "@mui/material/Avatar";
 
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
@@ -39,15 +40,15 @@ function BiodataDiri() {
   const [zipcodeUser, setZipcodeUser] = useState<string>("");
   const [imageUser, setImageUser] = useState<string>("");
 
-  const [nameError, setNameError] = useState<string>("")
-  const [emailError, setEmailError] = useState<string>("")
-  const [cityError, setCityError] = useState<string>("")
-  const [provinceError, setProvinceError] = useState<string>("")
-  const [kodeposError, setKodeposError] = useState<string>("")
-  const [alamatError, setAlamatError] = useState<string>("")
-  const [linkError, setLinkError] = useState<string>("")
+  const [nameError, setNameError] = useState<string>("");
+  const [emailError, setEmailError] = useState<string>("");
+  const [cityError, setCityError] = useState<string>("");
+  const [provinceError, setProvinceError] = useState<string>("");
+  const [kodeposError, setKodeposError] = useState<string>("");
+  const [alamatError, setAlamatError] = useState<string>("");
+  const [linkError, setLinkError] = useState<string>("");
 
-   const [disabledVal, setDisabled] = useState<boolean>(false)
+  const [disabledVal, setDisabled] = useState<boolean>(false);
 
   const [isReady, setIsReady] = useState<boolean>(false);
   const [open, setOpen] = React.useState(false);
@@ -59,7 +60,6 @@ function BiodataDiri() {
     message: "",
     status: "info",
   });
-  // setOpenAlert(true);
 
   const handleCloseAlert = (
     event?: React.SyntheticEvent | Event,
@@ -74,75 +74,69 @@ function BiodataDiri() {
   const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setNameUser(value);
-    var len =event.target.value.length
-    if(len>20){
-     setNameError(" is too long")
-    } else if(len>=0){
-    setNameError("")
+    var len = event.target.value.length;
+    if (len > 20) {
+      setNameError(" is too long");
+    } else if (len >= 0) {
+      setNameError("");
+    } else {
+      setNameError("");
     }
-    else{
-    setNameError("")
-    }
-
   };
 
   const handleChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setEmailUser(value);
-    let regexpEmail = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$');
-      if(!regexpEmail.test(event.target.value)){
-         setEmailError(" is invalid")
-      }else{
-         setEmailError("")
-      }      
+    let regexpEmail = new RegExp("^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$");
+    if (!regexpEmail.test(event.target.value)) {
+      setEmailError(" is invalid");
+    } else {
+      setEmailError("");
+    }
   };
 
   const handleChangeCity = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setCityUser(value);
-    var len =event.target.value.length
-    if(len>20){
-      setCityError("is too long")
-     } 
-     else{
-     setCityError("")
-     }
+    var len = event.target.value.length;
+    if (len > 20) {
+      setCityError("is too long");
+    } else {
+      setCityError("");
+    }
   };
 
   const handleChangeProvince = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setProvinceUser(value);
-    var len =event.target.value.length
-    if(len>20){
-     setProvinceError(" is too long")
-     }
-     else{
-     setProvinceError("")
-     }
+    var len = event.target.value.length;
+    if (len > 20) {
+      setProvinceError(" is too long");
+    } else {
+      setProvinceError("");
+    }
   };
 
   const handleChangeZipcode = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setZipcodeUser(value);
-    var len =event.target.value.length
-    if(len>20){
-     setKodeposError(" is too long")
-     }
-     else{
-     setKodeposError("")
-     }
+    var len = event.target.value.length;
+    if (len > 20) {
+      setKodeposError(" is too long");
+    } else {
+      setKodeposError("");
+    }
   };
 
   const handleChangeStreet = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setStreetUser(value);
-    var len =event.target.value.length
-     if(len>20){
-     setAlamatError(" is too long")
-     }
-     else{
-     setAlamatError("")
-     }
+    var len = event.target.value.length;
+    if (len > 20) {
+      setAlamatError(" is too long");
+    } else {
+      setAlamatError("");
+    }
   };
 
   const handleChangeGender = (event: SelectChangeEvent) => {
@@ -152,13 +146,12 @@ function BiodataDiri() {
   const handleChangeImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setImageUser(value);
-    var len =event.target.value.length
-    if(len>100){
-     setLinkError(" is too long")
-     }
-     else{
-     setLinkError("")
-     }
+    var len = event.target.value.length;
+    if (len > 100) {
+      setLinkError(" is too long");
+    } else {
+      setLinkError("");
+    }
   };
 
   useEffect(() => {
@@ -201,8 +194,17 @@ function BiodataDiri() {
             message: "Login Expired",
             status: "error",
           });
+          setAuth([
+            {
+              id: 0,
+              token: "",
+              isAuth: false,
+            },
+          ]);
           setOpenAlert(true);
-          navigate("/login");
+          setTimeout(() => {
+            navigate("/login");
+          }, 2000);
         }
       })
       .finally(() => {
@@ -226,55 +228,64 @@ function BiodataDiri() {
       },
     };
 
-    if(nameUser===""){
-      setNameError(" is required")
-   } else if(emailUser===""){
-      setEmailError(" is required")
-   }
-    else if(emailError==="" ){
-       setDisabled(true)      
-    axios
-      .put(
-        `users/${id}`,
-        {
-          name: nameUser,
-          email: emailUser,
-          gender: genderUser,
-          address: {
-            city: cityUser,
-            province: provinceUser,
-            zipcode: zipcodeUser,
-            street: streetUser,
+    if (nameUser === "") {
+      setNameError(" is required");
+    } else if (emailUser === "") {
+      setEmailError(" is required");
+    } else if (emailError === "") {
+      setDisabled(true);
+      axios
+        .put(
+          `users/${id}`,
+          {
+            name: nameUser,
+            email: emailUser,
+            gender: genderUser,
+            address: {
+              city: cityUser,
+              province: provinceUser,
+              zipcode: zipcodeUser,
+              street: streetUser,
+            },
+            image: imageUser,
           },
-          image: imageUser,
-        },
-        config
-      )
-      .then((res) => {
-        const { data } = res;
-        if (data.message === "successful") {
-          setAlert({
-            message: "Data Telah di Update",
-            status: "success",
-          });
-          setOpenAlert(true);
-        }
-      })
-      .catch((err) => {
-        const { data } = err.response;
-        if (data.message === "invalid or expired jwt") {
-          setAlert({
-            message: "Login Expired",
-            status: "error",
-          });
-          setOpenAlert(true);
-          navigate("/login");
-        }
-      })
-      .finally(() => {
-        fetchDataUserId();
-        setOpen(false);
-      });
+          config
+        )
+        .then((res) => {
+          const { data } = res;
+          if (data.message === "successful") {
+            setAlert({
+              message: "Data Telah di Update",
+              status: "success",
+            });
+            setOpenAlert(true);
+          }
+        })
+        .catch((err) => {
+          const { data } = err.response;
+          if (data.message === "invalid or expired jwt") {
+            setAlert({
+              message: "Login Expired",
+              status: "error",
+            });
+            setAuth([
+              {
+                id: 0,
+                token: "",
+                isAuth: false,
+              },
+            ]);
+            setOpenAlert(true);
+            setTimeout(() => {
+              navigate("/login");
+            }, 2000);
+          }
+        })
+        .finally(() => {
+          window.location.reload();
+          fetchDataUserId();
+          setOpen(false);
+        });
     }
   };
 
@@ -306,19 +317,7 @@ function BiodataDiri() {
               overflow: "hidden",
               borderRadius: "60px",
             }}>
-            {dataUserID[0].image === "" ? (
-              <img
-                style={{ width: "100%" }}
-                src='https://cdn3.vectorstock.com/i/1000x1000/01/77/businesswoman-character-avatar-icon-vector-12800177.jpg'
-                alt='avatar-user'
-              />
-            ) : (
-              <img
-                style={{ width: "100%" }}
-                src={dataUserID[0].image}
-                alt='avatar-user1'
-              />
-            )}
+           <Avatar src={dataUserID[0].image}  sx={{ width: "100px", height: "100px" }} />
           </Box>
         </Box>
         <Box
@@ -405,7 +404,7 @@ function BiodataDiri() {
                 fontSize: "28px",
               }}>
               Edit Biodata
-            </Typography>            
+            </Typography>
             <Box sx={{ display: "flex", gap: 3, width: "100%" }}>
               <Box sx={{ width: "100%" }}>
                 <InputText2
@@ -417,7 +416,7 @@ function BiodataDiri() {
                   value={nameUser}
                 />
               </Box>
-              
+
               <Box sx={{ width: "100%" }}>
                 <InputText3
                   label='Gender'
@@ -492,7 +491,11 @@ function BiodataDiri() {
               />
             </Box>
             <Box>
-              <CustomButtonPrimary isDisabled={disabledVal} caption='Simpan' OnClick={handleEditUser} />
+              <CustomButtonPrimary
+                isDisabled={disabledVal}
+                caption='Simpan'
+                OnClick={handleEditUser}
+              />
             </Box>
           </Box>
         </Modal>

@@ -13,7 +13,7 @@ import axios from 'axios'
 import ProtectedRoute from '../utils/ProtectedRoute'
 
 
-axios.defaults.baseURL="http://52.77.229.210:3000"
+axios.defaults.baseURL="http://54.151.143.39:3000"
 const route=()=> {
     return (    
         <Box>
