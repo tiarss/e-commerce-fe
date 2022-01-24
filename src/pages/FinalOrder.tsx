@@ -214,15 +214,17 @@ function FinalOrder() {
         },
       };
       await axios
-        .put(`/carts/${id}`, config)
+        .get(`/carts/${id}`, config)
         .then((res) => {
           const { data } = res.data;    
           // setQtyOrder(data.products);
           setShippingOrder("free");  
           setPriceOrder(data.totalprice);   
           setIdCart(data.id)
+          console.log(data)
         })
         .catch((err) => {
+          console.log(err)
           const { data } = err.response;
           if (data.message === "invalid or expired jwt") {
             setAlert({
