@@ -29,7 +29,7 @@ function FinalOrder() {
   const [zipCodeError, setZipCodeError] = useState<string>("");
   const [cardError, setCardError] = useState<string>("");
 
-  const [disabled, setDisabled] = useState<boolean>(false);
+  const [disabled, setDisabled] = useState<boolean>(true);
   const [isReady, setIsReady] = useState<boolean>(false);
   const navigate = useNavigate();
   const dataUserDefault: dataUserIDTypes[] = [];
@@ -140,6 +140,24 @@ function FinalOrder() {
         Authorization: `Bearer ${token}`,
       },
     };
+    if(streetOrder===""){
+      setStreetError(" is required")
+   } else if(cityOrder===""){
+      setCityError(" is required")
+   }
+      else if(provinceOrder===null){
+      setProvinceError(" cannot be null")
+    }
+      else if(zipCodeOrder===""){
+      setZipCodeError(" min 1")
+    }
+      else if(cardOrder===""){
+      setCardError(" is required")
+    }
+     else if(streetError==="" && cityError==="" && 
+      provinceError==="" && zipCodeError==="" && cardError==="" ){
+       setDisabled(false)
+
     await axios
       .put(`/carts/${id}/${idCart}`,
       {
@@ -177,6 +195,7 @@ function FinalOrder() {
       .finally(() => {
         setIsReady(true);
       });
+    }
     }
 
     const fetchData = async () => {
