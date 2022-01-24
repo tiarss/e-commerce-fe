@@ -311,7 +311,7 @@ function FinalOrder() {
           }}>
           <Box></Box>
           <Box>
-            <SummaryDetail qty={qty} shipping={shipping} sumPrice={price} />
+            <SummaryDetail qty={parseInt(qty)} shipping={shipping} sumPrice={parseInt(price)} />
           </Box>
         </Box>
         <Box

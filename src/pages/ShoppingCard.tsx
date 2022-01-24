@@ -29,7 +29,7 @@ const ShoppingCard: React.FC = (props) => {
             display: "flex",
           }}>
           <Box>
-            <SummaryDetail qty={4} shipping='0' sumPrice={40000} />
+            {/* <SummaryDetail qty={4} shipping='0' sumPrice={40000} /> */}
           </Box>
         </Box>
         <Box sx={{display: "flex", gap: 3 , justifyContent: "flex-end", marginTop: "20px"}}>
