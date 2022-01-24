@@ -15,7 +15,7 @@ function CardsHome({
 }: {
   image?: string;
   name?: string;
-  price?: number;
+  price?: number | bigint;
   OnClick?: () => void;
   AddCart?: () => void;
 }) {
@@ -73,7 +73,7 @@ function CardsHome({
               fontWeight: "700",
             }}>
             {/* replace productPrice with price props*/}
-            {price}
+            {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(price!)}
           </Typography>
         </Box>
         <Box>
