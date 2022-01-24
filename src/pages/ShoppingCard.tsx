@@ -9,7 +9,6 @@ import { CustomButtonPrimary } from "../components/CustomButton";
 const ShoppingCard: React.FC = (props) => {
   return (
     <Box>
-      <Header />
       <Box sx={{ minHeight: "80vh", padding: { xs: "10px", sm: "20px", md: "50px" } }}>
         <Box>
           <h1 style={{ color: "#309DCE", fontSize: "130%" }}>

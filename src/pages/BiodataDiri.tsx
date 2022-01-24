@@ -108,7 +108,10 @@ function BiodataDiri() {
         console.log(res)
       })
       .catch((err) => {
-        console.log(err.response);
+        const {data} = err.response;
+        if(data.message === "invalid or expired jwt"){
+          navigate('/login')
+        }
       })
       .finally(() => {
         setIsReady(true);
@@ -158,7 +161,7 @@ function BiodataDiri() {
         setOpen(false);
       });
   };
-  console.log(dataUserID[0]);
+  
   if (isReady) {
     return (
       <Box

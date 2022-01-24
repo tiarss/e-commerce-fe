@@ -11,11 +11,13 @@ function CardsHome({
   name,
   price,
   OnClick,
+  AddCart,
 }: {
   image?: string;
   name?: string;
   price?: number;
   OnClick?: () => void;
+  AddCart?: () => void;
 }) {
   return (
     <Box
@@ -77,6 +79,7 @@ function CardsHome({
         <Box>
           <Tooltip title='Add to Cart'>
             <IconButton
+              onClick={AddCart}
               size='small'
               sx={{
                 display: { xs: "inline-flex", sm: "none" },
@@ -93,6 +96,7 @@ function CardsHome({
           </Tooltip>
           <Tooltip title='Add to Cart'>
             <IconButton
+              onClick={AddCart}
               size='medium'
               sx={{
                 display: { xs: "none", sm: "inline-flex" },

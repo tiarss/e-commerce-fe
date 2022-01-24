@@ -18,7 +18,6 @@ const config = {
 function FinalOrder() {
   return (
     <Box>
-      <Header />
       <Box
         sx={{
           padding: { xs: "5%", sm: "10%", md: "5% 20%" },

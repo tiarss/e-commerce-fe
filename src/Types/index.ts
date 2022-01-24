@@ -47,7 +47,11 @@ export type burgerProps = {
   isAuth?: boolean,
 }
 
-
+export type toSendCart = {
+  id?: string
+  qty?: number
+  price?: number
+}
 //             "id": 9,
 //             "name": "Nvidia RTx 2080",
 //             "seller": "Bahtiar Subrata",

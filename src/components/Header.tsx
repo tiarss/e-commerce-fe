@@ -56,6 +56,14 @@ function Header() {
         setUserImage(data.image);
       })
       .catch((err) => {
+        const {data} = err.response
+        if(data.message === "invalid or expired jwt"){
+          setAuth([{
+            id: 0,
+            token: "",
+            isAuth: false
+          }])
+        }
         console.log(err.response);
       })
       .finally(() => {
@@ -67,15 +75,19 @@ function Header() {
   return (
     <Box
       sx={{
+        position: "sticky",
+        top: "0",
+        zIndex: "2",
         display: "flex",
         height: "80px",
+        backgroundColor: "white",
         padding: { xs: "17px 20px", sm: "10px 50px" },
         boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.250);",
         justifyContent: "space-between",
         alignItems: "center",
       }}>
       <Box sx={{ display: { xs: "none", md: "block" } }}>
-        <img style={{ height: "40px" }} src={logo} alt='logo-sirclo' />
+        <img style={{ height: "40px", cursor:"pointer" }} src={logo} alt='logo-sirclo' onClick={()=> navigate('/')}/>
       </Box>
       <Box>
         <Box
@@ -123,7 +135,7 @@ function Header() {
           <Typography sx={{ color: "white" }}>2</Typography>
         </Box>
         {isAuth? (
-          <Box sx={{display: "flex", alignItems: "center"}} onClick={()=> navigate('/profilePage')}>
+          <Box sx={{display: "flex", alignItems: "center", cursor:"pointer"}} onClick={()=> navigate('/profilePage')}>
             <Box sx={{width: "40px", height: "40px", borderRadius: "20px", overflow: "hidden"}}>
               <img style={{width: "40px"}} src={userImage} alt="" />
             </Box>

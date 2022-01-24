@@ -10,13 +10,18 @@ import CardsHome from "../components/CardsHome";
 import "@fontsource/nunito/700.css";
 import Footer from "../components/Footer";
 import axios from "axios";
-import { dataProductTypes } from "../Types";
+import { dataProductTypes, toSendCart } from "../Types";
+import { useLocalStorage } from "../utils/useLocalStorage";
 
 function HomePage() {
   const dataProductDefault: dataProductTypes[] = [];
   const [categoryOpenMenu, setCategoryOpenMenu] = useState<null | HTMLElement>(
     null
   );
+
+  const [addCarts, setAddCarts] = useLocalStorage<dataProductTypes[]>('cart',[])
+  const [toSendCarts, setToSendCarts] = useLocalStorage<toSendCart[]>('storeSend',[])
+  const [countProducts, seCountProducts] = useState<number>(0);
   const [isReady, setIsReady] = useState<boolean>(false);
 
   const [product, setProduct] = useState(dataProductDefault);
@@ -28,6 +33,22 @@ function HomePage() {
     fetchDataByPage(value);
   };
 
+  const addtoCart = (id:number)=>{
+    let carts = addCarts
+    if(carts !== undefined){
+      axios.get(`/products/${id}`).then((res)=>{
+        const {data} = res.data
+        carts!.push(data)
+        setAddCarts(carts)
+      })
+    }else{
+      console.log("test")
+    }
+    const idCart = id
+    // setAddCarts()
+
+  }
+
   const fetchDataByPage = async (page: number) => {
     await axios
       .get("/products", {
@@ -37,7 +58,8 @@ function HomePage() {
       })
       .then((res) => {
         const { data } = res.data;
-        setProduct(data);
+        setProduct(data.products);
+        seCountProducts(data.counts)
       })
       .catch((err) => {
         console.log(err);
@@ -53,7 +75,8 @@ function HomePage() {
       })
       .then((res) => {
         const { data } = res.data;
-        setProduct(data);
+        setProduct(data.products);
+        seCountProducts(data.counts)
       })
       .catch((err) => {
         console.log(err);
@@ -96,7 +119,8 @@ function HomePage() {
       .get("/products")
       .then((res) => {
         const { data } = res.data;
-        setProduct(data);
+        setProduct(data.products);
+        seCountProducts(data.counts)
       })
       .catch((err) => {
         console.log(err);
@@ -216,6 +240,7 @@ function HomePage() {
                   image={value.image}
                   price={value.price}
                   OnClick={() => handleToDetails(value.id)}
+                  AddCart={() => addtoCart(value.id)}
                 />
               </Grid>
             ))}
