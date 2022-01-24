@@ -80,6 +80,7 @@ const CssTextField = styled(TextField)({
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
     defValue?: string;
     value?: string | number;
+    errorVal?: string
 }
 
 function InputText(props:inputDetail){
@@ -101,7 +102,7 @@ function InputText(props:inputDetail){
 function InputText2(props:inputDetail){
     return(
         <div>
-            <p>{props.textLabel}</p>
+            <p>{props.textLabel}  <span style={{ color: "red" }}>{props.errorVal}</span></p>            
             <FormControl variant="standard" sx={{ width:"100%" }}>
             <BootstrapInput 
             id="bootstrap-input" 
@@ -120,14 +121,15 @@ type inputSelect = {
   data?: string[],
   value?: string,
   placeholder?: string
+  errorVal?: string
 
 }
 
-function InputText3({label, onChange, data,value,placeholder,}: inputSelect){
+function InputText3({label, onChange, data,value,placeholder,errorVal}: inputSelect){
 
   return (
     <div>     
-        <p>{label}</p>
+        <p>{label}  <span style={{ color: "red" }}>{errorVal}</span></p>  
       <FormControl sx={{width:"100%", height: "45px" }} variant="standard" >        
         <Select
           labelId="demo-customized-select-label"

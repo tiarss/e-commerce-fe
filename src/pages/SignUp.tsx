@@ -21,7 +21,7 @@ const SignUp: React.FC = () => {
   },[])
 
   const fetchData = async () =>{
-    if(nameError===""){
+    if(name===""){
       setNameError("Name is required")
    }  else if(email===""){
     setEmailError("Email is required")

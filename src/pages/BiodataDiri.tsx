@@ -29,6 +29,16 @@ function BiodataDiri() {
   const [zipcodeUser, setZipcodeUser] = useState<string>("");
   const [imageUser, setImageUser] = useState<string>("");
 
+  const [nameError, setNameError] = useState<string>("")
+  const [emailError, setEmailError] = useState<string>("")
+  const [cityError, setCityError] = useState<string>("")
+  const [provinceError, setProvinceError] = useState<string>("")
+  const [kodeposError, setKodeposError] = useState<string>("")
+  const [alamatError, setAlamatError] = useState<string>("")
+  const [linkError, setLinkError] = useState<string>("")
+
+   const [disabledVal, setDisabled] = useState<boolean>(false)
+
   const [isReady, setIsReady] = useState<boolean>(false);
   const [open, setOpen] = React.useState(false);
   const handleOpenModal = () => setOpen(true);
@@ -37,31 +47,75 @@ function BiodataDiri() {
   const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setNameUser(value);
+    var len =event.target.value.length
+    if(len>20){
+     setNameError(" is too long")
+    } else if(len>=0){
+    setNameError("")
+    }
+    else{
+    setNameError("")
+    }
+
   };
 
   const handleChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setEmailUser(value);
+    let regexpEmail = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$');
+      if(!regexpEmail.test(event.target.value)){
+         setEmailError(" is invalid")
+      }else{
+         setEmailError("")
+      }      
   };
 
   const handleChangeCity = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setCityUser(value);
+    var len =event.target.value.length
+    if(len>20){
+      setCityError("is too long")
+     } 
+     else{
+     setCityError("")
+     }
   };
 
   const handleChangeProvince = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setProvinceUser(value);
+    var len =event.target.value.length
+    if(len>20){
+     setProvinceError(" is too long")
+     }
+     else{
+     setProvinceError("")
+     }
   };
 
   const handleChangeZipcode = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setZipcodeUser(value);
+    var len =event.target.value.length
+    if(len>20){
+     setKodeposError(" is too long")
+     }
+     else{
+     setKodeposError("")
+     }
   };
 
   const handleChangeStreet = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setStreetUser(value);
+    var len =event.target.value.length
+     if(len>20){
+     setAlamatError(" is too long")
+     }
+     else{
+     setAlamatError("")
+     }
   };
 
   const handleChangeGender = (event: SelectChangeEvent) => {
@@ -71,6 +125,13 @@ function BiodataDiri() {
   const handleChangeImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setImageUser(value);
+    var len =event.target.value.length
+    if(len>100){
+     setLinkError(" is too long")
+     }
+     else{
+     setLinkError("")
+     }
   };
 
   useEffect(() => {
@@ -133,6 +194,14 @@ function BiodataDiri() {
         Authorization: `Bearer ${token}`,
       },
     };
+
+    if(nameUser===""){
+      setNameError(" is required")
+   } else if(emailUser===""){
+      setEmailError(" is required")
+   }
+    else if(emailError==="" ){
+       setDisabled(true)      
     axios
       .put(
         `users/${id}`,
@@ -160,6 +229,7 @@ function BiodataDiri() {
         fetchDataUserId();
         setOpen(false);
       });
+    }
   };
   
   if (isReady) {
@@ -289,17 +359,19 @@ function BiodataDiri() {
                 fontSize: "28px",
               }}>
               Edit Biodata
-            </Typography>
+            </Typography>            
             <Box sx={{ display: "flex", gap: 3, width: "100%" }}>
               <Box sx={{ width: "100%" }}>
                 <InputText2
                   textLabel='Nama'
+                  errorVal={nameError}
                   placeholder='Masukkan Nama'
                   type='text'
                   onChange={handleChangeName}
                   value={nameUser}
                 />
               </Box>
+              
               <Box sx={{ width: "100%" }}>
                 <InputText3
                   label='Gender'
@@ -312,6 +384,7 @@ function BiodataDiri() {
             <Box>
               <InputText2
                 textLabel='Email'
+                errorVal={emailError}
                 placeholder='Masukkan Email'
                 type='text'
                 onChange={handleChangeEmail}
@@ -322,6 +395,7 @@ function BiodataDiri() {
               <Box sx={{ width: "100%" }}>
                 <InputText2
                   textLabel='Provinsi'
+                  errorVal={provinceError}
                   placeholder='Masukkan Provinsi'
                   type='text'
                   onChange={handleChangeProvince}
@@ -331,6 +405,7 @@ function BiodataDiri() {
               <Box sx={{ width: "100%" }}>
                 <InputText2
                   textLabel='Kota'
+                  errorVal={cityError}
                   placeholder='Masukkan Kota'
                   type='text'
                   onChange={handleChangeCity}
@@ -342,6 +417,7 @@ function BiodataDiri() {
               <Box sx={{ width: "100%" }}>
                 <InputText2
                   textLabel='Kode Pos'
+                  errorVal={kodeposError}
                   placeholder='Masukkan Kode Pos'
                   type='text'
                   onChange={handleChangeZipcode}
@@ -351,6 +427,7 @@ function BiodataDiri() {
               <Box sx={{ width: "100%" }}>
                 <InputText2
                   textLabel='Alamat'
+                  errorVal={alamatError}
                   placeholder='Masukkan Alamat'
                   type='text'
                   onChange={handleChangeStreet}
@@ -361,6 +438,7 @@ function BiodataDiri() {
             <Box sx={{ display: "flex", gap: 3, width: "100%" }}>
               <InputText2
                 textLabel='Link Gambar'
+                errorVal={linkError}
                 placeholder='Masukkan Link Gambar'
                 type='text'
                 onChange={handleChangeImage}
@@ -368,7 +446,7 @@ function BiodataDiri() {
               />
             </Box>
             <Box>
-              <CustomButtonPrimary caption='Simpan' OnClick={handleEditUser} />
+              <CustomButtonPrimary isDisabled={disabledVal} caption='Simpan' OnClick={handleEditUser} />
             </Box>
           </Box>
         </Modal>

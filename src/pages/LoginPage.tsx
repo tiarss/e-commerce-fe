@@ -8,8 +8,6 @@ import { Link } from 'react-router-dom';
 import { useLocalStorage } from "../utils/useLocalStorage";
 import { authTypes } from "../Types";
 import { useNavigate } from "react-router-dom";
-import { Validator } from "react";
-
 
 
 const LoginPage: React.FC = () => {
@@ -44,12 +42,12 @@ const LoginPage: React.FC = () => {
             token: data.token,
             isAuth: true
          }])
-         console.log(res.status)
          console.log(res) 
          navigate(`/`);      
       })
       .catch((err) => {
          console.log(err);
+         console.log(email,password)
      })
      .finally(() => {setPassword("");setEmailError(""); setPasswordError("");
      setEmail("");});
@@ -131,9 +129,9 @@ const LoginPage: React.FC = () => {
             flexDirection:"column",
             gap:"20px",
            }}>
-               <InputText2 value={email} textLabel='Email' type='email' onChange={(e)=>handleEmail(e)}/>
+               <InputText2  textLabel='Email' type='email' onChange={(e)=>handleEmail(e)}/>
                <span style={{ color: "red" }}>{emailError}</span>
-              <InputText2 value={password} textLabel='Password' type='password' onChange={(e)=>handlePassword(e)}/>
+              <InputText2  textLabel='Password' type='password' onChange={(e)=>handlePassword(e)}/>
               <span style={{ color: "red" }}>{passwordError}</span>
               {/* <button onClick={fetchData}>Login </button> */}
               <CustomButtonPrimary isDisabled={disabledVal} caption='Login' OnClick={fetchData} />
