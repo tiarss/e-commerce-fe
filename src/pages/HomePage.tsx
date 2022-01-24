@@ -119,8 +119,8 @@ function HomePage() {
       .get("/products")
       .then((res) => {
         const { data } = res.data;
-        setProduct(data.products);
-        seCountProducts(data.counts)
+        setProduct(data);
+        // seCountProducts(data.counts)
       })
       .catch((err) => {
         console.log(err);
