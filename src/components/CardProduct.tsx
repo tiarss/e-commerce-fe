@@ -1,17 +1,13 @@
 import * as React from "react";
 import { Box, Typography } from "@mui/material";
-import logo from "../images/Logo-sirclo.png";
-import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import "@fontsource/nunito";
+import IconButton from "@mui/material/IconButton";
 import { Grid } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import { fontFamily } from "@mui/system";
-import { LargeNumberLike } from "crypto";
-import { CustomButtonSecondary } from "./CustomButton";
+import { CustomButtonSecondary, CustomButtonPrimary } from "./CustomButton";
 
 interface cardproduct {
   srcImage: string;
@@ -19,6 +15,9 @@ interface cardproduct {
   productPrice: number;
   productCount: number;
   sumPrice: number;
+  productStock: number;
+  addQty?: ()=>void;
+  minQty?: ()=>void
 }
 
 function CardProduct(props: cardproduct) {
@@ -33,6 +32,7 @@ function CardProduct(props: cardproduct) {
         borderRadius: "10px",
         boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.250);",
         fontFamily: "Nunito",
+        marginBottom: "10px",
       }}>
       <Box
         sx={{
@@ -41,7 +41,7 @@ function CardProduct(props: cardproduct) {
           alignItems: "center",
         }}>
         <img
-          style={{ height: "100%" }}
+          style={{ height: "100px" }}
           src={props.srcImage}
           alt='Product Picture'
         />
@@ -50,7 +50,7 @@ function CardProduct(props: cardproduct) {
         sx={{
           width: "50%",
           justifyContent: "space-between",
-          display:"flex",
+          display: "flex",
           gap: 1,
           flexDirection: { xs: "column", sm: "column" },
         }}>
@@ -75,13 +75,16 @@ function CardProduct(props: cardproduct) {
               sx={{
                 display: "flex",
                 justifyContent: "end",
-                alignItems: "end",
+                alignItems: "center",
                 gap: "10px  ",
-                backgroundColor: "#C4C4C4",
               }}>
-              <AddIcon />
+              <IconButton aria-label='delete' onClick={props.minQty} disabled={props.productCount === 1 ? true : false}>
+                <RemoveIcon />
+              </IconButton>
               <p>{props.productCount}</p>
-              <RemoveIcon />
+              <IconButton aria-label='add' onClick={props.addQty} disabled={props.productCount === props.productStock ? true : false}>
+                <AddIcon />
+              </IconButton>
             </Box>
           </Box>
         </Box>
@@ -106,7 +109,7 @@ function CardProduct(props: cardproduct) {
           }}>
           <Box></Box>
           <Box>
-            <CustomButtonSecondary caption="Hapus dari Keranjang" />
+            <CustomButtonSecondary caption='Hapus dari Keranjang' />
           </Box>
         </Box>
 

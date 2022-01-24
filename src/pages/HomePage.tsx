@@ -31,7 +31,20 @@ function HomePage() {
   const [page, setPage] = React.useState(1);
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
-    fetchDataByPage(value);
+    if(categoryPage === "All Product"){
+      fetchDataByPage(value);
+    }else if(categoryPage === "Processor"){
+      fetchDataByPageCategory(value)
+    
+    }else if(categoryPage === "Graphic Card"){
+      fetchDataByPageCategory(value)
+    
+    }else if(categoryPage === "RAM"){
+      fetchDataByPageCategory(value)
+    
+    }else if(categoryPage === "Internal Storage"){
+      fetchDataByPageCategory(value)
+    }
   };
 
   const addtoCart = (id: number) => {
@@ -67,23 +80,23 @@ function HomePage() {
     // setAddCarts()
   };
 
-  // const fetchDataByPageCategory = async (page: number) => {
-  //   await axios
-  //     .get("/products", {
-  //       params: {
-  //         p: page,
-  //         category: categoryPage
-  //       },
-  //     })
-  //     .then((res) => {
-  //       const { data } = res.data;
-  //       setProduct(data.products);
-  //       setCountProducts(data.counts)
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
+  const fetchDataByPageCategory = async (page: number) => {
+    await axios
+      .get("/products", {
+        params: {
+          p: page,
+          category: categoryPage
+        },
+      })
+      .then((res) => {
+        const { data } = res.data;
+        setProduct(data.products);
+        setCountProducts(data.counts)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const fetchDataByPage = async (page: number) => {
     await axios
@@ -124,21 +137,25 @@ function HomePage() {
   };
   const handleCategoryProcessor = () => {
     const category: string = "Processor";
+    setCategoryPage(category)
     fetchDataByCategory(category);
   };
 
   const handleCategoryGraphic = () => {
     const category: string = "Graphic Card";
+    setCategoryPage(category)
     fetchDataByCategory(category);
   };
 
   const handleCategoryRAM = () => {
     const category: string = "RAM";
+    setCategoryPage(category)
     fetchDataByCategory(category);
   };
 
   const handleCategoryInternalStorage = () => {
     const category: string = "Internal Storage";
+    setCategoryPage(category)
     fetchDataByCategory(category);
   };
 

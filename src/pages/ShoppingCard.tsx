@@ -5,42 +5,171 @@ import Header from "../components/Header";
 import SummaryDetail from "../components/SummaryDetail";
 import React, { useEffect, useState } from "react";
 import { CustomButtonPrimary } from "../components/CustomButton";
+import { authTypes, cartDetailsType, cartDetailUpdate } from "../Types";
+import { useLocalStorage } from "../utils/useLocalStorage";
+import axios from "axios";
 
 const ShoppingCard: React.FC = (props) => {
-  return (
-    <Box>
-      <Box sx={{ minHeight: "80vh", padding: { xs: "10px", sm: "20px", md: "50px" } }}>
-        <Box>
-          <h1 style={{ color: "#309DCE", fontSize: "130%" }}>
-            Shopping Card Detail
-          </h1>
-          <CardProduct
-            srcImage=''
-            productTitle='Product 1'
-            productPrice={1}
-            productCount={2}
-            sumPrice={2}
-          />
-        </Box>
+  const cartDetailsDefault: cartDetailsType[] = [];
+  const [auth, setAuth] = useLocalStorage<authTypes[] | undefined>("auth", []);
+  const [cartDetails, setCartDetails] = useState(cartDetailsDefault);
+  const [cartTotalPrice, setCartTotalPrice] = useState<number>(0)
+  const [cartUpdate, setCartUpdate] = useState([])
+  const [isReady, setIsReady] = useState<boolean>(false);
+
+  useEffect(() => {
+    fetchDataShoppingCart();
+  }, []);
+
+  // const allQty = () =>{
+  //   let allqty : number = 0 
+  //   cartDetails?.map((value)=>{
+  //     allqty+=value.qty;
+  //   })
+  //   return allqty
+  // }
+
+  const handleAddQty = (idProduct: number)=>{
+    const temp = cartDetails.map((value)=>{
+      if(value.productid === idProduct){
+        console.log(value.qty)
+        return {...value, qty: value.qty+1}
+      }else{
+        return value
+      }
+    })
+
+    setCartDetails(temp)
+    
+  }
+  const handleMinQty = (idProduct: number)=>{
+    const temp = cartDetails.map((value)=>{
+      if(value.productid === idProduct){
+        console.log(value.qty)
+        return {...value, qty: value.qty-1}
+      }else{
+        return value
+      }
+    })
+
+    setCartDetails(temp)
+  }
+
+  const fetchDataShoppingCart = async () => {
+    let token: string | undefined;
+    let idUser: number | undefined;
+    if (auth === undefined) {
+      token = "";
+      idUser = 0;
+    } else {
+      token = auth[0].token;
+      idUser = auth[0].id;
+    }
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    await axios.get(`/carts/${idUser}`, config).then((res) => {
+      const { data } = res.data;
+      setCartDetails(data.cartdetail);
+      setCartTotalPrice(data.totalprice)
+    }).catch((err)=>{
+      console.log(err)
+    }).finally(()=>{
+      setIsReady(true)
+    });
+  };
+
+  const updateCart = async () =>{
+    let updatedCart: cartDetailUpdate[] = []
+
+    cartDetails?.map(value =>{
+      updatedCart.push({productid: value.productid, qty: value.qty })
+    })
+
+    let token: string | undefined;
+    let idUser: number | undefined;
+    if (auth === undefined) {
+      token = "";
+      idUser = 0;
+    } else {
+      token = auth[0].token;
+      idUser = auth[0].id;
+    }
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    await axios.put(`/carts/${idUser}`,{
+      boq: updatedCart
+    },config).then((res)=>{
+      console.log(res)
+    }).catch((err)=>{
+      console.log(err)
+    }).finally(()=>{
+      fetchDataShoppingCart()
+    })
+  }
+
+  if (isReady) {
+    return (
+      <Box>
         <Box
           sx={{
-            alignItems: "center",
-            justifyContent: "flex-end",
-            display: "flex",
+            minHeight: "80vh",
+            padding: { xs: "10px", sm: "20px", md: "50px" },
           }}>
           <Box>
-            <SummaryDetail qty={4} shipping='0' sumPrice={40000} />
+            <h1 style={{ color: "#309DCE", fontSize: "130%" }}>
+              Shopping Card Detail
+            </h1>
+            {cartDetails?.map((value)=> (
+              <CardProduct
+              key={value.productid}
+                srcImage={value.productimage}
+                productTitle={value.productname}
+                productPrice={0}
+                productStock={value.stock}
+                productCount={value.qty}
+                sumPrice={value.subtotal}
+                addQty={()=>handleAddQty(value.productid)}
+                minQty={()=>handleMinQty(value.productid)}
+              />
+            ))
+            }
+          </Box>
+          <Box
+            sx={{
+              alignItems: "center",
+              justifyContent: "flex-end",
+              display: "flex",
+            }}>
+            <Box>
+              <SummaryDetail qty={0} shipping='0' sumPrice={cartTotalPrice} />
+            </Box>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              gap: 3,
+              justifyContent: "flex-end",
+              marginTop: "20px",
+            }}>
+            <CustomButtonPrimary caption='Update Keranjang' OnClick={updateCart} />
+            <CustomButtonPrimary caption='Checkout' />
           </Box>
         </Box>
-        <Box sx={{display: "flex", gap: 3 , justifyContent: "flex-end", marginTop: "20px"}}>
-          <CustomButtonPrimary caption='Update Keranjang' />
-          <CustomButtonPrimary caption='Checkout' />
-        </Box>
-      </Box>
 
-      <Footer />
-    </Box>
-  );
+        <Footer />
+      </Box>
+    );
+  } else {
+    return <Box>Loading</Box>;
+  }
 };
 
 export default ShoppingCard;

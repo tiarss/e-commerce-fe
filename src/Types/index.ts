@@ -59,6 +59,24 @@ export type alertType = {
   message: string;
   status: "error" | "info" | "success" | "warning" | undefined;
 };
+
+export type cartDetailsType = {
+  productid: number,
+  productimage: string,
+  productname: string,
+  qty: number
+  stock: number
+  subtotal: number
+}
+
+export type updateCartType ={
+  boq: cartDetailUpdate[]
+}
+
+export type cartDetailUpdate ={
+  productid: number,
+  qty: number
+}
 //             "id": 9,
 //             "name": "Nvidia RTx 2080",
 //             "seller": "Bahtiar Subrata",
