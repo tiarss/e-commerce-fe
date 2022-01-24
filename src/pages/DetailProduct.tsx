@@ -6,11 +6,15 @@ import Footer from '../components/Footer';
 import axios from 'axios';
 import {dataProductTypes} from "../Types/index";
 import Modal from "@mui/material/Modal";
+import { readParams } from '../utils/navigation'
 import { CustomButtonPrimary, CustomButtonSecondary } from '../components/CustomButton';
+import { useLocalStorage } from "../utils/useLocalStorage";
+import { authTypes } from "../Types";
+import { useNavigate } from "react-router-dom";
 
 
 
-function DetailProduct() {
+function DetailProduct(props:any) {
   const dataProductDefault: dataProductTypes[] = [];
   const [dataProductID, setDataProductID] = useState(dataProductDefault);
   const [categoryProduct, setProductCategory] = useState<string>("");
@@ -20,16 +24,25 @@ function DetailProduct() {
   const [sellerProduct, setSellerProduct] = useState<string>("")
   const [stockProduct, setStockProduct] = useState<string>("")
   const [imageProduct, setImageProduct] = useState<string>("")
-
   const [isReady, setIsReady] = useState<boolean>(false);
-
-  const bringData = async () =>{
-    await axios.post("/users", {
-      // update this function to add product in cart
+  const [auth] = useLocalStorage<authTypes[] | undefined>("auth", []);
+  let navigate = useNavigate(); 
+  
+  const addToCart = async () =>{
+    let idUser: number|undefined;
+    let productId = parseInt(`${props.params.id}`)
+    if (auth === undefined) {
+      navigate(`login`);      
+    } else {
+      idUser = auth[0]?.id;      
+    
+    await axios.post(`/carts/{idUser}`, {
+      "productid" :productId    
   
     }).then((res)=>{
        console.log(res)
     })
+  }
  }
 
   useEffect(() => {
@@ -38,7 +51,7 @@ function DetailProduct() {
 
   const fetchDataProductID = async () => {
     await axios
-      .get("/products/1")
+      .get(`/products/${props.params.id}`)
       .then((res) => {
         const { data } = res.data;
         setDataProductID([data]);
@@ -61,7 +74,6 @@ function DetailProduct() {
   if(isReady){
   return (
       <Box>
-        <Header/>
         <Box sx={{ 
           display:"flex",
           justifyContent: {xs:"center", sm:"left"},
@@ -72,7 +84,7 @@ function DetailProduct() {
            <Box sx={{ width:{xs:"80%", sm:"50%"}, alignItems:"center", }}>
              <img style={{ width:"50%" }} src={dataProductID[0].image}/>
              <p></p>
-             <CustomButtonPrimary caption='Tambah Ke Keranjang' OnClick={bringData} />
+             <CustomButtonPrimary caption='Tambah Ke Keranjang' OnClick={addToCart} />
              
            </Box>
            <Box sx={{ minWidth:{xs:"80%", sm:"50%", md:"60%"} }}>
@@ -88,7 +100,7 @@ function DetailProduct() {
     return <Box>Loading</Box>
   }
 }
-export default DetailProduct;
+export default readParams(DetailProduct);
 
 
 //apakah setelah klik tambah keranjang, muncul modal atau ada button khusus untuk menambah jumlah barang
