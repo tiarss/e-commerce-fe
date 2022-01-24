@@ -12,11 +12,24 @@ const SignUp: React.FC = () => {
   let navigate = useNavigate();   
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
+  const [nameError, setNameError] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [emailError, setEmailError] = useState<string>("")
+   const [passwordError, setPasswordError] = useState<string>("")
+   const [disabledVal, setDisabled] = useState<boolean>(false)
   useEffect(()=>{      
   },[])
 
   const fetchData = async () =>{
+    if(nameError===""){
+      setNameError("Name is required")
+   }  else if(email===""){
+    setEmailError("Email is required")
+  }else if(email===""){
+      setPasswordError("Password is required")
+   }
+    else if(emailError==="" ){
+       setDisabled(true)  
     await axios.post("http://52.77.229.210:3000/users", {
         name:name,
         email: email,
@@ -31,18 +44,38 @@ const SignUp: React.FC = () => {
   .finally(() => {setPassword(""); setName("");
   setEmail("");});
  }
+}
 
   const handleName = (e: React.ChangeEvent<HTMLInputElement>)=>{
     const value = e.target.value
     setName(value)
+    var len = e.target.value.length
+    if(len>20){
+     setNameError("your's is too long")
+  } else{
+    setNameError("")
+  }
  } 
  const handleEmail = (e: React.ChangeEvent<HTMLInputElement>)=>{
-  const value = e.target.value
-  setEmail(value)
+  const value = (e.target.value)
+  setEmail(value)      
+  let regexpEmail = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$');
+  if(!regexpEmail.test(e.target.value)){
+     setEmailError("it's not an email bro")
+  } else{
+    setEmailError("")
+  }     
 }
+
 const handlePassword = (e: React.ChangeEvent<HTMLInputElement>)=>{
   const value = e.target.value
   setPassword(value)
+  var len = e.target.value.length
+  if(len>20){
+     setEmailError("your's is too long")
+  } else{
+    setEmailError("")
+  }
 }
   return (
     <Box sx={{
@@ -98,9 +131,12 @@ const handlePassword = (e: React.ChangeEvent<HTMLInputElement>)=>{
             gap:"20px",
            }}>
               <InputText2 value={name} textLabel='Nama' type='text' onChange={(e)=>handleName(e)}/>
+              <span style={{ color: "red" }}>{nameError}</span>
               <InputText2 value={ email } textLabel='Email' type='email' onChange={(e)=>handleEmail(e)}/>
+              <span style={{ color: "red" }}>{emailError}</span>
               <InputText2 value={password} textLabel='Password' type='password' onChange={(e)=>handlePassword(e)}/>
-              <CustomButtonPrimary caption='Sign Up' OnClick={fetchData} />
+              <span style={{ color: "red" }}>{passwordError}</span>
+              <CustomButtonPrimary isDisabled={disabledVal} caption='Sign Up' OnClick={fetchData} />
           </Box>         
         </Box>
       </Box>      
