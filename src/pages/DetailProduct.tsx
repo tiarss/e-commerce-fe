@@ -32,9 +32,13 @@ function DetailProduct(props:any) {
     let idUser: number|undefined;
     let productId = parseInt(`${props.params.id}`)
     if (auth === undefined) {
-      navigate(`login`);      
+      navigate(`/login`);      
     } else {
-      idUser = auth[0]?.id;      
+      idUser = auth[0]?.id;  
+      if(idUser===undefined){
+        navigate(`/login`);
+      }
+      console.log(idUser)    
     
     await axios.post(`/carts/{idUser}`, {
       "productid" :productId    
