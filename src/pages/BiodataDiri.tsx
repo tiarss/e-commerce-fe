@@ -202,9 +202,8 @@ function BiodataDiri() {
             },
           ]);
           setOpenAlert(true);
-          setTimeout(() => {
-            navigate("/login");
-          }, 2000);
+          navigate("/login");
+          
         }
       })
       .finally(() => {
@@ -276,9 +275,8 @@ function BiodataDiri() {
               },
             ]);
             setOpenAlert(true);
-            setTimeout(() => {
-              navigate("/login");
-            }, 2000);
+            navigate("/login");
+            
           }
         })
         .finally(() => {

@@ -18,6 +18,7 @@ interface cardproduct {
   productStock: number;
   addQty?: ()=>void;
   minQty?: ()=>void
+  handleDelete?:()=>void
 }
 
 function CardProduct(props: cardproduct) {
@@ -109,24 +110,9 @@ function CardProduct(props: cardproduct) {
           }}>
           <Box></Box>
           <Box>
-            <CustomButtonSecondary caption='Hapus dari Keranjang' />
+            <CustomButtonSecondary caption='Hapus dari Keranjang' OnClick={props.handleDelete} />
           </Box>
         </Box>
-
-        {/* <Box
-                sx={{
-                    width:"50%",
-                    padding: { xs: "17px 20px", sm: "10px 50px" },
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    
-                    // flex-direction: "row",
-                  }}>
-                   
-                </Box>
-                <Box>
-                    C
-                </Box> */}
       </Box>
     </Box>
   );

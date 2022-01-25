@@ -8,8 +8,10 @@ import { CustomButtonPrimary } from "../components/CustomButton";
 import { authTypes, cartDetailsType, cartDetailUpdate } from "../Types";
 import { useLocalStorage } from "../utils/useLocalStorage";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const ShoppingCard: React.FC = (props) => {
+  const navigate = useNavigate()
   const cartDetailsDefault: cartDetailsType[] = [];
   const [auth, setAuth] = useLocalStorage<authTypes[] | undefined>("auth", []);
   const [cartDetails, setCartDetails] = useState(cartDetailsDefault);
@@ -28,6 +30,11 @@ const ShoppingCard: React.FC = (props) => {
   //   })
   //   return allqty
   // }
+
+  const handleDeleteItem = (idProduct: number) =>{
+    const filtering = cartDetails?.filter(value => value.productid !== idProduct)
+    setCartDetails(filtering)
+  }
 
   const handleAddQty = (idProduct: number)=>{
     const temp = cartDetails.map((value)=>{
@@ -115,6 +122,10 @@ const ShoppingCard: React.FC = (props) => {
     })
   }
 
+  const toOrder = () =>{
+    navigate("/finalorder")
+  }
+
   if (isReady) {
     return (
       <Box>
@@ -138,6 +149,7 @@ const ShoppingCard: React.FC = (props) => {
                 sumPrice={value.subtotal}
                 addQty={()=>handleAddQty(value.productid)}
                 minQty={()=>handleMinQty(value.productid)}
+                handleDelete={()=>handleDeleteItem(value.productid)}
               />
             ))
             }
@@ -160,7 +172,7 @@ const ShoppingCard: React.FC = (props) => {
               marginTop: "20px",
             }}>
             <CustomButtonPrimary caption='Update Keranjang' OnClick={updateCart} />
-            <CustomButtonPrimary caption='Checkout' />
+            <CustomButtonPrimary caption='Checkout' OnClick={toOrder} />
           </Box>
         </Box>
 

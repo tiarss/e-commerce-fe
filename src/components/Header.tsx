@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import logo from "../images/Logo-sirclo.png";
 
@@ -22,11 +22,15 @@ import Burger from "./Burger";
 import { useLocalStorage } from "../utils/useLocalStorage";
 import { authTypes } from "../Types";
 import axios from "axios";
+import "./Header.css";
+import { SearchContext } from "../context/SearchContext";
 
 function Header() {
+  const Search =useContext(SearchContext);
   const [auth, setAuth] = useLocalStorage<authTypes[] | undefined>("auth", []);
   const [userName, setUserName] = useState<string>("");
   const [userImage, setUserImage] = useState<string>("");
+  const [textSend, setTextSend] = useState<string>("")
   const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -35,6 +39,7 @@ function Header() {
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -54,6 +59,16 @@ function Header() {
   const toHome = () => {
     navigate("/");
   };
+
+  const handleGetText = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const values = e.target.value;
+    setTextSend(values)
+  };
+
+  const handleSendText = () =>{
+    Search?.setTextSearch(textSend)
+  }
+
 
   useEffect(() => {
     fetchNameUserID();
@@ -150,6 +165,7 @@ function Header() {
             borderRadius: "10px",
           }}>
           <Box
+          onClick={handleSendText}
             sx={{
               cursor: "pointer",
               display: "flex",
@@ -157,9 +173,13 @@ function Header() {
               justifyContent: "center",
             }}>
             <SearchRoundedIcon sx={{ color: "white" }} />
-            <Typography sx={{ color: "white", fontFamily: "Nunito" }}>
-              Search
-            </Typography>
+            <input
+              onChange={handleGetText}
+              className='input-search'
+              type='text'
+              style={{ outline: "none", border: "none", background: "#2296CB" }}
+              placeholder='Search'
+            />
           </Box>
         </Box>
       </Box>
@@ -184,7 +204,9 @@ function Header() {
               gap: "10px",
             }}>
             <ShoppingCartOutlinedIcon sx={{ color: "white" }} />
-            <Typography sx={{ color: "white", fontFamily: "Nunito" }}>2</Typography>
+            <Typography sx={{ color: "white", fontFamily: "Nunito" }}>
+              2
+            </Typography>
           </Box>
         </Tooltip>
         {isAuth ? (

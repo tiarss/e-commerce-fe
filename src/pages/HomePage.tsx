@@ -2,7 +2,7 @@ import { Box, Grid, IconButton, Typography } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Pagination from "@mui/material/Pagination";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import FilterListRoundedIcon from "@mui/icons-material/FilterListRounded";
 import FilterAltRoundedIcon from "@mui/icons-material/FilterAltRounded";
 import Header from "../components/Header";
@@ -13,6 +13,7 @@ import axios from "axios";
 import { authTypes, dataProductTypes, toSendCart } from "../Types";
 import { useLocalStorage } from "../utils/useLocalStorage";
 import { useNavigate } from "react-router-dom";
+import { SearchContext } from "../context/SearchContext";
 
 function HomePage() {
   const dataProductDefault: dataProductTypes[] = [];
@@ -20,6 +21,7 @@ function HomePage() {
     null
   );
   let navigate = useNavigate();
+  const Search = useContext(SearchContext);
   const [auth, setAuth] = useLocalStorage<authTypes[] | undefined>("auth", []);
   const [countProducts, setCountProducts] = useState<number>(0);
   const [isReady, setIsReady] = useState<boolean>(false);
@@ -31,7 +33,7 @@ function HomePage() {
   const [page, setPage] = React.useState(1);
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
-    if(categoryPage === "All Product"){
+    if(categoryPage === "All Category"){
       fetchDataByPage(value);
     }else if(categoryPage === "Processor"){
       fetchDataByPageCategory(value)
@@ -46,6 +48,23 @@ function HomePage() {
       fetchDataByPageCategory(value)
     }
   };
+
+  const fetchDataByKeyword = async () =>{
+    await axios
+      .get("/products", {
+        params: {
+          p: Search?.textSearch,
+        },
+      })
+      .then((res) => {
+        const { data } = res.data;
+        setProduct(data.products);
+        setCountProducts(data.counts);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   const addtoCart = (id: number) => {
     let token: string | undefined;
@@ -135,6 +154,13 @@ function HomePage() {
   const handleClickCategory = (event: React.MouseEvent<HTMLButtonElement>) => {
     setCategoryOpenMenu(event.currentTarget);
   };
+
+  const handleAllCategory = () =>{
+    const category: string = "All Category";
+    setCategoryPage(category)
+    fetchDataAllProduct()
+  }
+
   const handleCategoryProcessor = () => {
     const category: string = "Processor";
     setCategoryPage(category)
@@ -162,6 +188,10 @@ function HomePage() {
   const handleCloseCategory = () => {
     setCategoryOpenMenu(null);
   };
+
+  useEffect(()=>{
+    fetchDataByKeyword()
+  },[Search?.textSearch])
 
   useEffect(() => {
     fetchDataAllProduct();
@@ -260,7 +290,7 @@ function HomePage() {
                 MenuListProps={{
                   "aria-labelledby": "category-button",
                 }}>
-                <MenuItem onClick={fetchDataAllProduct}>All Category</MenuItem>
+                <MenuItem onClick={handleAllCategory}>All Category</MenuItem>
                 <MenuItem onClick={handleCategoryProcessor}>Processor</MenuItem>
                 <MenuItem onClick={handleCategoryGraphic}>
                   Graphic Card

@@ -112,9 +112,8 @@ function Barangku() {
             },
           ]);
           setOpenAlert(true);
-          setTimeout(() => {
-            navigate("/login");
-          }, 2000);
+          navigate("/login");
+          
         }
       })
       .finally(() => {
@@ -273,9 +272,8 @@ function Barangku() {
               },
             ]);
             setOpenAlert(true);
-            setTimeout(() => {
-              navigate("/login");
-            }, 2000);
+            navigate("/login");
+            
           }
         })
         .finally(() => {
@@ -332,9 +330,8 @@ function Barangku() {
               },
             ]);
             setOpenAlert(true);
-            setTimeout(() => {
-              navigate("/login");
-            }, 2000);
+            navigate("/login");
+            
           }
         })
         .finally(() => {
@@ -391,9 +388,8 @@ function Barangku() {
             },
           ]);
           setOpenAlert(true);
-          setTimeout(() => {
-            navigate("/login");
-          }, 2000);
+          navigate("/login");
+          
         }
       })
       .finally(() => {
@@ -440,9 +436,8 @@ function Barangku() {
             },
           ]);
           setOpenAlert(true);
-          setTimeout(() => {
-            navigate("/login");
-          }, 2000);
+          navigate("/login");
+          
         }
       })
       .finally(() => {

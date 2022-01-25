@@ -100,9 +100,8 @@ let token: string | undefined;
          }}>
            <Box sx={{ width:{xs:"80%", sm:"50%"}, alignItems:"center", }}>
              <img style={{ width:"50%" }} src={dataProductID[0].image}/>
-             <p></p>
+             <p>Stock :{dataProductID[0].stock}</p>
              <CustomButtonPrimary caption='Tambah Ke Keranjang' OnClick={addToCart} />
-             
            </Box>
            <Box sx={{ minWidth:{xs:"80%", sm:"50%", md:"60%"} }}>
              <h1 style={{ color:"#2296CB" }}>{dataProductID[0].name}</h1>

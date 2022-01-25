@@ -9,12 +9,10 @@ import React, { useEffect, useState } from "react";
 import { useLocalStorage } from "../utils/useLocalStorage";
 import { authTypes } from "../Types";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios'
+import axios from "axios";
 import { alertType, dataUserIDTypes } from "../Types";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
-
-
 
 function FinalOrder() {
   const [streetOrder, setStreetOrder] = useState<string>("");
@@ -36,10 +34,9 @@ function FinalOrder() {
   const [auth, setAuth] = useLocalStorage<authTypes[] | undefined>("auth", []);
 
   const [qty, setQtyOrder] = useState<string>("");
-  const [shipping, setShippingOrder] = useState<string>("")
+  const [shipping, setShippingOrder] = useState<string>("");
   const [price, setPriceOrder] = useState<string>("");
   const [idCart, setIdCart] = useState<number>(0);
-  
 
   const [openAlert, setOpenAlert] = React.useState(false);
   const [alert, setAlert] = useState<alertType>({
@@ -127,104 +124,62 @@ function FinalOrder() {
 
   const handlePurchase = async () => {
     let token: string | undefined;
-    let id: number | undefined;
+    let idUser: number | undefined;
     if (auth === undefined) {
       token = "";
-      id = 0;
+      idUser = 0;
     } else {
       token = auth[0].token;
-      id = auth[0].id;
+      idUser = auth[0].id;
     }
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     };
-    if(streetOrder===""){
-      setStreetError(" is required")
-   } else if(cityOrder===""){
-      setCityError(" is required")
-   }
-      else if(provinceOrder===null){
-      setProvinceError(" cannot be null")
-    }
-      else if(zipCodeOrder===""){
-      setZipCodeError(" min 1")
-    }
-      else if(cardOrder===""){
-      setCardError(" is required")
-    }
-     else if(streetError==="" && cityError==="" && 
-      provinceError==="" && zipCodeError==="" && cardError==="" ){
-       setDisabled(false)
 
-    await axios
-      .put(`/carts/${id}/${idCart}`,
-      {
-        address: {
-          street: streetOrder,
-          city: cityOrder,
-          province: provinceError,
-          zipcode: zipCodeOrder
-        },
-        "cardnumber": "23421352341523"
-      }, config)
-      .then((res) => {
-        const { data } = res.data;        
-      })
-      .catch((err) => {
-        const { data } = err.response;
-        if (data.message === "invalid or expired jwt") {
-          setAlert({
-            message: "Login Expired",
-            status: "error",
-          });
-          setAuth([
-            {
-              id: 0,
-              token: "",
-              isAuth: false,
-            },
-          ]);
-          setOpenAlert(true);
-          setTimeout(() => {
-            navigate("/login");
-          }, 2000);
-        }
-      })
-      .finally(() => {
-        setIsReady(true);
-      });
-    }
-    }
+    if (streetOrder === "") {
+      setStreetError(" is required");
+      console.log("rest");
+    } else if (cityOrder === "") {
+      setCityError(" is required");
+      console.log("rest");
+    } else if (provinceOrder === null) {
+      setProvinceError(" cannot be null");
+      console.log("rest");
+    } else if (zipCodeOrder === "") {
+      setZipCodeError(" min 1");
+      console.log("rest");
+    } else if (cardOrder === "") {
+      setCardError(" is required");
+      console.log("rest");
+    } else if (
+      streetError === "" &&
+      cityError === "" &&
+      provinceError === "" &&
+      zipCodeError === "" &&
+      cardError === ""
+    ) {
+      setDisabled(false);
 
-    const fetchData = async () => {
-      let token: string | undefined;
-      let id: number | undefined;
-      if (auth === undefined) {
-        token = "";
-        id = 0;
-      } else {
-        token = auth[0].token;
-        id = auth[0].id;
-      }
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
       await axios
-        .get(`/carts/${id}`, config)
+        .put(
+          `/carts/${idUser}/${idCart}`,
+          {
+            address: {
+              street: streetOrder,
+              city: cityOrder,
+              province: provinceOrder,
+              zipcode: zipCodeOrder,
+            },
+            cardnumber: cardOrder,
+          },
+          config
+        )
         .then((res) => {
-          const { data } = res.data;    
-          // setQtyOrder(data.products);
-          setShippingOrder("free");  
-          setPriceOrder(data.totalprice);   
-          setIdCart(data.id)
-          console.log(data)
+          console.log(res);
         })
         .catch((err) => {
-          console.log(err)
           const { data } = err.response;
           if (data.message === "invalid or expired jwt") {
             setAlert({
@@ -239,15 +194,64 @@ function FinalOrder() {
               },
             ]);
             setOpenAlert(true);
-            setTimeout(() => {
               navigate("/login");
-            }, 2000);
           }
         })
         .finally(() => {
           setIsReady(true);
         });
-      }
+    }
+  };
+
+  const fetchData = async () => {
+    let token: string | undefined;
+    let id: number | undefined;
+    if (auth === undefined) {
+      token = "";
+      id = 0;
+    } else {
+      token = auth[0].token;
+      id = auth[0].id;
+    }
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    await axios
+      .get(`/carts/${id}`, config)
+      .then((res) => {
+        const { data } = res.data;
+        // setQtyOrder(data.products);
+        setShippingOrder("free");
+        setPriceOrder(data.totalprice);
+        setIdCart(data.id);
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+        const { data } = err.response;
+        if (data.message === "invalid or expired jwt") {
+          setAlert({
+            message: "Login Expired",
+            status: "error",
+          });
+          setAuth([
+            {
+              id: 0,
+              token: "",
+              isAuth: false,
+            },
+          ]);
+          setOpenAlert(true);
+          navigate("/login");
+          
+        }
+      })
+      .finally(() => {
+        setIsReady(true);
+      });
+  };
 
   return (
     <Box>
@@ -272,12 +276,28 @@ function FinalOrder() {
             textLabel='Shipping Address'
             placeholder='Street'
             type='text'
-            onChange={(e)=>handleStreet(e)}
+            onChange={(e) => handleStreet(e)}
             errorVal={streetError}
           />
-          <InputText2 placeholder='City' type='text' onChange={(e)=>handleCity(e)} errorVal={cityError}/>
-          <InputText2 placeholder='State/Province' type='text' onChange={(e)=>handleProvince(e)} errorVal={provinceError}/>
-        </Box>        
+          <InputText2
+            placeholder='City'
+            type='text'
+            onChange={(e) => handleCity(e)}
+            errorVal={cityError}
+          />
+          <InputText2
+            placeholder='State/Province'
+            type='text'
+            onChange={(e) => handleProvince(e)}
+            errorVal={provinceError}
+          />
+          <InputText2
+            placeholder='Zipcode'
+            type='text'
+            onChange={(e) => handleZipCode(e)}
+            errorVal={zipCodeError}
+          />
+        </Box>
         <Box
           sx={{
             width: "100%",
@@ -285,7 +305,12 @@ function FinalOrder() {
             flexDirection: "column",
             gap: "2vh",
           }}>
-          <InputText2 placeholder='Number on Card' type='text' onChange={(e)=>handleCard(e)} errorVal={cardError}/>
+          <InputText2
+            placeholder='Number on Card'
+            type='text'
+            onChange={(e) => handleCard(e)}
+            errorVal={cardError}
+          />
           {/* <Box sx={{ display:"flex", flexDirection:"row", gap:"10px" }}>
               <Box sx={{ width:"60%" }}>
                 <InputText2 placeholder='Card Member' type='text'/>                
@@ -313,7 +338,11 @@ function FinalOrder() {
           }}>
           <Box></Box>
           <Box>
-            <SummaryDetail qty={parseInt(qty)} shipping={shipping} sumPrice={parseInt(price)} />
+            <SummaryDetail
+              qty={parseInt(qty)}
+              shipping={shipping}
+              sumPrice={parseInt(price)}
+            />
           </Box>
         </Box>
         <Box
@@ -323,7 +352,11 @@ function FinalOrder() {
             display: "flex",
           }}>
           <Box>
-            <CustomButtonPrimary isDisabled={disabled} caption='Purchase' OnClick={handlePurchase} />
+            <CustomButtonPrimary
+              isDisabled={disabled}
+              caption='Purchase'
+              OnClick={handlePurchase}
+            />
           </Box>
         </Box>
       </Box>

@@ -77,11 +77,12 @@ export type cartDetailUpdate ={
   productid: number,
   qty: number
 }
-//             "id": 9,
-//             "name": "Nvidia RTx 2080",
-//             "seller": "Bahtiar Subrata",
-//             "category": "Graphic Card",
-//             "description": "Ini VGA terbaik",
-//             "price": 1200000,
-//             "stock": 1,
-//             "image": "https://cf.shopee.co.id/file/73a01d9a8c77af1534c9b6817e90e944"
+
+export type productHistoryType = {
+  checkedoutcartdetail: any[],
+  status: string,
+  totalprice: number
+  id : number
+}
+
+
