@@ -351,12 +351,21 @@ function FinalOrder() {
             justifyContent: "end",
             display: "flex",
           }}>
-          <Box>
-            <CustomButtonPrimary
+            <Box
+              sx={{
+                width: { xs: "164px", sm: "220px" },
+                display: "flex",
+                flexDirection: "column",
+                gap: "20px",
+              }}>
+              <CustomButtonPrimary
               isDisabled={disabled}
               caption='Purchase'
               OnClick={handlePurchase}
             />
+            </Box>
+          <Box>
+            
           </Box>
         </Box>
       </Box>
