@@ -20,17 +20,17 @@ import "@fontsource/nunito";
 import { useNavigate } from "react-router-dom";
 import Burger from "./Burger";
 import { useLocalStorage } from "../utils/useLocalStorage";
-import { authTypes } from "../Types";
+import { authTypes, countShopType, headerHandlerType } from "../Types";
 import axios from "axios";
 import "./Header.css";
 import { SearchContext } from "../context/SearchContext";
 
-function Header() {
-  const Search =useContext(SearchContext);
+function Header({handleGetText, handleSendText} :headerHandlerType) {
+  
   const [auth, setAuth] = useLocalStorage<authTypes[] | undefined>("auth", []);
+  const [count, setCount] = useLocalStorage<countShopType[]>("count", []);
   const [userName, setUserName] = useState<string>("");
   const [userImage, setUserImage] = useState<string>("");
-  const [textSend, setTextSend] = useState<string>("")
   const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -59,15 +59,6 @@ function Header() {
   const toHome = () => {
     navigate("/");
   };
-
-  const handleGetText = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const values = e.target.value;
-    setTextSend(values)
-  };
-
-  const handleSendText = () =>{
-    Search?.setTextSearch(textSend)
-  }
 
 
   useEffect(() => {
@@ -205,7 +196,7 @@ function Header() {
             }}>
             <ShoppingCartOutlinedIcon sx={{ color: "white" }} />
             <Typography sx={{ color: "white", fontFamily: "Nunito" }}>
-              2
+              {count === undefined ? 0 : count![0].count}
             </Typography>
           </Box>
         </Tooltip>

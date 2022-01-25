@@ -624,7 +624,7 @@ function Barangku() {
               <Box sx={{ width: "100%" }}>
                 <InputText3
                   label='Kategori'
-                  data={["Processor", "Graphic Card"]}
+                  data={["Processor", "Graphic Card", "Internal Storage", "RAM"]}
                   value={categoryProduct}
                   onChange={handleChangeCategory}
                   errorVal={categoryError}

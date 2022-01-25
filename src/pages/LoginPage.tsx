@@ -73,7 +73,7 @@ const LoginPage: React.FC = () => {
           if (data.message === "successful") {
             setAlert({
               message: "Login Berhasil",
-              status: "error",
+              status: "success",
             });
             setOpenAlert(true);
           }

@@ -5,12 +5,12 @@ import Pagination from "@mui/material/Pagination";
 import React, { useState, useEffect, useContext } from "react";
 import FilterListRoundedIcon from "@mui/icons-material/FilterListRounded";
 import FilterAltRoundedIcon from "@mui/icons-material/FilterAltRounded";
-import Header from "../components/Header";
 import CardsHome from "../components/CardsHome";
+import Header from "../components/Header"
 import "@fontsource/nunito/700.css";
 import Footer from "../components/Footer";
 import axios from "axios";
-import { authTypes, dataProductTypes, toSendCart } from "../Types";
+import { authTypes, countShopType, dataProductTypes, toSendCart } from "../Types";
 import { useLocalStorage } from "../utils/useLocalStorage";
 import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../context/SearchContext";
@@ -23,6 +23,7 @@ function HomePage() {
   let navigate = useNavigate();
   const Search = useContext(SearchContext);
   const [auth, setAuth] = useLocalStorage<authTypes[] | undefined>("auth", []);
+  const [textSend, setTextSend] = useState<string>("")
   const [countProducts, setCountProducts] = useState<number>(0);
   const [isReady, setIsReady] = useState<boolean>(false);
 
@@ -53,7 +54,7 @@ function HomePage() {
     await axios
       .get("/products", {
         params: {
-          p: Search?.textSearch,
+          p: textSend,
         },
       })
       .then((res) => {
@@ -92,11 +93,8 @@ function HomePage() {
         config
       )
       .then((res) => {
-        console.log(res);
+        
       });
-
-    // const idCart = id
-    // setAddCarts()
   };
 
   const fetchDataByPageCategory = async (page: number) => {
@@ -189,10 +187,6 @@ function HomePage() {
     setCategoryOpenMenu(null);
   };
 
-  useEffect(()=>{
-    fetchDataByKeyword()
-  },[Search?.textSearch])
-
   useEffect(() => {
     fetchDataAllProduct();
   }, []);
@@ -218,9 +212,19 @@ function HomePage() {
     navigate(`/detailproduct/` + id);
   };
 
+  const handleGetText = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const values = e.target.value;
+    setTextSend(values)
+  };
+
+  const handleSendText = () =>{
+    fetchDataByKeyword()
+  }
+
   if (isReady) {
     return (
       <Box>
+        <Header handleGetText={(e)=>handleGetText(e)} handleSendText={handleSendText} />
         <Box
           sx={{
             minHeight: "900px",

@@ -80,6 +80,7 @@ const ShoppingCard: React.FC = (props) => {
 
     await axios.get(`/carts/${idUser}`, config).then((res) => {
       const { data } = res.data;
+      console.log(res)
       setCartDetails(data.cartdetail);
       setCartTotalPrice(data.totalprice)
     }).catch((err)=>{

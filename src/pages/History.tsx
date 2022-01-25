@@ -38,6 +38,7 @@ function History() {
       .then((res) => {
         const { data } = res.data;
         setProductHistory(data);
+        console.log(data)
       })
       .catch((err) => {
         console.log(err);
@@ -67,12 +68,14 @@ function History() {
       .put(
         `/orders/${idUser}/${cartId}`,
         {
-          status: "confirm",
+          status: "paid",
         },
         config
       )
       .then((res) => {
         console.log(res);
+      }).finally(()=>{
+        fetchDataHistory()
       });
   };
 
@@ -96,12 +99,14 @@ function History() {
       .put(
         `/orders/${idUser}/${cartId}`,
         {
-          status: "canceled",
+          status: "cancelled",
         },
         config
       )
       .then((res) => {
         console.log(res);
+      }).finally(()=>{
+        fetchDataHistory()
       });
   };
   // OnClick={handleConfirm}
@@ -126,12 +131,14 @@ function History() {
       .put(
         `/orders/${idUser}/${cartId}`,
         {
-          status: "finish",
+          status: "completed",
         },
         config
       )
       .then((res) => {
         console.log(res);
+      }).finally(()=>{
+        fetchDataHistory()
       });
   };
 
@@ -204,7 +211,7 @@ function History() {
                 <Box
                   sx={{
                     marginTop: { xs: "10px", md: "0px" },
-                    display: `${value.status === "confirm" ? "flex" : "none"}`,
+                    display: `${value.status === "paid" ? "flex" : "none"}`,
                     justifyContent: "flex-end",
                     width: "100%",
                     gap: 2,

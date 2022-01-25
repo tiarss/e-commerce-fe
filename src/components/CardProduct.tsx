@@ -69,7 +69,7 @@ function CardProduct(props: cardproduct) {
             flexDirection: { xs: "column", sm: "row" },
           }}>
           <Box>
-            <p>Rp. {props.productPrice}</p>
+            <p>Rp. {props.sumPrice/props.productCount}</p>
           </Box>
           <Box>
             <Box

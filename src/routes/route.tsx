@@ -20,7 +20,6 @@ const route = () => {
       <BrowserRouter>
         <SearchProvider>
           <Routes>
-            <Route path='/' element={<App />}>
               <Route index element={<HomePage />} />
               <Route path='detailproduct/:id' element={<DetailProduct />} />
               <Route
@@ -47,7 +46,6 @@ const route = () => {
                   </ProtectedRoute>
                 }
               />
-            </Route>
             <Route path='login' element={<LoginPage />} />
             <Route path='signup' element={<SignUp />} />
           </Routes>

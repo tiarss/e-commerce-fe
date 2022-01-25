@@ -8,6 +8,17 @@ import logo from "../images/Logo-sirclo-white.png";
 import { CustomButtonPrimary } from "../components/CustomButton";
 import { useNavigate } from "react-router-dom";
 
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
+import { alertType } from "../Types";
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />;
+});
+
 const SignUp: React.FC = () => {
   let navigate = useNavigate();
   const [name, setName] = useState<string>("");
@@ -17,6 +28,24 @@ const SignUp: React.FC = () => {
   const [emailError, setEmailError] = useState<string>("");
   const [passwordError, setPasswordError] = useState<string>("");
   const [disabledVal, setDisabled] = useState<boolean>(false);
+
+  const [openAlert, setOpenAlert] = React.useState(false);
+  const [alert, setAlert] = useState<alertType>({
+    message: "",
+    status: "info",
+  });
+  // setOpenAlert(true);
+
+  const handleCloseAlert = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenAlert(false);
+  };
+
   useEffect(() => {}, []);
 
   const fetchData = async () => {
@@ -35,7 +64,15 @@ const SignUp: React.FC = () => {
           password: password,
         })
         .then((res) => {
-          console.log(res);
+          console.log(res)
+          if (res.data.message === "successful") {
+            console.log()
+            setAlert({
+              message: "User Telah dibuat",
+              status: "success",
+            });
+            setOpenAlert(true);
+          }
           navigate(`/login`);
         })
         .catch((err) => {
@@ -191,6 +228,17 @@ const SignUp: React.FC = () => {
           </Box>
         </Box>
       </Box>
+      <Snackbar
+          open={openAlert}
+          autoHideDuration={6000}
+          onClose={handleCloseAlert}>
+          <Alert
+            onClose={handleCloseAlert}
+            color={alert.status}
+            sx={{ width: "100%" }}>
+            {alert.message}
+          </Alert>
+        </Snackbar>
     </Box>
   );
 };

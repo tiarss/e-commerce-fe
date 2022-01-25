@@ -10,8 +10,8 @@ import axios from './api/axios';
 function App() {
   return (
     <div >
-      <Header/>
-      <Outlet/>     
+      {/* <Header/> */}
+      {/* <Outlet/>      */}
     </div>
    
   );

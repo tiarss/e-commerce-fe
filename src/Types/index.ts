@@ -43,6 +43,10 @@ export type authTypes = {
   isAuth: boolean | undefined
 }
 
+export type countShopType = {
+  count: number
+}
+
 export type burgerProps = {
   isAuth?: boolean,
   name?: string
@@ -85,4 +89,8 @@ export type productHistoryType = {
   id : number
 }
 
+export type headerHandlerType = {
+  handleGetText?: (e:React.ChangeEvent<HTMLInputElement>)=> void,
+  handleSendText?: ()=>void
+}
 
