@@ -178,17 +178,17 @@ function History() {
                 />
               </Box>
               <Box sx={{ width: { xs: "100", md: "80%" } }}>
-                <Typography>Order {index + 1}</Typography>
+                <Typography sx={{fontFamily: "Nunito", fontWeight: "700" }} >Order {index + 1}</Typography>
                 {value.checkedoutcartdetail?.map((data, index) => (
                   <Box key={index} sx={{ display: "flex" }}>
-                    <Typography>{data.productname}</Typography>
-                    <Typography sx={{ marginLeft: "5px" }}>
+                    <Typography sx={{fontFamily: "Nunito", fontWeight: "700" }}>{data.productname}</Typography>
+                    <Typography sx={{ marginLeft: "5px",fontFamily: "Nunito", fontWeight: "700"  }}>
                       , Jumlah: {data.qty}
                     </Typography>
                   </Box>
                 ))}
-                <Typography>{value.totalprice}</Typography>
-                <Typography>{value.status}</Typography>
+                <Typography sx={{fontFamily: "Nunito", fontWeight: "700" }}>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(value.totalprice!)}</Typography>
+                <Typography sx={{fontFamily: "Nunito", fontWeight: "700" }}>{value.status.toUpperCase()}</Typography>
                 <Box
                   sx={{
                     marginTop: { xs: "10px", md: "0px" },

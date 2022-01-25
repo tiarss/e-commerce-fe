@@ -5,10 +5,19 @@ import Header from "../components/Header";
 import SummaryDetail from "../components/SummaryDetail";
 import React, { useEffect, useState } from "react";
 import { CustomButtonPrimary } from "../components/CustomButton";
-import { authTypes, cartDetailsType, cartDetailUpdate } from "../Types";
+import { alertType, authTypes, cartDetailsType, cartDetailUpdate } from "../Types";
 import { useLocalStorage } from "../utils/useLocalStorage";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />;
+});
 
 const ShoppingCard: React.FC = (props) => {
   const navigate = useNavigate()
@@ -19,11 +28,27 @@ const ShoppingCard: React.FC = (props) => {
   const [cartUpdate, setCartUpdate] = useState([])
   const [isHidden, setIsHidden] = useState<boolean>(true);
   const [isReady, setIsReady] = useState<boolean>(false);
+  const [openAlert, setOpenAlert] = React.useState(false);
+  const [alert, setAlert] = useState<alertType>({
+    message: "",
+    status: "info",
+  });
 
   useEffect(() => {
     fetchDataShoppingCart();
   }, []);
 
+  // setOpenAlert(true);
+
+  const handleCloseAlert = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenAlert(false);
+  };
 
   const handleDeleteItem = (idProduct: number) =>{
     const filtering = cartDetails?.filter(value => value.productid !== idProduct)
@@ -109,7 +134,11 @@ const ShoppingCard: React.FC = (props) => {
     await axios.put(`/carts/${idUser}`,{
       boq: updatedCart
     },config).then((res)=>{
-      console.log(res)
+      setAlert({
+        message: "Barang telah di Perbarui ke Keranjang",
+        status: "success",
+      });
+      setOpenAlert(true);
     }).catch((err)=>{
       console.log(err)
     }).finally(()=>{
@@ -171,7 +200,17 @@ const ShoppingCard: React.FC = (props) => {
             <CustomButtonPrimary caption='Checkout' OnClick={toOrder} />
           </Box>
         </Box>
-
+        <Snackbar
+          open={openAlert}
+          autoHideDuration={6000}
+          onClose={handleCloseAlert}>
+          <Alert
+            onClose={handleCloseAlert}
+            color={alert.status}
+            sx={{ width: "100%" }}>
+            {alert.message}
+          </Alert>
+        </Snackbar>
         <Footer />
       </Box>
     );

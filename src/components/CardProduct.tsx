@@ -69,7 +69,7 @@ function CardProduct(props: cardproduct) {
             flexDirection: { xs: "column", sm: "row" },
           }}>
           <Box>
-            <p>Rp. {props.sumPrice/props.productCount}</p>
+            <p>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(props.sumPrice/props.productCount!)}</p>
           </Box>
           <Box>
             <Box
@@ -98,7 +98,7 @@ function CardProduct(props: cardproduct) {
           }}>
           <Box></Box>
           <Box>
-            <p>Sub-total : Rp.{props.sumPrice}</p>
+            <p>Sub-total : {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(props.sumPrice!)}</p>
           </Box>
         </Box>
         <Box

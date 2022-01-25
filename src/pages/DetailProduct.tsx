@@ -24,6 +24,7 @@ function DetailProduct(props:any) {
   const [sellerProduct, setSellerProduct] = useState<string>("")
   const [stockProduct, setStockProduct] = useState<string>("")
   const [imageProduct, setImageProduct] = useState<string>("")
+  const [isHidden, setIsHidden] = useState<boolean>(true);
   const [isReady, setIsReady] = useState<boolean>(false);
   const [auth] = useLocalStorage<authTypes[] | undefined>("auth", []);
   let navigate = useNavigate(); 
@@ -91,6 +92,7 @@ let token: string | undefined;
   if(isReady){
   return (
       <Box>
+        <Header isHidden={isHidden} />
         <Box sx={{ 
           display:"flex",
           justifyContent: {xs:"center", sm:"left"},

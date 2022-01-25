@@ -544,7 +544,7 @@ function Barangku() {
                         fontSize: "14px",
                         fontWeight: "700",
                       }}>
-                      Harga : {value.price}
+                      Harga : {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(value.price!)}
                     </Typography>
                     <Typography
                       sx={{

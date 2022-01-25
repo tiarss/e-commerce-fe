@@ -50,7 +50,7 @@ function SummaryDetail(props:summaryDetail) {
         justifyContent: "space-betweeend",        
       }}>
         <p style={{ marginBottom:"10px", color:"#FFFFFF" }}>{props.shipping}</p>
-        <p style={{ marginBottom:"10px", color:"#FFFFFF" }}>Rp.{props.sumPrice}</p>
+        <p style={{ marginBottom:"10px", color:"#FFFFFF" }}>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(props.sumPrice!)}</p>
       </Box>
     </Box>       
       
