@@ -32,6 +32,7 @@ function FinalOrder() {
   const navigate = useNavigate();
   const dataUserDefault: dataUserIDTypes[] = [];
   const [auth, setAuth] = useLocalStorage<authTypes[] | undefined>("auth", []);
+  const [isHidden, setIsHidden] = useState<boolean>(true);
 
   const [qty, setQtyOrder] = useState<string>("");
   const [shipping, setShippingOrder] = useState<string>("");
@@ -224,8 +225,8 @@ function FinalOrder() {
         const { data } = res.data;
         // setQtyOrder(data.products);
         setShippingOrder("free");
-        setPriceOrder(data.totalprice);
-        setIdCart(data.id);
+        setPriceOrder(data.shoppingcart.totalprice);
+        setIdCart(data.shoppingcart.id);
         console.log(data);
       })
       .catch((err) => {
@@ -255,6 +256,7 @@ function FinalOrder() {
 
   return (
     <Box>
+      <Header isHidden={isHidden} />
       <Box
         sx={{
           padding: { xs: "5%", sm: "10%", md: "5% 20%" },

@@ -26,6 +26,7 @@ function HomePage() {
   const [textSend, setTextSend] = useState<string>("")
   const [countProducts, setCountProducts] = useState<number>(0);
   const [isReady, setIsReady] = useState<boolean>(false);
+  const [isHidden, setIsHidden] = useState<boolean>(false);
 
   const [product, setProduct] = useState(dataProductDefault);
   const [categoryPage, setCategoryPage] = useState<string>("All Category");
@@ -224,7 +225,7 @@ function HomePage() {
   if (isReady) {
     return (
       <Box>
-        <Header handleGetText={(e)=>handleGetText(e)} handleSendText={handleSendText} />
+        <Header handleGetText={(e)=>handleGetText(e)} handleSendText={handleSendText} isHidden={isHidden}/>
         <Box
           sx={{
             minHeight: "900px",

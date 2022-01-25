@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Header from "../components/Header";
@@ -14,13 +14,14 @@ import Footer from "../components/Footer";
 
 function ProfilePage() {
   const [value, setValue] = React.useState("biodata");
+  const [isHidden, setIsHidden] = useState<boolean>(true);
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
   return (
     <Box>
-      <Header />
+      <Header isHidden={isHidden} />
       <Box
         sx={{
           padding: {

@@ -17,6 +17,7 @@ const ShoppingCard: React.FC = (props) => {
   const [cartDetails, setCartDetails] = useState(cartDetailsDefault);
   const [cartTotalPrice, setCartTotalPrice] = useState<number>(0)
   const [cartUpdate, setCartUpdate] = useState([])
+  const [isHidden, setIsHidden] = useState<boolean>(true);
   const [isReady, setIsReady] = useState<boolean>(false);
 
   useEffect(() => {
@@ -73,9 +74,9 @@ const ShoppingCard: React.FC = (props) => {
 
     await axios.get(`/carts/${idUser}`, config).then((res) => {
       const { data } = res.data;
-      console.log(res)
-      setCartDetails(data.cartdetail);
-      setCartTotalPrice(data.totalprice)
+      console.log(data)
+      setCartDetails(data.shoppingcart.cartdetail);
+      setCartTotalPrice(data.shoppingcart.totalprice)
     }).catch((err)=>{
       console.log(err)
     }).finally(()=>{
@@ -123,7 +124,7 @@ const ShoppingCard: React.FC = (props) => {
   if (isReady) {
     return (
       <Box>
-        <Header />
+        <Header isHidden={isHidden}/>
         <Box
           sx={{
             minHeight: "80vh",

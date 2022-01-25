@@ -25,12 +25,12 @@ import axios from "axios";
 import "./Header.css";
 import { SearchContext } from "../context/SearchContext";
 
-function Header({handleGetText, handleSendText} :headerHandlerType) {
+function Header({handleGetText, handleSendText, isHidden} :headerHandlerType) {
   const params = useParams()
   console.log(params)
   
   const [auth, setAuth] = useLocalStorage<authTypes[] | undefined>("auth", []);
-  const [count, setCount] = useLocalStorage<countShopType[]>("count", []);
+  const [count, setCount] = useState<number>(0);
   const [userName, setUserName] = useState<string>("");
   const [userImage, setUserImage] = useState<string>("");
   const navigate = useNavigate();
@@ -62,10 +62,40 @@ function Header({handleGetText, handleSendText} :headerHandlerType) {
     navigate("/");
   };
 
+  const getCartUser = async () =>{
+    let token: string | undefined;
+    let id: number | undefined;
+    if (auth === undefined) {
+      token = "";
+      id = 0;
+    } else {
+      token = auth[0].token;
+      id = auth[0].id;
+    }
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
-  useEffect(() => {
-    fetchNameUserID();
-  }, []);
+    await axios
+      .get(`/carts/${id}`, config)
+      .then((res) => {
+        const {data} = res
+        console.log(data)
+        if(data.message.toString() == "shopping cart empty"){
+          setCount(0)
+        }else if(data.message.toString() == "successful"){
+          setCount(data.data.totalqty)
+        }
+      })
+      .catch((err) => {
+        const { data } = err.response;
+        console.log(err.response);
+      })
+      .finally(() => {});
+
+  }
 
   let isAuth: boolean | undefined;
   if (auth === undefined) {
@@ -73,6 +103,14 @@ function Header({handleGetText, handleSendText} :headerHandlerType) {
   } else {
     isAuth = auth[0]?.isAuth;
   }
+
+  useEffect(() => {
+    fetchNameUserID();
+    if(isAuth){
+      getCartUser()
+    }
+  }, []);
+
 
   const fetchNameUserID = async () => {
     let token: string | undefined;
@@ -149,7 +187,7 @@ function Header({handleGetText, handleSendText} :headerHandlerType) {
       <Box>
         <Box
           sx={{
-            display: `${params! ? "flex": "none"}`,
+            display: `${!isHidden ? "flex": "none"}`,
             alignItems: "center",
             justifyContent: "center",
             backgroundColor: "#2296CB",
@@ -198,7 +236,7 @@ function Header({handleGetText, handleSendText} :headerHandlerType) {
             }}>
             <ShoppingCartOutlinedIcon sx={{ color: "white" }} />
             <Typography sx={{ color: "white", fontFamily: "Nunito" }}>
-              {0}
+              {count}
             </Typography>
           </Box>
         </Tooltip>

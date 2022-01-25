@@ -90,6 +90,7 @@ export type productHistoryType = {
 }
 
 export type headerHandlerType = {
+  isHidden?: boolean,
   handleGetText?: (e:React.ChangeEvent<HTMLInputElement>)=> void,
   handleSendText?: ()=>void
 }
