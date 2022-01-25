@@ -1,3 +1,43 @@
+
+# E-COMMERCE FE 5
+
+Group Project by Group 5 Sirclo Tech Academy 2022
+{(FE : Bahtiar Subrata and Jemi Damanik) && (BE : Bagus and Mufidi)
+
+
+## Acknowledgements
+
+ - [React JS](https://reactjs.org/)
+ - [Icon Material](https://www.npmjs.com/package/material-icons)
+ - [Material UI](https://www.npmjs.com/package/@mui/material)
+ - [axios](https://axios-http.com/docs/intro)
+ - [Router Dom@6](https://reactrouter.com/docs/en/v6)
+ - [Google Font : Nunito](https://fonts.google.com/specimen/Nunito)
+
+ 
+ 
+## Color Reference
+
+| Color             | Hex                                                                |
+| ----------------- | ------------------------------------------------------------------ |
+| Primer Color | [#2296CB]|
+| Sekunder Color | [#1767A0]
+| Primer Font Color | [#FFFFFF]
+| Sekunder Font Color | [#000000]
+
+
+
+## Demo
+
+Deployed in :
+
+
+
+
+## Running Tests
+
+To run tests, run the following command
+
 # Getting Started to E-COMMERCE-FE
 Run this command in your terminal
 
@@ -15,16 +55,13 @@ this command is due to install Font
 this command is due to install axios
 
 
+### npm i react-router-dom
+this command is due to install react-router-dom v6
+
+
 #### npm start
 this command is due to view it in the browser
 
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
 
 ### `npm start`
 
@@ -53,14 +90,19 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Screenshots
 
-## Learn More
+![HOME](https://i.ibb.co/CM7wywc/Screenshot-324.png)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+![LOGIN](https://i.ibb.co/Btcvvbr/Screenshot-325.png)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+![SIGN UP](https://i.ibb.co/K73c6KH/Screenshot-326.png)
+
+
+
+## Roadmap System
+
+
+
