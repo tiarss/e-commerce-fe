@@ -198,7 +198,7 @@ function Header({handleGetText, handleSendText} :headerHandlerType) {
             }}>
             <ShoppingCartOutlinedIcon sx={{ color: "white" }} />
             <Typography sx={{ color: "white", fontFamily: "Nunito" }}>
-              {count === undefined ? 0 : count![0].count}
+              {0}
             </Typography>
           </Box>
         </Tooltip>

@@ -23,13 +23,6 @@ const ShoppingCard: React.FC = (props) => {
     fetchDataShoppingCart();
   }, []);
 
-  // const allQty = () =>{
-  //   let allqty : number = 0 
-  //   cartDetails?.map((value)=>{
-  //     allqty+=value.qty;
-  //   })
-  //   return allqty
-  // }
 
   const handleDeleteItem = (idProduct: number) =>{
     const filtering = cartDetails?.filter(value => value.productid !== idProduct)
@@ -130,6 +123,7 @@ const ShoppingCard: React.FC = (props) => {
   if (isReady) {
     return (
       <Box>
+        <Header />
         <Box
           sx={{
             minHeight: "80vh",
@@ -167,31 +161,13 @@ const ShoppingCard: React.FC = (props) => {
           </Box>
           <Box
             sx={{
-              display: "flex",              
+              display: "flex",
               gap: 3,
               justifyContent: "flex-end",
               marginTop: "20px",
-              width: "100%"
             }}>
-              <Box
-              sx={{
-                width: { xs: "164px", sm: "220px" },
-                display: "flex",
-                flexDirection: "column",
-                gap: "20px",
-              }}>
-              <CustomButtonPrimary caption='Update Keranjang' OnClick={updateCart} />
-            </Box>
-            <Box
-              sx={{
-                width: { xs: "164px", sm: "220px" },
-                display: "flex",
-                flexDirection: "column",
-                gap: "20px",
-              }}>
-              <CustomButtonPrimary caption='Checkout' OnClick={toOrder} />
-            </Box>           
-            
+            <CustomButtonPrimary caption='Update Keranjang' OnClick={updateCart} />
+            <CustomButtonPrimary caption='Checkout' OnClick={toOrder} />
           </Box>
         </Box>
 
