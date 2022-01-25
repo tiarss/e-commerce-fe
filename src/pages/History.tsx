@@ -4,14 +4,41 @@ import {
   CustomButtonPrimary,
   CustomButtonSecondary,
 } from "../components/CustomButton";
-import { authTypes, productHistoryType } from "../Types";
+import { alertType, authTypes, productHistoryType } from "../Types";
 import axios from "axios";
 import { useLocalStorage } from "../utils/useLocalStorage";
+
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />;
+});
+
+
 function History() {
   const productHistoryDefault: productHistoryType[] = [];
   const [auth, setAuth] = useLocalStorage<authTypes[] | undefined>("auth", []);
   const [productHistory, setProductHistory] = useState(productHistoryDefault);
   const [isReady, setIsReady] = useState<boolean>(false);
+  const [openAlert, setOpenAlert] = React.useState(false);
+  const [alert, setAlert] = useState<alertType>({
+    message: "",
+    status: "info",
+  });
+
+  const handleCloseAlert = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenAlert(false);
+  };
 
   useEffect(() => {
     fetchDataHistory();
@@ -73,7 +100,11 @@ function History() {
         config
       )
       .then((res) => {
-        console.log(res);
+        setAlert({
+          message: "Konfirmasi Pembayaran Selesai",
+          status: "success",
+        });
+        setOpenAlert(true);
       }).finally(()=>{
         fetchDataHistory()
       });
@@ -104,7 +135,11 @@ function History() {
         config
       )
       .then((res) => {
-        console.log(res);
+        setAlert({
+          message: "Transaksi Dibatalkan",
+          status: "error",
+        });
+        setOpenAlert(true);
       }).finally(()=>{
         fetchDataHistory()
       });
@@ -136,7 +171,11 @@ function History() {
         config
       )
       .then((res) => {
-        console.log(res);
+        setAlert({
+          message: "Barang Telah Sampai",
+          status: "success",
+        });
+        setOpenAlert(true);
       }).finally(()=>{
         fetchDataHistory()
       });
@@ -179,14 +218,8 @@ function History() {
               </Box>
               <Box sx={{ width: { xs: "100", md: "80%" } }}>
                 <Typography sx={{fontFamily: "Nunito", fontWeight: "700" }} >Order {index + 1}</Typography>
-                {value.checkedoutcartdetail?.map((data, index) => (
-                  <Box key={index} sx={{ display: "flex" }}>
-                    <Typography sx={{fontFamily: "Nunito", fontWeight: "700" }}>{data.productname}</Typography>
-                    <Typography sx={{ marginLeft: "5px",fontFamily: "Nunito", fontWeight: "700"  }}>
-                      , Jumlah: {data.qty}
-                    </Typography>
-                  </Box>
-                ))}
+                <Typography sx={{fontFamily: "Nunito", fontWeight: "700" }}>{value.datetransaction}</Typography>
+              
                 <Typography sx={{fontFamily: "Nunito", fontWeight: "700" }}>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(value.totalprice!)}</Typography>
                 <Typography sx={{fontFamily: "Nunito", fontWeight: "700" }}>{value.status.toUpperCase()}</Typography>
                 <Box
@@ -225,6 +258,17 @@ function History() {
             </Box>
           ))}
         </Box>
+        <Snackbar
+          open={openAlert}
+          autoHideDuration={6000}
+          onClose={handleCloseAlert}>
+          <Alert
+            onClose={handleCloseAlert}
+            color={alert.status}
+            sx={{ width: "100%" }}>
+            {alert.message}
+          </Alert>
+        </Snackbar>
       </Box>
     );
   } else {

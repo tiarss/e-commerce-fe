@@ -25,6 +25,7 @@ const ShoppingCard: React.FC = (props) => {
   const [auth, setAuth] = useLocalStorage<authTypes[] | undefined>("auth", []);
   const [cartDetails, setCartDetails] = useState(cartDetailsDefault);
   const [cartTotalPrice, setCartTotalPrice] = useState<number>(0)
+  const [cartTotalQty, setCartTotalQty] = useState<number>(0)
   const [cartUpdate, setCartUpdate] = useState([])
   const [isHidden, setIsHidden] = useState<boolean>(true);
   const [isReady, setIsReady] = useState<boolean>(false);
@@ -102,6 +103,7 @@ const ShoppingCard: React.FC = (props) => {
       console.log(data)
       setCartDetails(data.shoppingcart.cartdetail);
       setCartTotalPrice(data.shoppingcart.totalprice)
+      setCartTotalQty(data.totalqty)
     }).catch((err)=>{
       console.log(err)
     }).finally(()=>{
@@ -186,7 +188,7 @@ const ShoppingCard: React.FC = (props) => {
               display: "flex",
             }}>
             <Box>
-              <SummaryDetail qty={0} shipping='0' sumPrice={cartTotalPrice} />
+              <SummaryDetail qty={cartTotalQty} shipping='0' sumPrice={cartTotalPrice} />
             </Box>
           </Box>
           <Box

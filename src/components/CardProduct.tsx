@@ -69,7 +69,7 @@ function CardProduct(props: cardproduct) {
             flexDirection: { xs: "column", sm: "row" },
           }}>
           <Box>
-            <p>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(props.sumPrice/props.productCount!)}</p>
+            {/* <p>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(props.sumPrice/props.productCount!)}</p> */}
           </Box>
           <Box>
             <Box

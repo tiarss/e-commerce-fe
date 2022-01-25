@@ -83,7 +83,7 @@ export type cartDetailUpdate ={
 }
 
 export type productHistoryType = {
-  checkedoutcartdetail: any[],
+  datetransaction:string
   status: string,
   totalprice: number
   id : number
