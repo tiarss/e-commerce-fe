@@ -28,6 +28,7 @@ function SummaryDetail(props:summaryDetail) {
         padding: "10px 10px",        
         justifyContent: "space-between",                
       }}>
+          <p style={{ marginBottom:"10px", color:"#FFFFFF" }}>Quantity</p>
           <p style={{ marginBottom:"10px", color:"#FFFFFF" }}>Shipping</p>
           <p style={{ marginBottom:"10px", color:"#FFFFFF" }}>Total Price</p>
         
@@ -40,6 +41,7 @@ function SummaryDetail(props:summaryDetail) {
       }}>
         <p style={{ marginBottom:"10px", color:"#FFFFFF" }}>:</p>
         <p style={{ marginBottom:"10px", color:"#FFFFFF" }}>:</p>
+        <p style={{ marginBottom:"10px", color:"#FFFFFF" }}>:</p>
       </Box>
       <Box
       sx={{
@@ -49,6 +51,7 @@ function SummaryDetail(props:summaryDetail) {
         
         justifyContent: "space-betweeend",        
       }}>
+        <p style={{ marginBottom:"10px", color:"#FFFFFF" }}>{props.qty}</p>
         <p style={{ marginBottom:"10px", color:"#FFFFFF" }}>{props.shipping}</p>
         <p style={{ marginBottom:"10px", color:"#FFFFFF" }}>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(props.sumPrice!)}</p>
       </Box>

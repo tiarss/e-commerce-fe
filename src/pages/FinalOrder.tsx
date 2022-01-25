@@ -34,7 +34,7 @@ function FinalOrder() {
   const [auth, setAuth] = useLocalStorage<authTypes[] | undefined>("auth", []);
   const [isHidden, setIsHidden] = useState<boolean>(true);
 
-  const [qty, setQtyOrder] = useState<string>("");
+  const [qty, setQtyOrder] = useState<number>(0);
   const [shipping, setShippingOrder] = useState<string>("");
   const [price, setPriceOrder] = useState<string>("");
   const [idCart, setIdCart] = useState<number>(0);
@@ -179,6 +179,8 @@ function FinalOrder() {
         )
         .then((res) => {
           console.log(res);
+          navigate(`/`);
+
         })
         .catch((err) => {
           const { data } = err.response;
@@ -227,6 +229,7 @@ function FinalOrder() {
         setShippingOrder("free");
         setPriceOrder(data.shoppingcart.totalprice);
         setIdCart(data.shoppingcart.id);
+        setQtyOrder(data.totalqty);
         console.log(data);
       })
       .catch((err) => {
@@ -341,7 +344,7 @@ function FinalOrder() {
           <Box></Box>
           <Box>
             <SummaryDetail
-              qty={parseInt(qty)}
+              qty={qty}
               shipping={shipping}
               sumPrice={parseInt(price)}
             />
