@@ -95,7 +95,8 @@ function Barangku() {
       })
       .then((res) => {
         const { data } = res.data;
-        setDataProductUser(data);
+        console.log(data)
+        setDataProductUser(data.products);
       })
       .catch((err) => {
         const { data } = err.response;
@@ -419,6 +420,7 @@ function Barangku() {
             status: "error",
           });
           setOpenAlert(true);
+          fetchDataProductUser();
         }
       })
       .catch((err) => {
@@ -437,7 +439,6 @@ function Barangku() {
           ]);
           setOpenAlert(true);
           navigate("/login");
-          
         }
       })
       .finally(() => {
