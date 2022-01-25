@@ -411,7 +411,7 @@ function HomePage() {
   } else {
     return (
       <Box>
-        <Typography>Loading</Typography>
+        <Typography></Typography>
       </Box>
     );
   }

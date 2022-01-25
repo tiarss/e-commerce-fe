@@ -217,7 +217,7 @@ const ShoppingCard: React.FC = (props) => {
       </Box>
     );
   } else {
-    return <Box>Loading</Box>;
+    return <Box></Box>;
   }
 };
 

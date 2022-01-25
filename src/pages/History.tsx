@@ -283,7 +283,7 @@ function History() {
           padding: "20px",
           display: "flex",
         }}>
-        Loading
+        
       </Box>
     );
   }

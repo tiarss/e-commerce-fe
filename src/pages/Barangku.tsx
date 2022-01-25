@@ -69,6 +69,7 @@ function Barangku() {
     }
     setOpenAlert(false);
   };
+
   useEffect(() => {
     fetchDataProductUser();
   }, []);
@@ -85,7 +86,7 @@ function Barangku() {
     }
 
     await axios
-      .get("products", {
+      .get("/products", {
         params: {
           uid: idUser,
         },
@@ -95,7 +96,6 @@ function Barangku() {
       })
       .then((res) => {
         const { data } = res.data;
-        console.log(data)
         setDataProductUser(data.products);
       })
       .catch((err) => {
@@ -400,10 +400,13 @@ function Barangku() {
 
   const handleDeleteProduct = (id: number) => {
     let token: string | undefined;
+    let idUser: number | undefined;
     if (auth === undefined) {
       token = "";
+      idUser = 0;
     } else {
       token = auth[0].token;
+      idUser = auth[0].id;
     }
 
     axios
@@ -414,13 +417,13 @@ function Barangku() {
       })
       .then((res) => {
         const { data } = res;
+        console.log(data)
         if (data.message === "successful") {
           setAlert({
             message: "Barang Telah di Hapus",
             status: "error",
           });
           setOpenAlert(true);
-          fetchDataProductUser();
         }
       })
       .catch((err) => {
@@ -443,6 +446,7 @@ function Barangku() {
       })
       .finally(() => {
         fetchDataProductUser();
+        // window.location.reload();
       });
   };
 
@@ -716,7 +720,7 @@ function Barangku() {
           marginBottom: "50px",
           padding: "20px",
         }}>
-        Loading
+        
       </Box>
     );
   }

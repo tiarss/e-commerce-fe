@@ -115,7 +115,7 @@ let token: string | undefined;
       </Box>    
   );
   } else {
-    return <Box>Loading</Box>
+    return <Box></Box>
   }
 }
 export default readParams(DetailProduct);

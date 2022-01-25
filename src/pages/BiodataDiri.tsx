@@ -524,7 +524,7 @@ function BiodataDiri() {
           position: "relative",
           flexDirection: { xs: "column", md: "row" },
         }}>
-        Loading
+        
       </Box>
     );
   }
