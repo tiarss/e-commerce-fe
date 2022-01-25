@@ -179,6 +179,8 @@ function FinalOrder() {
         )
         .then((res) => {
           console.log(res);
+          navigate(`/`);
+
         })
         .catch((err) => {
           const { data } = err.response;
