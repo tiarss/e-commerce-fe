@@ -15,7 +15,7 @@ function SummaryDetail(props:summaryDetail) {
         marginTop: "20px",
         display: "flex",
         width: { xs:"357px", sm:"463px"},
-        height: "130px",
+        height: { xs:"71px", sm:"118px"},
         padding: "10px 30px",
         backgroundColor: "#1767A0",
         justifyContent: "space-between",    
@@ -28,7 +28,6 @@ function SummaryDetail(props:summaryDetail) {
         padding: "10px 10px",        
         justifyContent: "space-between",                
       }}>
-          <p style={{ marginBottom:"10px", color:"#FFFFFF" }}>Total Quantity</p>
           <p style={{ marginBottom:"10px", color:"#FFFFFF" }}>Shipping</p>
           <p style={{ marginBottom:"10px", color:"#FFFFFF" }}>Total Price</p>
         
@@ -41,7 +40,6 @@ function SummaryDetail(props:summaryDetail) {
       }}>
         <p style={{ marginBottom:"10px", color:"#FFFFFF" }}>:</p>
         <p style={{ marginBottom:"10px", color:"#FFFFFF" }}>:</p>
-        <p style={{ marginBottom:"10px", color:"#FFFFFF" }}>:</p>
       </Box>
       <Box
       sx={{
@@ -51,7 +49,6 @@ function SummaryDetail(props:summaryDetail) {
         
         justifyContent: "space-betweeend",        
       }}>
-        <p style={{ marginBottom:"10px", color:"#FFFFFF" }}>{props.qty}</p>
         <p style={{ marginBottom:"10px", color:"#FFFFFF" }}>{props.shipping}</p>
         <p style={{ marginBottom:"10px", color:"#FFFFFF" }}>Rp.{props.sumPrice}</p>
       </Box>

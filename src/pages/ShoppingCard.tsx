@@ -167,13 +167,31 @@ const ShoppingCard: React.FC = (props) => {
           </Box>
           <Box
             sx={{
-              display: "flex",
+              display: "flex",              
               gap: 3,
               justifyContent: "flex-end",
               marginTop: "20px",
+              width: "100%"
             }}>
-            <CustomButtonPrimary caption='Update Keranjang' OnClick={updateCart} />
-            <CustomButtonPrimary caption='Checkout' OnClick={toOrder} />
+              <Box
+              sx={{
+                width: { xs: "164px", sm: "220px" },
+                display: "flex",
+                flexDirection: "column",
+                gap: "20px",
+              }}>
+              <CustomButtonPrimary caption='Update Keranjang' OnClick={updateCart} />
+            </Box>
+            <Box
+              sx={{
+                width: { xs: "164px", sm: "220px" },
+                display: "flex",
+                flexDirection: "column",
+                gap: "20px",
+              }}>
+              <CustomButtonPrimary caption='Checkout' OnClick={toOrder} />
+            </Box>           
+            
           </Box>
         </Box>
 
