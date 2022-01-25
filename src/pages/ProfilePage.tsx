@@ -20,6 +20,7 @@ function ProfilePage() {
   };
   return (
     <Box>
+      <Header />
       <Box
         sx={{
           padding: {

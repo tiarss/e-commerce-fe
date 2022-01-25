@@ -54,7 +54,7 @@ function HomePage() {
     await axios
       .get("/products", {
         params: {
-          p: textSend,
+          keyword: textSend,
         },
       })
       .then((res) => {

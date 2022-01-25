@@ -17,7 +17,7 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { CustomButtonSecondary } from "./CustomButton";
 import "@fontsource/nunito";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Burger from "./Burger";
 import { useLocalStorage } from "../utils/useLocalStorage";
 import { authTypes, countShopType, headerHandlerType } from "../Types";
@@ -26,6 +26,8 @@ import "./Header.css";
 import { SearchContext } from "../context/SearchContext";
 
 function Header({handleGetText, handleSendText} :headerHandlerType) {
+  const params = useParams()
+  console.log(params)
   
   const [auth, setAuth] = useLocalStorage<authTypes[] | undefined>("auth", []);
   const [count, setCount] = useLocalStorage<countShopType[]>("count", []);
@@ -147,7 +149,7 @@ function Header({handleGetText, handleSendText} :headerHandlerType) {
       <Box>
         <Box
           sx={{
-            display: "flex",
+            display: `${params! ? "flex": "none"}`,
             alignItems: "center",
             justifyContent: "center",
             backgroundColor: "#2296CB",
