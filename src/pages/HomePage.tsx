@@ -3,7 +3,6 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Pagination from "@mui/material/Pagination";
 import React, { useState, useEffect, useContext } from "react";
-import FilterListRoundedIcon from "@mui/icons-material/FilterListRounded";
 import FilterAltRoundedIcon from "@mui/icons-material/FilterAltRounded";
 import CardsHome from "../components/CardsHome";
 import Header from "../components/Header"
@@ -13,8 +12,6 @@ import axios from "axios";
 import { alertType, authTypes, countShopType, dataProductTypes, toSendCart } from "../Types";
 import { useLocalStorage } from "../utils/useLocalStorage";
 import { useNavigate } from "react-router-dom";
-import { SearchContext } from "../context/SearchContext";
-
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { ShoppingContext } from "../context/ShoppingNotification";
@@ -33,7 +30,6 @@ function HomePage() {
     null
   );
   let navigate = useNavigate();
-  const Search = useContext(SearchContext);
   const [auth, setAuth] = useLocalStorage<authTypes[] | undefined>("auth", []);
   const [textSend, setTextSend] = useState<string>("")
   const [countProducts, setCountProducts] = useState<number>(0);

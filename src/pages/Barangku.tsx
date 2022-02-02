@@ -417,7 +417,6 @@ function Barangku() {
       })
       .then((res) => {
         const { data } = res;
-        console.log(data)
         if (data.message === "successful") {
           setAlert({
             message: "Barang Telah di Hapus",

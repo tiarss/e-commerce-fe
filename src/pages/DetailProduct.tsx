@@ -56,11 +56,8 @@ let token: string | undefined;
         config
       )
       .then((res) => {
-        console.log(res);
       });
 
-    // const idCart = id
-    // setAddCarts()
   };
 
   useEffect(() => {

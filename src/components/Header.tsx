@@ -20,10 +20,9 @@ import "@fontsource/nunito";
 import { useNavigate, useParams } from "react-router-dom";
 import Burger from "./Burger";
 import { useLocalStorage } from "../utils/useLocalStorage";
-import { authTypes, countShopType, headerHandlerType } from "../Types";
+import { authTypes, headerHandlerType } from "../Types";
 import axios from "axios";
 import "./Header.css";
-import { SearchContext } from "../context/SearchContext";
 import { ShoppingContext } from "../context/ShoppingNotification";
 
 function Header({
@@ -129,7 +128,6 @@ function Header({
       .get(`/users/${id}`, config)
       .then((res) => {
         const { data } = res.data;
-        console.log(data);
         setUserName(data.name);
         setUserImage(data.image);
       })
@@ -144,7 +142,6 @@ function Header({
             },
           ]);
         }
-        console.log(err.response);
       })
       .finally(() => {});
   };

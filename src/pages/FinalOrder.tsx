@@ -1,7 +1,7 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { BrowserRouter, Route } from "react-router-dom";
-import { Box } from "@mui/material";
+import { Alert, Box } from "@mui/material";
 import { InputText2, InputText3 } from "../components/InputText";
 import SummaryDetail from "../components/SummaryDetail";
 import { CustomButtonPrimary } from "../components/CustomButton";
@@ -141,19 +141,14 @@ function FinalOrder() {
 
     if (streetOrder === "") {
       setStreetError(" is required");
-      console.log("rest");
     } else if (cityOrder === "") {
       setCityError(" is required");
-      console.log("rest");
     } else if (provinceOrder === null) {
       setProvinceError(" cannot be null");
-      console.log("rest");
     } else if (zipCodeOrder === "") {
       setZipCodeError(" min 1");
-      console.log("rest");
     } else if (cardOrder === "") {
       setCardError(" is required");
-      console.log("rest");
     } else if (
       streetError === "" &&
       cityError === "" &&
@@ -178,9 +173,13 @@ function FinalOrder() {
           config
         )
         .then((res) => {
-          console.log(res);
-          navigate(`/`);
-
+          setAlert({
+            message: "Barang Berhasil di Order",
+            status: "success",
+          });
+          setTimeout(() => {
+            navigate(`/`);
+          }, 500);
         })
         .catch((err) => {
           const { data } = err.response;
@@ -197,7 +196,7 @@ function FinalOrder() {
               },
             ]);
             setOpenAlert(true);
-              navigate("/login");
+            navigate("/login");
           }
         })
         .finally(() => {
@@ -226,11 +225,10 @@ function FinalOrder() {
       .then((res) => {
         const { data } = res.data;
         // setQtyOrder(data.products);
-        setShippingOrder("free");
+        setShippingOrder("Free");
         setPriceOrder(data.shoppingcart.totalprice);
         setIdCart(data.shoppingcart.id);
         setQtyOrder(data.totalqty);
-        console.log(data);
       })
       .catch((err) => {
         console.log(err);
@@ -249,7 +247,6 @@ function FinalOrder() {
           ]);
           setOpenAlert(true);
           navigate("/login");
-          
         }
       })
       .finally(() => {
@@ -316,24 +313,6 @@ function FinalOrder() {
             onChange={(e) => handleCard(e)}
             errorVal={cardError}
           />
-          {/* <Box sx={{ display:"flex", flexDirection:"row", gap:"10px" }}>
-              <Box sx={{ width:"60%" }}>
-                <InputText2 placeholder='Card Member' type='text'/>                
-              </Box>
-              <Box sx={{ width:"40%" }}>
-                <InputText2 placeholder='Card Member' type='text'/>
-              </Box>
-            </Box>
-              <Box sx={{ display:"flex", flexDirection:"row", gap:"10px", alignItems:"center" }}>
-                <p style={{ width:"25%",}}>Expiration Date</p>
-                <Box sx={{ width: "35%" }}>
-                <InputText3/>
-                </Box>
-                <Box sx={{ width:"35%" }}>
-                  <InputText3/>
-                </Box>
-
-              </Box> */}
         </Box>
         <Box
           sx={{
@@ -356,24 +335,32 @@ function FinalOrder() {
             justifyContent: "end",
             display: "flex",
           }}>
-            <Box
-              sx={{
-                width: { xs: "164px", sm: "220px" },
-                display: "flex",
-                flexDirection: "column",
-                gap: "20px",
-              }}>
-              <CustomButtonPrimary
+          <Box
+            sx={{
+              width: { xs: "164px", sm: "220px" },
+              display: "flex",
+              flexDirection: "column",
+              gap: "20px",
+            }}>
+            <CustomButtonPrimary
               isDisabled={disabled}
               caption='Purchase'
               OnClick={handlePurchase}
             />
-            </Box>
-          <Box>
-            
           </Box>
         </Box>
       </Box>
+      <Snackbar
+        open={openAlert}
+        autoHideDuration={6000}
+        onClose={handleCloseAlert}>
+        <Alert
+          onClose={handleCloseAlert}
+          color={alert.status}
+          sx={{ width: "100%" }}>
+          {alert.message}
+        </Alert>
+      </Snackbar>
       <Footer />
     </Box>
   );
