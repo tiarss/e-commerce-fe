@@ -20,6 +20,7 @@ import "@fontsource/nunito";
 import { useNavigate, useParams } from "react-router-dom";
 import Burger from "./Burger";
 import { useLocalStorage } from "../utils/useLocalStorage";
+
 import { authTypes, headerHandlerType } from "../Types";
 import axios from "axios";
 import "./Header.css";

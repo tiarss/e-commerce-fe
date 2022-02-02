@@ -57,7 +57,6 @@ let token: string | undefined;
       )
       .then((res) => {
       });
-
   };
 
   useEffect(() => {

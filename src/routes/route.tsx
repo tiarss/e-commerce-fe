@@ -12,7 +12,6 @@ import FinalOrder from "../pages/FinalOrder";
 import axios from "axios";
 import ProtectedRoute from "../utils/ProtectedRoute";
 import { ShoppingContext, ShoppingProvider } from "../context/ShoppingNotification";
-
 axios.defaults.baseURL = "http://52.221.195.63:3000";
 const RouteCenter = () => {
   return (
@@ -55,3 +54,4 @@ const RouteCenter = () => {
   );
 };
 export default RouteCenter;
+

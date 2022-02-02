@@ -141,6 +141,7 @@ function FinalOrder() {
 
     if (streetOrder === "") {
       setStreetError(" is required");
+
     } else if (cityOrder === "") {
       setCityError(" is required");
     } else if (provinceOrder === null) {
@@ -173,6 +174,7 @@ function FinalOrder() {
           config
         )
         .then((res) => {
+
           setAlert({
             message: "Barang Berhasil di Order",
             status: "success",
@@ -335,6 +337,7 @@ function FinalOrder() {
             justifyContent: "end",
             display: "flex",
           }}>
+
           <Box
             sx={{
               width: { xs: "164px", sm: "220px" },
