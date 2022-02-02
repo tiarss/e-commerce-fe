@@ -1,12 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import "./index.css"
+import LoginPage from "./pages/LoginPage"
+import DetailProduct from './pages/DetailProduct';
+import SignUp from './pages/SignUp';
+import { Login } from '@mui/icons-material';
+import RouteCenter from "./routes/route";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <RouteCenter/>
   </React.StrictMode>,
   document.getElementById('root')
 );
