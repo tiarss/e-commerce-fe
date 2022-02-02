@@ -65,7 +65,6 @@ function History() {
       .then((res) => {
         const { data } = res.data;
         setProductHistory(data);
-        console.log(data)
       })
       .catch((err) => {
         console.log(err);

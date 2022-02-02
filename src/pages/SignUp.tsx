@@ -64,9 +64,7 @@ const SignUp: React.FC = () => {
           password: password,
         })
         .then((res) => {
-          console.log(res)
           if (res.data.message === "successful") {
-            console.log()
             setAlert({
               message: "User Telah dibuat",
               status: "success",

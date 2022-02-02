@@ -59,7 +59,6 @@ const ShoppingCard: React.FC = (props) => {
   const handleAddQty = (idProduct: number)=>{
     const temp = cartDetails.map((value)=>{
       if(value.productid === idProduct){
-        console.log(value.qty)
         return {...value, qty: value.qty+1}
       }else{
         return value
@@ -72,7 +71,6 @@ const ShoppingCard: React.FC = (props) => {
   const handleMinQty = (idProduct: number)=>{
     const temp = cartDetails.map((value)=>{
       if(value.productid === idProduct){
-        console.log(value.qty)
         return {...value, qty: value.qty-1}
       }else{
         return value
@@ -100,7 +98,6 @@ const ShoppingCard: React.FC = (props) => {
 
     await axios.get(`/carts/${idUser}`, config).then((res) => {
       const { data } = res.data;
-      console.log(data)
       setCartDetails(data.shoppingcart.cartdetail);
       setCartTotalPrice(data.shoppingcart.totalprice)
       setCartTotalQty(data.totalqty)
@@ -188,7 +185,7 @@ const ShoppingCard: React.FC = (props) => {
               display: "flex",
             }}>
             <Box>
-              <SummaryDetail qty={cartTotalQty} shipping='0' sumPrice={cartTotalPrice} />
+              <SummaryDetail qty={cartTotalQty} shipping='Free' sumPrice={cartTotalPrice} />
             </Box>
           </Box>
           <Box

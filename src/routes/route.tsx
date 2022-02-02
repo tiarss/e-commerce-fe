@@ -1,6 +1,6 @@
 import { Route, Routes, BrowserRouter, Navigate } from "react-router-dom";
 import { Box } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import HomePage from "../pages/HomePage";
 import ProfilePage from "../pages/ProfilePage";
 import App from "../App";
@@ -11,11 +11,9 @@ import SignUp from "../pages/SignUp";
 import FinalOrder from "../pages/FinalOrder";
 import axios from "axios";
 import ProtectedRoute from "../utils/ProtectedRoute";
-import { SearchProvider } from "../context/SearchContext";
-import { ShoppingProvider } from "../context/ShoppingNotification";
-
+import { ShoppingContext, ShoppingProvider } from "../context/ShoppingNotification";
 axios.defaults.baseURL = "http://52.221.195.63:3000";
-const route = () => {
+const RouteCenter = () => {
   return (
     <Box>
       <BrowserRouter>
@@ -55,4 +53,5 @@ const route = () => {
     </Box>
   );
 };
-export default route;
+export default RouteCenter;
+

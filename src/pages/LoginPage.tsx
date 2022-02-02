@@ -70,7 +70,6 @@ const LoginPage: React.FC = () => {
               isAuth: true,
             },
           ]);
-          console.log(res)
           if (res.data.message === "successful") {
             setAlert({
               message: "Login Berhasil",
