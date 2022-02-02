@@ -17,6 +17,7 @@ import { SearchContext } from "../context/SearchContext";
 
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
+import { ShoppingContext } from "../context/ShoppingNotification";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -38,6 +39,7 @@ function HomePage() {
   const [countProducts, setCountProducts] = useState<number>(0);
   const [isReady, setIsReady] = useState<boolean>(false);
   const [isHidden, setIsHidden] = useState<boolean>(false);
+  const shoppingCart = useContext(ShoppingContext);
 
   const [product, setProduct] = useState(dataProductDefault);
   const [categoryPage, setCategoryPage] = useState<string>("All Category");
@@ -121,11 +123,16 @@ function HomePage() {
         config
       )
       .then((res) => {
+        let countNow = shoppingCart.count
+        if(countNow !== null){
+          shoppingCart.setCount(countNow++)
+        }
         setAlert({
           message: "Barang di Tambahkan ke Keranjang",
           status: "success",
         });
         setOpenAlert(true);
+        
       });
   };
 
@@ -222,6 +229,11 @@ function HomePage() {
   useEffect(() => {
     fetchDataAllProduct();
   }, []);
+
+  useEffect(()=>{
+    
+  },[shoppingCart.count])
+
 
   const fetchDataAllProduct = async () => {
     await axios

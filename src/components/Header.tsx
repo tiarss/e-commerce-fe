@@ -24,13 +24,16 @@ import { authTypes, countShopType, headerHandlerType } from "../Types";
 import axios from "axios";
 import "./Header.css";
 import { SearchContext } from "../context/SearchContext";
+import { ShoppingContext } from "../context/ShoppingNotification";
 
-function Header({handleGetText, handleSendText, isHidden} :headerHandlerType) {
-  const params = useParams()
-  console.log(params)
-  
+function Header({
+  handleGetText,
+  handleSendText,
+  isHidden,
+}: headerHandlerType) {
+  const params = useParams();
   const [auth, setAuth] = useLocalStorage<authTypes[] | undefined>("auth", []);
-  const [count, setCount] = useState<number>(0);
+  const shoppingCart = useContext(ShoppingContext);
   const [userName, setUserName] = useState<string>("");
   const [userImage, setUserImage] = useState<string>("");
   const navigate = useNavigate();
@@ -41,6 +44,12 @@ function Header({handleGetText, handleSendText, isHidden} :headerHandlerType) {
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+  useEffect(() => {
+    fetchNameUserID();
+    if (isAuth) {
+      getCartUser();
+    }
+  }, [shoppingCart.count]);
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -62,7 +71,7 @@ function Header({handleGetText, handleSendText, isHidden} :headerHandlerType) {
     navigate("/");
   };
 
-  const getCartUser = async () =>{
+  const getCartUser = async () => {
     let token: string | undefined;
     let id: number | undefined;
     if (auth === undefined) {
@@ -81,21 +90,18 @@ function Header({handleGetText, handleSendText, isHidden} :headerHandlerType) {
     await axios
       .get(`/carts/${id}`, config)
       .then((res) => {
-        const {data} = res
-        console.log(data)
-        if(data.message.toString() == "shopping cart empty"){
-          setCount(0)
-        }else if(data.message.toString() == "successful"){
-          setCount(data.data.totalqty)
+        const { data } = res;
+        if (data.message === "shopping cart empty") {
+          shoppingCart.setCount(0);
+        } else if (data.message === "successful") {
+          shoppingCart.setCount(data.data.totalqty);
         }
       })
       .catch((err) => {
-        const { data } = err.response;
-        console.log(err.response);
+        console.log(err);
       })
       .finally(() => {});
-
-  }
+  };
 
   let isAuth: boolean | undefined;
   if (auth === undefined) {
@@ -103,14 +109,6 @@ function Header({handleGetText, handleSendText, isHidden} :headerHandlerType) {
   } else {
     isAuth = auth[0]?.isAuth;
   }
-
-  useEffect(() => {
-    fetchNameUserID();
-    if(isAuth){
-      getCartUser()
-    }
-  }, []);
-
 
   const fetchNameUserID = async () => {
     let token: string | undefined;
@@ -159,7 +157,9 @@ function Header({handleGetText, handleSendText, isHidden} :headerHandlerType) {
         isAuth: false,
       },
     ]);
-    navigate("/");
+    setTimeout(() => {
+      navigate("/login");
+    }, 500);
   };
 
   return (
@@ -187,7 +187,7 @@ function Header({handleGetText, handleSendText, isHidden} :headerHandlerType) {
       <Box>
         <Box
           sx={{
-            display: `${!isHidden ? "flex": "none"}`,
+            display: `${!isHidden ? "flex" : "none"}`,
             alignItems: "center",
             justifyContent: "center",
             backgroundColor: "#2296CB",
@@ -196,7 +196,7 @@ function Header({handleGetText, handleSendText, isHidden} :headerHandlerType) {
             borderRadius: "10px",
           }}>
           <Box
-          onClick={handleSendText}
+            onClick={handleSendText}
             sx={{
               cursor: "pointer",
               display: "flex",
@@ -236,7 +236,7 @@ function Header({handleGetText, handleSendText, isHidden} :headerHandlerType) {
             }}>
             <ShoppingCartOutlinedIcon sx={{ color: "white" }} />
             <Typography sx={{ color: "white", fontFamily: "Nunito" }}>
-              {count}
+              {shoppingCart.count}
             </Typography>
           </Box>
         </Tooltip>

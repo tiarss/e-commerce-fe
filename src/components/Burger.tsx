@@ -99,7 +99,7 @@ function Burger({ isAuth, name, onLogOut }: burgerProps) {
           sx={{ display: `${isAuth ? "flex" : "none"}` }}
           onClick={toProfile}>
           <Avatar />
-          <Typography>{name?.substring(0, 7) + "..."}</Typography>
+          <Typography sx={{fontFamily: "Nunito"}}>{name?.substring(0, 7) + "..."}</Typography>
         </MenuItem>
         <MenuItem onClick={toShopping}>
           <ListItemIcon>
@@ -126,7 +126,7 @@ function Burger({ isAuth, name, onLogOut }: burgerProps) {
           <ListItemIcon>
             <Logout fontSize='small' />
           </ListItemIcon>
-          Logout
+          <Typography sx={{ fontFamily: "Nunito" }}>Log Out</Typography>
         </MenuItem>
       </Menu>
     </Box>

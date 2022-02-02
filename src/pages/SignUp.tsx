@@ -73,7 +73,9 @@ const SignUp: React.FC = () => {
             });
             setOpenAlert(true);
           }
-          navigate(`/login`);
+          setTimeout(() => {
+            navigate(`/login`);
+          }, 1000);
         })
         .catch((err) => {
           console.log(err);

@@ -53,6 +53,8 @@ function CardsHome({
           padding: "10px",
           display: "flex",
           gap: "5px",
+          height: "120px",
+          justifyContent: "space-between"
         }}>
         <Box sx={{ display: "flex", flexDirection: "column", gap: "5px" }}>
           <Typography

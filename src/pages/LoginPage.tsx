@@ -70,14 +70,17 @@ const LoginPage: React.FC = () => {
               isAuth: true,
             },
           ]);
-          if (data.message === "successful") {
+          console.log(res)
+          if (res.data.message === "successful") {
             setAlert({
               message: "Login Berhasil",
               status: "success",
             });
             setOpenAlert(true);
           }
-          navigate(`/`);
+          setTimeout(() => {
+            navigate(`/`);
+          }, 1000);
         })
         .catch((err) => {
           console.log(err);
@@ -99,7 +102,7 @@ const LoginPage: React.FC = () => {
     setEmail(value);
     let regexpEmail = new RegExp("^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$");
     if (!regexpEmail.test(e.target.value)) {
-      setEmailError("it's not an email bro");
+      setEmailError("Wrong Email");
     } else {
       setEmailError("");
     }

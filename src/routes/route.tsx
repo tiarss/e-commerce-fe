@@ -12,13 +12,14 @@ import FinalOrder from "../pages/FinalOrder";
 import axios from "axios";
 import ProtectedRoute from "../utils/ProtectedRoute";
 import { SearchProvider } from "../context/SearchContext";
+import { ShoppingProvider } from "../context/ShoppingNotification";
 
-axios.defaults.baseURL = "http://54.151.143.39:3000";
+axios.defaults.baseURL = "http://52.221.195.63:3000";
 const route = () => {
   return (
     <Box>
       <BrowserRouter>
-        <SearchProvider>
+        <ShoppingProvider>
           <Routes>
               <Route index element={<HomePage />} />
               <Route path='detailproduct/:id' element={<DetailProduct />} />
@@ -49,7 +50,7 @@ const route = () => {
             <Route path='login' element={<LoginPage />} />
             <Route path='signup' element={<SignUp />} />
           </Routes>
-        </SearchProvider>
+        </ShoppingProvider>
       </BrowserRouter>
     </Box>
   );

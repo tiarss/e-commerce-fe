@@ -15,7 +15,7 @@ function SummaryDetail(props:summaryDetail) {
         marginTop: "20px",
         display: "flex",
         width: { xs:"357px", sm:"463px"},
-        height: { xs:"71px", sm:"118px"},
+        height: { xs:"118px", sm:"118px"},
         padding: "10px 30px",
         backgroundColor: "#1767A0",
         justifyContent: "space-between",    
